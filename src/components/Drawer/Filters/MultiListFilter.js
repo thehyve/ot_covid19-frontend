@@ -25,6 +25,11 @@ function MultiListFilter({
   const classes = drawerStyles();
 
   const handleChangeFilter = (_, value) => {
+    if (!value.length) {
+      onRemove(name);
+      return;
+    }
+
     onChange({ [name]: { $in: value } });
   };
 
