@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from '@material-ui/core';
+import chroma from 'chroma-js';
 
 import {
   mapScientificName,
@@ -7,21 +9,30 @@ import {
   mapTractabilityTopBucketAB,
   mapTractabilityTopBucketOther,
   prepareInvitroCovidActivity,
+  tractabilityTopBucketSMDescription,
+  tractabilityTopBucketABDescription,
+  tractabilityTopBucketOtherDescription,
 } from './maps';
-import {
-  comparatorFromAccessorLength,
-  comparatorFromMaps,
-  naLabel,
-} from '../utils';
 import {
   renderArray,
   renderBoolean,
   renderBooleanFillNa,
   renderDescription,
+  renderSafetyHas,
+  renderSafetySource,
   renderLink,
   renderInvitroArrays,
+  renderTractabilityTopBucket,
 } from './renderers';
-import { Link } from '@material-ui/core';
+import {
+  comparatorFromAccessorLength,
+  comparatorFromMaps,
+  naLabel,
+} from '../utils';
+
+const qualityScale = chroma
+  .scale(['#c6e3c7', '#ffffea', '#fbc1af'])
+  .colors(tractabilityTopBucketABDescription.length);
 
 const columnGroups = (onClickCellContent) => [
   {
@@ -422,41 +433,99 @@ const columnGroups = (onClickCellContent) => [
     ],
   },
   {
-    //TODO: THESE MUST SHOW details in sidebar
     label: 'Target tractability',
     columns: [
       {
         id: 'Tractability_Top_bucket_(sm)',
+        label: 'Small molecule',
         align: 'center',
         sortable: true,
         comparator: comparatorFromMaps(
           'Tractability_Top_bucket_(sm)',
-          mapTractabilityTopBucketSM
+          mapTractabilityTopBucketSM,
+          { ascending: true }
         ),
         renderCell: (row) =>
-          mapTractabilityTopBucketSM(row['Tractability_Top_bucket_(sm)']),
+          renderTractabilityTopBucket(
+            tractabilityTopBucketSMDescription,
+            qualityScale,
+            onClickCellContent,
+            mapTractabilityTopBucketSM(row['Tractability_Top_bucket_(sm)']),
+            'Tractability top bucket (small molecule)',
+            <span>
+              Name of the highest <strong>small molecule</strong> tractability
+              bucket. More information about{' '}
+              <Link
+                href="https://docs.targetvalidation.org/getting-started/target-tractability"
+                target="blank"
+              >
+                target tractability
+              </Link>
+              .
+            </span>
+          ),
       },
       {
         id: 'Tractability_Top_bucket_(ab)',
+        label: 'Antibody',
         align: 'center',
         sortable: true,
         comparator: comparatorFromMaps(
           'Tractability_Top_bucket_(ab)',
-          mapTractabilityTopBucketAB
+          mapTractabilityTopBucketAB,
+          { ascending: true }
         ),
         renderCell: (row) =>
-          mapTractabilityTopBucketAB(row['Tractability_Top_bucket_(ab)']),
+          renderTractabilityTopBucket(
+            tractabilityTopBucketABDescription,
+            qualityScale,
+            onClickCellContent,
+            mapTractabilityTopBucketAB(row['Tractability_Top_bucket_(ab)']),
+            'Tractability top bucket (antibody)',
+            <span>
+              Name of the highest <strong>antibody</strong> tractability bucket.
+              More information about{' '}
+              <Link
+                href="https://docs.targetvalidation.org/getting-started/target-tractability"
+                target="blank"
+              >
+                target tractability
+              </Link>
+              .
+            </span>
+          ),
       },
       {
         id: 'Tractability_Top_bucket_(other)',
+        label: 'Other modalities',
         align: 'center',
         sortable: true,
         comparator: comparatorFromMaps(
           'Tractability_Top_bucket_(other)',
-          mapTractabilityTopBucketOther
+          mapTractabilityTopBucketOther,
+          { ascending: true }
         ),
         renderCell: (row) =>
-          mapTractabilityTopBucketOther(row['Tractability_Top_bucket_(other)']),
+          renderTractabilityTopBucket(
+            tractabilityTopBucketOtherDescription,
+            qualityScale,
+            onClickCellContent,
+            mapTractabilityTopBucketOther(
+              row['Tractability_Top_bucket_(other)']
+            ),
+            'Tractability top bucket (other)',
+            <span>
+              Name of the highest tractability bucket for{' '}
+              <strong>other modalities</strong>. More information about{' '}
+              <Link
+                href="https://docs.targetvalidation.org/getting-started/target-tractability"
+                target="blank"
+              >
+                target tractability
+              </Link>
+              .
+            </span>
+          ),
       },
     ],
   },
@@ -468,7 +537,7 @@ const columnGroups = (onClickCellContent) => [
         align: 'center',
         sortable: true,
         // TODO: ask if I can fill NAS in this column
-        renderCell: (row) => renderBooleanFillNa(row.has_safety_risk),
+        renderCell: (row) => renderSafetyHas(row.has_safety_risk),
       },
       {
         id: 'safety_info_source',
@@ -476,15 +545,7 @@ const columnGroups = (onClickCellContent) => [
         sortable: true,
         comparator: comparatorFromAccessorLength('safety_info_source'),
         renderCell: (row) =>
-          renderArray(
-            row.safety_info_source,
-            {
-              url: `https://alpha.targetvalidation.org/target/${row.ensembl_id}`,
-            },
-            onClickCellContent,
-            'Source of the safety risk info',
-            'Options are: known target safety (Literature, HeCaTos), experimental toxicity (eTox, TOX21) or both'
-          ),
+          renderSafetySource(row.safety_info_source, row.ensembl_id),
       },
       {
         id: 'safety_organs_systems_affected',

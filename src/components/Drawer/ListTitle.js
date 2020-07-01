@@ -9,9 +9,11 @@ function ListTitle({ title, description, length }) {
   return (
     <Box className={classes.drawerBodyTitle}>
       <Typography className={classes.drawerTitleCaption}>{title}</Typography>
-      <Typography className={classes.drawerSubtitleCaption}>
-        {length} entries
-      </Typography>
+      {length && (
+        <Typography className={classes.drawerSubtitleCaption}>
+          {length} entries
+        </Typography>
+      )}
       <Typography variant="caption">{description}</Typography>
     </Box>
   );

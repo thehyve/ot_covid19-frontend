@@ -1,6 +1,8 @@
+import React from 'react';
 import _ from 'lodash';
 
 import { naLabel, splitStringInParentheses } from '../utils';
+import { Link } from '@material-ui/core';
 
 export const mapScientificName = (str) =>
   ({
@@ -28,10 +30,42 @@ export const mapTractabilityTopBucketSM = (str) =>
     'Targets with crystal structures with ligands': 4,
     'Targets with a drugEBIlity score equal or greater than 0.7': 5,
     'Targets with drugEBIlity between 0 and 0.7': 6,
+    'Targets with drugEBIlity between zero and 0.7': 6,
     'Targets with ligands': 7,
     'Targets with a predicted Ro5 druggable domain (druggable genome)': 8,
     [naLabel]: naLabel,
   }[str?.trim() || naLabel]);
+
+export const tractabilityTopBucketSMDescription = [
+  <span>Targets with drugs in phase IV.</span>,
+  <span>Targets with drugs in phase II or phase III.</span>,
+  <span>Targets with drugs in phase 0 or phase I.</span>,
+  <span>
+    Targets with crystal structures with ligand.
+    <br />
+    <small>
+      (excluding: buffer compounds, solvents, crystallization agents/additives
+      and sugars).
+    </small>
+  </span>,
+  <span>Targets with a drugEBIlity score equal or greater than 0.7.</span>,
+  <span>Targets with drugEBIlity between 0 and 0.7.</span>,
+  <span>
+    Targets with ligands{' '}
+    <small>(PFI &#8804; 7, SMART hits &#8804; 2, scaffolds &#8805; 2).</small>
+  </span>,
+  <span>
+    Targets considered druggable.{' '}
+    <small>
+      See{' '}
+      <Link href="https://europepmc.org/article/MED/28356508" target="blank">
+        Finan et al. 2017
+      </Link>
+      .
+    </small>
+  </span>,
+  <span>{naLabel}</span>,
+];
 
 // TODO: THIS IS NOT CORRECTLY SORTED https://docs.targetvalidation.org/getting-started/target-tractability
 export const mapTractabilityTopBucketAB = (str) =>
@@ -39,14 +73,49 @@ export const mapTractabilityTopBucketAB = (str) =>
     'Targets with drugs in phase IV': 1,
     'Targets with drugs in phase II or phase III': 2,
     'Targets with drugs in phase 0 or phase I': 3,
-    'Targets located in the plasma membrane': 4,
     'Targets with GO cell component terms plasma membrane or secreted': 5,
-    'Targets with predicted signal peptide and transmembrane domains': 6,
-    'GO cell component - medium confidence': 7,
+    'Targets with predicted signal peptide and transmembrane domains': 7,
+    'GO cell component - medium confidence': 8,
     'Targets with GO cell component terms plasma membrane or secreted with low or unknown confidence': 8,
-    'Human Protein Atlas - high confidence': 9,
+    'Targets located in the plasma membrane': 9,
+    'Human Protein Atlas - high confidence': naLabel,
     [naLabel]: naLabel,
   }[str?.trim() || naLabel]);
+
+export const tractabilityTopBucketABDescription = [
+  <span>Targets with drugs in phase IV.</span>,
+  <span>Targets with drugs in phase II or phase III.</span>,
+  <span>Targets with drugs in phase 0 or phase I.</span>,
+  <span>
+    Targets with UniProt <i>Subcellular location</i> terms indicative for plasma
+    membrane, extracellular region/matrix, or secretion -{' '}
+    <strong>high confidence</strong>.
+  </span>,
+  <span>
+    Targets with GO <i>Cellular component</i> terms indicative for plasma
+    membrane, extracellular region/matrix, or secretion -{' '}
+    <strong>high confidence</strong>.
+  </span>,
+  <span>
+    Targets with UniProt <i>Subcellular location</i> terms indicative for plasma
+    membrane, extracellular region/matrix, or secretion -{' '}
+    <strong>medium confidence</strong>.
+  </span>,
+  <span>
+    Targets with predicted Signal Peptide or Trans-membrane regions, and not
+    destined to organelles.
+  </span>,
+  <span>
+    Targets with GO <i>Cellular component</i> terms indicative for plasma
+    membrane, extracellular region/matrix, or secretion -{' '}
+    <strong>medium confidence</strong>.
+  </span>,
+  <span>
+    Targets with main location term indicative for plasma membrane -{' '}
+    <strong>high confidence</strong>.
+  </span>,
+  <span>{naLabel}</span>,
+];
 
 export const mapTractabilityTopBucketOther = (str) =>
   ({
@@ -55,6 +124,13 @@ export const mapTractabilityTopBucketOther = (str) =>
     'Targets with drugs in phase 0 or phase I': 3,
     [naLabel]: naLabel,
   }[str?.trim() || naLabel]);
+
+export const tractabilityTopBucketOtherDescription = [
+  <span>Targets with drugs in phase IV.</span>,
+  <span>Targets with drugs in phase II or phase III.</span>,
+  <span>Targets with drugs in phase 0 or phase I.</span>,
+  <span>{naLabel}</span>,
+];
 
 export const mapSource = (sourceName, sourceAccession) =>
   ({
@@ -155,3 +231,28 @@ export const biotypeList = [
   'vaultRNA',
   'Mt_rRNA',
 ];
+
+export const redToGreen9Step = [
+  '#c6e3c7',
+  '#d4ead0',
+  '#e3f1d9',
+  '#f1f8e1',
+  '#ffffea',
+  '#fef0db',
+  '#fde0cd',
+  '#fcd1be',
+  '#fbc1af',
+];
+
+export const redToGreen8Step = [
+  '#c6e3c7',
+  '#d6ebd1',
+  '#e7f3db',
+  '#f7fbe5',
+  '#fef6e2',
+  '#fde4d1',
+  '#fcd3c0',
+  '#fbc1af',
+];
+
+export const redToGreen3Step = ['#fbc1af', '#ffffea', '#c6e3c7'];

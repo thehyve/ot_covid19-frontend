@@ -1,6 +1,4 @@
 import React from 'react';
-import CheckCircleTwoTone from '@material-ui/icons/CheckCircleTwoTone';
-import HighlightOffTwoToneIcon from '@material-ui/icons/HighlightOffTwoTone';
 import {
   colors,
   Link,
@@ -9,9 +7,19 @@ import {
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
+  Box,
+  Typography,
+  Tooltip,
+  IconButton,
 } from '@material-ui/core';
+import CheckCircleTwoTone from '@material-ui/icons/CheckCircleTwoTone';
+import HighlightOffTwoToneIcon from '@material-ui/icons/HighlightOffTwoTone';
+import WarningTwoToneIcon from '@material-ui/icons/WarningTwoTone';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCrosshairs, faFlask } from '@fortawesome/free-solid-svg-icons';
 import _ from 'lodash';
+import { darken } from 'polished';
 
 import ListTitle from '../components/Drawer/ListTitle';
 import { naLabel, splitStringInBrackets } from '../utils';
@@ -80,7 +88,6 @@ export const renderArray = (
 export const renderBooleanFillNa = (value) => renderBoolean(value || false);
 
 export const renderBooleanLink = (value, link) => {
-  console.log('link', link);
   return link
     ? renderLink({ ...link, label: renderBoolean(value) })
     : renderBoolean(value);
@@ -93,6 +100,62 @@ export const renderBoolean = (value) => {
     <CheckCircleTwoTone style={{ color: colors.green[500] }} />
   ) : (
     <HighlightOffTwoToneIcon style={{ color: colors.deepOrange.A400 }} />
+  );
+};
+
+export const renderSafetyHas = (value) =>
+  value ? <WarningTwoToneIcon style={{ color: colors.yellow[800] }} /> : null;
+
+export const renderSafetySource = (value, accession) => {
+  const etPresent = value?.includes('experimental_toxicity');
+  const tsPresent = value?.includes('known_target_safety');
+
+  const etColor = etPresent ? '#3489ca' : colors.grey[200];
+  const tsColor = tsPresent ? '#3489ca' : colors.grey[200];
+
+  const IconWrapper = ({ title, children, present }) =>
+    present ? (
+      <Tooltip title={title}>
+        <Link
+          href={`https://alpha.targetvalidation.org/target/${accession}`}
+          target="blank"
+        >
+          {children}
+        </Link>
+      </Tooltip>
+    ) : (
+      <>{children}</>
+    );
+
+  return (
+    <Box display="flex" justifyContent="space-evenly">
+      <IconWrapper
+        title="Non-clinical experimental toxicity"
+        present={etPresent}
+      >
+        <Box>
+          <FontAwesomeIcon
+            style={{
+              fontSize: '1.25rem',
+              color: etColor,
+            }}
+            icon={faFlask}
+          />
+        </Box>
+      </IconWrapper>
+
+      <IconWrapper title="Target safety effects" present={tsPresent}>
+        <Box>
+          <FontAwesomeIcon
+            style={{
+              fontSize: '1.25rem',
+              color: tsColor,
+            }}
+            icon={faCrosshairs}
+          />
+        </Box>
+      </IconWrapper>
+    </Box>
   );
 };
 
@@ -169,6 +232,72 @@ export const renderInvitroArrays = (
   return (
     <Link href="#" onClick={handleClickArrayLink}>
       {entryCount} entries
+    </Link>
+  );
+};
+
+export const renderTractabilityTopBucket = (
+  buckets,
+  colorScale,
+  onClickCellContent,
+  selectedBucket,
+  contentTitle,
+  contentDescription
+) => {
+  const contents = (
+    <>
+      <ListTitle title={contentTitle} description={contentDescription} />
+      {buckets.map((bucket, i) => {
+        const borderWidth = selectedBucket === i + 1 ? '4px' : '1px';
+        const border = `${borderWidth} solid ${darken(0.33, colorScale[i])}`;
+
+        return (
+          <Box
+            key={i}
+            style={{
+              backgroundColor: colorScale[i],
+              border,
+              margin: '.25rem',
+              padding: '.25rem',
+            }}
+          >
+            <Typography variant="subtitle2">Bucket {i + 1}</Typography>
+            <Box style={{ lineHeight: 0 }}>
+              <Typography variant="caption" style={{ lineHeight: 1.25 }}>
+                {bucket}
+              </Typography>
+            </Box>
+          </Box>
+        );
+      })}
+    </>
+  );
+
+  const handleClickArrayLink = () => {
+    onClickCellContent(contents);
+  };
+
+  const backgroundColor =
+    selectedBucket === naLabel
+      ? colorScale[colorScale.length - 1]
+      : colorScale[selectedBucket - 1] || '#fff';
+
+  const border = `2px solid ${darken(0.33, backgroundColor)}`;
+
+  return (
+    <Link href="#" onClick={handleClickArrayLink}>
+      <Box
+        style={{
+          backgroundColor,
+          border,
+          borderRadius: '25px',
+          padding: '0 .25rem',
+          margin: 'auto',
+          width: '3rem',
+        }}
+      >
+        {selectedBucket}
+      </Box>
     </Link>
   );
 };
