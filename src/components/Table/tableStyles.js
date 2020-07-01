@@ -28,9 +28,10 @@ export const tableStyles = makeStyles((theme) => ({
     },
   },
   cellSticky: {
-    position: 'sticky',
-    left: 0,
     backgroundColor: theme.palette.grey[100],
+    left: 0,
+    position: 'sticky',
+    zIndex: 1,
   },
   rowFixed: {
     backgroundColor: theme.palette.grey[300],
