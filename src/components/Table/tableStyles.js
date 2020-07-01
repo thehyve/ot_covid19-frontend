@@ -31,7 +31,7 @@ export const tableStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[100],
     left: 0,
     position: 'sticky',
-    zIndex: 1,
+    zIndex: 2,
   },
   rowFixed: {
     backgroundColor: theme.palette.grey[300],

@@ -7,7 +7,7 @@ export const drawerStyles = makeStyles((theme) => ({
     minWidth: '250px',
     width: `${sideBarWidthPercent}%`,
     height: 'calc(100vh - 3rem)',
-    zIndex: 2,
+    zIndex: 10,
   },
   drawerBody: {
     border: '1px solid #ccc',
