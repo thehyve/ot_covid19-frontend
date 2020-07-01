@@ -69,6 +69,11 @@ function MultiListFilter({
             style={{ margin: 0 }}
           />
         )}
+        renderOption={(option) => (
+          <Typography className={classes.drawerSelectOption}>
+            {option}
+          </Typography>
+        )}
         size="small"
         value={value?.$in || []}
       />

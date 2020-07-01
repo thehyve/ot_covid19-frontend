@@ -50,6 +50,9 @@ export const drawerStyles = makeStyles((theme) => ({
     fontSize: '1.2rem',
     fontWeight: 'bold',
   },
+  drawerSelectOption: {
+    fontSize: '0.6rem',
+  },
   drawerSubtitleCaption: {
     color: theme.palette.grey[400],
     fontSize: '0.8rem',
