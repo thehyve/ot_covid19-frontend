@@ -50,7 +50,7 @@ function UpdatingModal({ open }) {
             <Typography variant="h3">LOADING DATA</Typography>
             <Typography variant="caption" align="center">
               This is the first time you visit the Open Targets COVID-19, the
-              dataset is being loaded into your computer. This will only happen
+              dataset is being loaded into your device. This will only happen
               once unless you delete the browser's storage data.
             </Typography>
             <CircularProgress />
