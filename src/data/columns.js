@@ -197,7 +197,8 @@ const columnGroups = (onClickCellContent) => [
         id: 'max_phase',
         align: 'center',
         sortable: true,
-        renderCell: (row) => parseInt(row.max_phase ?? 0),
+        renderCell: (row) =>
+          row.max_phase ? parseInt(row.max_phase) : <>{naLabel}</>,
       },
       {
         id: 'drugs_in_clinic',
