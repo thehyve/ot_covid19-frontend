@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Box } from '@material-ui/core';
+import { Box, Snackbar } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 
 import CovidTable from './components/CovidTable';
 import DrawerButton from './components/Drawer/DrawerButton';
@@ -10,6 +11,7 @@ import UpdatingModal from './components/UpdatingModal';
 import { getNewestDatasetRevision, updateClient } from './db/update';
 import ContentDrawer from './components/Drawer/ContentDrawer';
 import FilterDrawer from './components/Drawer/FilterDrawer';
+import { createIndexes } from './db/indexes';
 
 function App() {
   const [content, setContent] = useState(null);
@@ -20,14 +22,11 @@ function App() {
   ]);
   const [filterOpen, setFilterOpen] = useState(true);
   const [updating, setUpdating] = useState(false);
+  const [indexing, setIndexing] = useState(false);
   const [ready, setReady] = useState(false);
 
-  const handleToggleFilterDrawer = () => {
-    setFilterOpen(!filterOpen);
-  };
-
-  const handleToggleContentDrawer = () => {
-    setContentOpen(!contentOpen);
+  const handleCloseIndexingInfo = () => {
+    setIndexing(false);
   };
 
   const handleSetContent = (content) => {
@@ -39,6 +38,14 @@ function App() {
     setFilter(filter);
   };
 
+  const handleToggleContentDrawer = () => {
+    setContentOpen(!contentOpen);
+  };
+
+  const handleToggleFilterDrawer = () => {
+    setFilterOpen(!filterOpen);
+  };
+
   useEffect(() => {
     async function checkRevisionAndUpdate() {
       const currentDatasetRevision = await getNewestDatasetRevision();
@@ -47,6 +54,12 @@ function App() {
         setUpdating(true);
         await updateClient(currentDatasetRevision);
         setUpdating(false);
+
+        setReady(true);
+
+        setIndexing(true);
+        await createIndexes();
+        setIndexing(false);
       }
 
       setReady(true);
@@ -95,6 +108,12 @@ function App() {
         </ContentDrawer>
       </Box>
       <UpdatingModal open={updating} />
+      <Snackbar open={indexing} onClose={handleCloseIndexingInfo}>
+        <Alert severity="info" elevation={6} onClose={handleCloseIndexingInfo}>
+          The first filter might be slow while the indexes are generated. This
+          will only happen once. Please be patient.
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

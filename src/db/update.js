@@ -1,11 +1,9 @@
 import openDB from './open';
 import populateDB from './populate';
 
-import { createIndexes } from './indexes';
 import { getDatasetRevision, setDatasetRevision } from '../utils';
 import { storeUrl } from '../config';
-
-// import dataset from '../data/dataset.json';
+import JSZip from 'jszip';
 
 export async function getNewestDatasetRevision() {
   const res = await fetch(`${storeUrl}/current_revision.json`);
@@ -37,13 +35,19 @@ export async function updateClient(datasetRevision) {
   await db.destroy().then(async () => {
     const newDB = openDB();
 
-    const res = await fetch(`${storeUrl}/${datasetRevision}`);
-    const resString = await res.text();
-    const dataArray = resString.split('\n').map((line) => JSON.parse(line));
+    const res = await fetch(`${storeUrl}/${datasetRevision}.zip`);
+    const resBlob = await res.blob();
+    console.log(`[DB] data fetched: ${resBlob.size}B`);
+    const zip = await JSZip.loadAsync(resBlob);
+    const datasetStr = await zip
+      .file(`${datasetRevision}.json`)
+      .async('string');
+    console.log('[DB] data decompressed');
+
+    const dataArray = datasetStr.split('\n').map((line) => JSON.parse(line));
+    console.log('[DB] data parsed');
+
     const updateResult = await populateDB(newDB, dataArray);
-
-    await createIndexes(openDB());
-
     console.log(`[DB] imported ${updateResult.length} rows`);
 
     setDatasetRevision(datasetRevision);

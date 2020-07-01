@@ -49,6 +49,7 @@ const columnGroups = (onClickCellContent) => [
         id: 'biotype',
         label: 'Gene biotype',
         sortable: true,
+        sticky: true,
       },
       {
         id: 'description',
