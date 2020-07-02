@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { Box } from '@material-ui/core';
 
 import fetchDB from '../db/fetch';
@@ -41,11 +41,12 @@ function CovidTable({ filter, onClickCellContent, sideBarsOpen }) {
         headerGroups={headerGroups}
         noWrapHeader={false}
         rows={rows}
-        sortBy="Covid_direct_interactions"
+        sortBy="drugs_in_covid_trials"
         order="desc"
       />
     </Box>
   );
 }
 
-export default CovidTable;
+// There is nothing in props that should cause a rerender.
+export default memo(CovidTable, (prevProps, nextProps) => true);
