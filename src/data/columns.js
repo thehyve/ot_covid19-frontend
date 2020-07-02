@@ -31,7 +31,7 @@ const qualityScale = (len) =>
   chroma.scale(['#c6e3c7', '#ffffea', '#fbc1af']).colors(len);
 
 const qualityMidScale = (len) =>
-  chroma.scale(['#ffffea', '#fbc1af']).colors(len);
+  chroma.scale(['#ffffea', '#c6e3c7']).colors(len);
 
 const columnGroups = (onClickCellContent) => [
   {
