@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  Badge,
-  makeStyles,
   Hidden,
   TableHead,
   TableRow,
@@ -30,39 +28,33 @@ function HeaderCell({
   sortParams,
   sticky = false,
   tooltip,
-  tooltipStyle = {},
   TooltipIcon = HelpIcon,
   width,
 }) {
   const classes = tableStyles();
-  const tooltipClasses = makeStyles(tooltipStyle)();
   const style = {
     minWidth,
     width,
     ...labelStyle,
   };
 
-  const labelInnerComponent = tooltip ? (
-    <Badge
-      classes={{
-        root: classes.tooltipBadgeRoot,
-        anchorOriginTopRightRectangle: classes.tooltipBadgeAnchor,
-      }}
-      badgeContent={
+  const labelInnerComponent = (
+    <>
+      {label}
+      {tooltip && (
         <Tooltip
+          arrow
+          classes={{
+            tooltip: classes.tooltip,
+            arrow: classes.tooltipArrow,
+          }}
           interactive
-          placement="top"
-          classes={tooltipClasses}
           title={tooltip}
         >
           <TooltipIcon className={classes.tooltipIcon} />
         </Tooltip>
-      }
-    >
-      {label}
-    </Badge>
-  ) : (
-    label
+      )}
+    </>
   );
 
   return (

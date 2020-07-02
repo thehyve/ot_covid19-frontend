@@ -92,7 +92,7 @@ const columnGroups = (onClickCellContent) => [
           <>
             <span>
               Whether or not the target was included in the{' '}
-              <Link color="secondary" href="https://covid-19.uniprot.org">
+              <Link href="https://covid-19.uniprot.org">
                 COVID-19 Uniprot website
               </Link>
               .
@@ -153,7 +153,12 @@ const columnGroups = (onClickCellContent) => [
             link={{ prefix: 'intact' }}
             onClickCellContent={onClickCellContent}
             contentTitle="IntAct IDs"
-            contentDescription="Target interaction with one of the targets from the <i>Direct</i> column"
+            contentDescription={
+              <span>
+                Target interaction with one of the targets from the{' '}
+                <i>Direct</i> column
+              </span>
+            }
           />
         ),
       },

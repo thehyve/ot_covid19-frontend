@@ -88,15 +88,21 @@ export const tableStyles = makeStyles((theme) => ({
   tabularNums: {
     fontVariant: 'tabular-nums',
   },
-  tooltipBadgeAnchor: {
-    top: '-5px',
-  },
-  tooltipBadgeRoot: {
-    flexShrink: 'unset',
-  },
   tooltipIcon: {
-    fontSize: '1.33rem',
-    paddingLeft: `0.6rem`,
+    fontSize: '.8rem',
+  },
+  tooltip: {
+    backgroundColor: theme.palette.common.white,
+    border: `1px solid ${theme.palette.grey[300]}`,
+    color: 'rgba(0, 0, 0, 0.87)',
+    boxShadow: theme.shadows[1],
+    fontSize: 11,
+  },
+  tooltipArrow: {
+    '&:before': {
+      backgroundColor: theme.palette.common.white,
+      border: `1px solid ${theme.palette.grey[300]}`,
+    },
   },
 }));
 
