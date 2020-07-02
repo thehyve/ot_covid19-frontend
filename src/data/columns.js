@@ -40,12 +40,14 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'scientificName',
         label: 'Species',
+        minWidth: '5.125rem',
         sortable: true,
         renderCell: (row) => mapScientificName(row.scientificName),
       },
       {
         id: 'ensembl_id',
         label: 'Ensembl ID',
+        minWidth: '8.875rem',
         sortable: true,
         renderCell: (row) => (
           <CellLink prefix="ensembl" accession={row.ensembl_id} />
@@ -54,6 +56,7 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'name',
         label: 'Gene name',
+        minWidth: '6rem',
         sortable: true,
         sticky: true,
       },
@@ -65,12 +68,13 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'description',
         sortable: true,
+        minWidth: '14.875rem',
         renderCell: (row) => <CellDescription description={row.description} />,
       },
       {
         id: 'uniprot_ids',
         label: 'UniProt IDs',
-        minWidth: '7.5rem',
+        minWidth: '6.3rem',
         sortable: true,
         comparator: (a, b) =>
           (a.uniprot_ids?.split(',').length ?? 0) -
@@ -100,7 +104,8 @@ const columnGroups = (onClickCellContent) => [
           </>
         ),
         align: 'center',
-        minWidth: '7.5rem',
+        minWidth: '5.1rem',
+        filterable: true,
         sortable: true,
         renderCell: (row) => (
           <CellBoolean value={row['COVID-19 UniprotKB']} fillNa={true} />
@@ -122,6 +127,7 @@ const columnGroups = (onClickCellContent) => [
             </span>
           </>
         ),
+        filterable: true,
         sortable: true,
         comparator: comparatorFromAccessorLength('Covid_direct_interactions'),
         renderCell: (row) => (
@@ -145,6 +151,7 @@ const columnGroups = (onClickCellContent) => [
             </span>
           </>
         ),
+        filterable: true,
         sortable: true,
         comparator: comparatorFromAccessorLength('Covid_indirect_interactions'),
         renderCell: (row) => (
@@ -192,6 +199,8 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'max_phase',
         align: 'center',
+        minWidth: '6rem',
+        filterable: true,
         sortable: true,
         renderCell: (row) => (
           <CellQuality value={row.max_phase} colorScale={qualityMidScale(5)} />
@@ -216,7 +225,7 @@ const columnGroups = (onClickCellContent) => [
         id: 'has_drug_in_covid_trials',
         label: 'COVID-19 CT',
         align: 'center',
-        minWidth: '8rem',
+        filterable: true,
         sortable: true,
         renderCell: (row) => (
           <CellBoolean value={row.has_drug_in_covid_trials} fillNa={true} />
@@ -311,6 +320,7 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'hpa_subcellular_location',
         label: 'Subcellular location',
+        filterable: true,
         sortable: true,
         comparator: comparatorFromAccessorLength('hpa_subcellular_location'),
         renderCell: (row) => (
@@ -344,6 +354,7 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'hpa_rna_specific_tissues',
         label: 'RNA specific tissues',
+        minWidth: '7rem',
         sortable: true,
         comparator: comparatorFromAccessorLength('hpa_rna_specific_tissues'),
         renderCell: (row) => (
@@ -366,7 +377,7 @@ const columnGroups = (onClickCellContent) => [
     columns: [
       {
         id: 'respiratory_system_is_expressed',
-        label: 'Expressed in respiratory system',
+        label: 'Respiratory system',
         align: 'center',
         minWidth: '8rem',
         sortable: true,
@@ -380,7 +391,7 @@ const columnGroups = (onClickCellContent) => [
       },
       {
         id: 'respiratory_system_expressed_tissue_list',
-        label: 'Respiratory system tissue list',
+        label: 'Tissue list',
         sortable: true,
         comparator: comparatorFromAccessorLength(
           'respiratory_system_expressed_tissue_list'
@@ -400,7 +411,7 @@ const columnGroups = (onClickCellContent) => [
       },
       {
         id: 'immune_system_is_expressed',
-        label: 'Expressed in immune system',
+        label: 'Immune system',
         align: 'center',
         sortable: true,
         // TODO: ask if I can fill NAS in this column
@@ -410,7 +421,7 @@ const columnGroups = (onClickCellContent) => [
       },
       {
         id: 'immune_system_expressed_tissue_list',
-        label: 'Immune system tissue list',
+        label: 'Tissue list',
         minWidth: '8rem',
         sortable: true,
         comparator: comparatorFromAccessorLength(
@@ -510,7 +521,9 @@ const columnGroups = (onClickCellContent) => [
     columns: [
       {
         id: 'has_safety_risk',
+        label: 'Safety risk',
         align: 'center',
+        filterable: true,
         sortable: true,
         renderCell: (row) => <CellSafetyHas value={row.has_safety_risk} />,
       },

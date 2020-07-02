@@ -20,15 +20,18 @@ import {
 } from './dataPreparation';
 import { tableStyles } from './tableStyles';
 import useDimensions from '../../hooks/useDimensions';
+import { addFilter, includeFilter, remFilter } from '../Filters/filters';
 
 function Table({
   className,
   columns,
   rows,
   rowCount,
+  filterBy = [],
   fixed = false,
   fixedRows = [],
   headerGroups = [],
+  onRequestFilter,
   onTableAction = () => {},
   pageSize = 10 - fixedRows.length,
   dataDownloader = false,
@@ -48,7 +51,7 @@ function Table({
   const containerRef = useRef();
   const { height } = useDimensions(containerRef);
 
-  pageSize = Math.floor((height - 149) / 37);
+  pageSize = Math.floor((height - 150) / 37);
 
   const [processedRows, emptyRows, effectiveRowCount = rowCount] = serverSide
     ? prepareDataServerSide(rows, fixedRows, pageSize)
@@ -65,6 +68,18 @@ function Table({
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
+  };
+
+  const handleRequestFilter = (newFilter) => {
+    let newFilterBy = filterBy;
+
+    if (includeFilter(filterBy, newFilter)) {
+      newFilterBy = remFilter(filterBy, newFilter);
+    } else {
+      newFilterBy = addFilter(filterBy, { [newFilter]: {} });
+    }
+
+    onRequestFilter(newFilterBy);
   };
 
   const handleRequestSort = (_, property) => {
@@ -140,6 +155,8 @@ function Table({
               <TableHeader
                 classes={classes}
                 columns={columns}
+                filterBy={filterBy}
+                onRequestFilter={handleRequestFilter}
                 headerGroups={headerGroups}
                 noWrapHeader={noWrapHeader}
                 order={order}

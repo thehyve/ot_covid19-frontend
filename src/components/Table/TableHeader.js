@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Box,
   Hidden,
   TableHead,
   TableRow,
@@ -7,23 +8,29 @@ import {
   TableSortLabel,
   Tooltip,
   withWidth,
+  IconButton,
 } from '@material-ui/core';
+import FilterListIcon from '@material-ui/icons/FilterList';
 import HelpIcon from '@material-ui/icons/Help';
-
+import clsx from 'clsx';
 import _ from 'lodash';
 
-import { tableStyles } from './tableStyles';
 import useDynamicColspan from '../../hooks/useDynamicColspans';
 import { getHiddenBreakpoints } from './utils';
+import { tableStyles } from './tableStyles';
+import { includeFilter } from '../Filters/filters';
 
 function HeaderCell({
-  align,
   colspan,
   isHeaderGroup = false,
+  filterable = false,
+  filterBy = [],
+  id,
   label,
   labelStyle,
   minWidth,
   noWrapHeader,
+  onRequestFilter,
   sortable = false,
   sortParams,
   sticky = false,
@@ -37,51 +44,72 @@ function HeaderCell({
     width,
     ...labelStyle,
   };
+  const isFiltered = includeFilter(filterBy, id);
+  console.log('isFiltered', isFiltered);
 
-  const labelInnerComponent = (
-    <>
-      {label}
+  const handleRequestFilter = () => {
+    onRequestFilter(id);
+  };
+
+  const headerToolbar = (
+    <Box className={classes.cellHeaderToolbar}>
       {tooltip && (
         <Tooltip
           arrow
           classes={{
-            tooltip: classes.tooltip,
-            arrow: classes.tooltipArrow,
+            tooltip: classes.cellHeaderTooltip,
+            arrow: classes.cellHeaderTooltipArrow,
           }}
           interactive
           title={tooltip}
         >
-          <TooltipIcon className={classes.tooltipIcon} />
+          <TooltipIcon className={classes.cellHeaderTooltipIcon} />
         </Tooltip>
       )}
-    </>
+      {sortable && (
+        <TableSortLabel
+          classes={{ icon: classes.cellHeaderSortIcon }}
+          {...sortParams}
+        />
+      )}
+      {filterable && (
+        <IconButton
+          className={classes.cellHeaderFilterIcon}
+          disableRipple
+          onClick={handleRequestFilter}
+        >
+          <FilterListIcon
+            className={clsx(!isFiltered && classes.cellHeaderFilterIconOff)}
+          />
+        </IconButton>
+      )}
+    </Box>
   );
 
   return (
     <TableCell
-      align={align}
       classes={{
-        root: `
-          ${classes.cell}
-          ${classes.cellHeader}
-          ${isHeaderGroup ? classes.cellGroup : ''}
-          ${sticky ? classes.cellSticky : ''}
-          ${noWrapHeader ? classes.noWrap : ''}
-        `,
+        root: clsx(
+          classes.cell,
+          classes.cellHeader,
+          isHeaderGroup && classes.cellGroup,
+          sticky && classes.cellSticky,
+          noWrapHeader && classes.noWrap
+        ),
       }}
       colSpan={colspan}
       sortDirection={sortable && sortParams.direction}
       style={style}
     >
-      {sortable ? (
-        <TableSortLabel
-          classes={{ icon: classes.tableSortLabelIcon }}
-          {...sortParams}
-        >
-          {labelInnerComponent}
-        </TableSortLabel>
+      {isHeaderGroup ? (
+        <>{label}</>
       ) : (
-        labelInnerComponent
+        <Box className={classes.cellHeaderContainer}>
+          <Box className={classes.cellHeaderLabel}>
+            <span>{label}</span>
+          </Box>
+          {headerToolbar}
+        </Box>
       )}
     </TableCell>
   );
@@ -89,9 +117,11 @@ function HeaderCell({
 
 function TableHeader({
   columns,
+  filterBy,
   headerGroups,
   noWrapHeader,
   order,
+  onRequestFilter,
   onRequestSort,
   sortBy,
   width,
@@ -124,8 +154,13 @@ function TableHeader({
               align={
                 column.align ? column.align : column.numeric ? 'right' : 'left'
               }
+              filterable={column.filterable}
+              filterBy={filterBy}
+              id={column.id}
               label={column.label || _.startCase(column.id)}
+              labelStyle={column.labelStyle}
               noWrapHeader={noWrapHeader}
+              onRequestFilter={onRequestFilter}
               sortable={column.sortable}
               sortParams={
                 column.sortable
@@ -136,7 +171,6 @@ function TableHeader({
                     }
                   : null
               }
-              labelStyle={column.labelStyle}
               sticky={column.sticky}
               tooltip={column.tooltip}
               tooltipStyle={column.tooltipStyle}

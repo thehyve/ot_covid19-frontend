@@ -23,9 +23,16 @@ export const drawerStyles = makeStyles((theme) => ({
   drawerBodyShort: {
     border: '1px solid #ccc',
     margin: '.25rem',
-    padding: '.25rem .25rem .5rem .25rem',
   },
   drawerBodyTitle: {
+    padding: '1rem',
+  },
+  drawerBodyIconHelp: {
+    backgroundColor: theme.palette.grey[100],
+    border: `1px solid ${theme.palette.grey[300]}`,
+    verticalAlign: 'middle',
+  },
+  drawerBodyTextHelp: {
     padding: '1rem',
   },
   drawerBodyDescription: {

@@ -14,11 +14,69 @@ export const tableStyles = makeStyles((theme) => ({
     fontSize: '0.8125rem',
   },
   cellHeader: {
-    padding: '.5rem .5rem',
+    borderRight: `1px solid ${theme.palette.grey[200]}`,
     fontSize: '.75rem',
     lineHeight: '.8rem',
+    padding: '.33rem .5rem',
     textTransform: 'uppercase',
     textAlign: 'center',
+  },
+  cellHeaderContainer: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '2.7rem',
+    padding: '0 .25rem',
+    justifyContent: 'space-between',
+  },
+  cellHeaderLabel: {
+    alignItems: 'center',
+    display: 'flex',
+    flexGrow: 1,
+  },
+  cellHeaderFilterIcon: {
+    height: '1rem',
+    margin: '0 .2rem',
+    width: '1rem',
+    '& span': {
+      '& svg': {
+        fontSize: '1.33rem',
+        '&:hover': {
+          opacity: 0.5,
+        },
+      },
+    },
+  },
+  cellHeaderFilterIconOff: {
+    opacity: 0.2,
+  },
+  cellHeaderSortIcon: {
+    opacity: 0.2,
+    margin: '0 .1rem',
+  },
+  cellHeaderToolbar: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.palette.grey[100],
+    border: `1px solid ${theme.palette.grey[200]}`,
+  },
+  cellHeaderTooltip: {
+    backgroundColor: theme.palette.common.white,
+    border: `1px solid ${theme.palette.grey[300]}`,
+    color: 'rgba(0, 0, 0, 0.87)',
+    boxShadow: theme.shadows[1],
+    fontSize: 11,
+  },
+  cellHeaderTooltipArrow: {
+    '&:before': {
+      backgroundColor: theme.palette.common.white,
+      border: `1px solid ${theme.palette.grey[300]}`,
+    },
+  },
+  cellHeaderTooltipIcon: {
+    fontSize: '1rem',
+    margin: '0 .1rem',
   },
   cellGroup: {
     padding: '1rem',
@@ -58,9 +116,6 @@ export const tableStyles = makeStyles((theme) => ({
     overflowX: 'scroll',
     overflowY: 'auto',
   },
-  tableSortLabelIcon: {
-    opacity: 0.15,
-  },
   tableFixed: {
     tableLayout: 'fixed',
   },
@@ -87,22 +142,6 @@ export const tableStyles = makeStyles((theme) => ({
   },
   tabularNums: {
     fontVariant: 'tabular-nums',
-  },
-  tooltipIcon: {
-    fontSize: '.8rem',
-  },
-  tooltip: {
-    backgroundColor: theme.palette.common.white,
-    border: `1px solid ${theme.palette.grey[300]}`,
-    color: 'rgba(0, 0, 0, 0.87)',
-    boxShadow: theme.shadows[1],
-    fontSize: 11,
-  },
-  tooltipArrow: {
-    '&:before': {
-      backgroundColor: theme.palette.common.white,
-      border: `1px solid ${theme.palette.grey[300]}`,
-    },
   },
 }));
 

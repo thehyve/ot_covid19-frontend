@@ -1,4 +1,5 @@
 import React, { useState, useEffect, memo } from 'react';
+import _ from 'lodash';
 import { Box } from '@material-ui/core';
 
 import fetchDB from '../db/fetch';
@@ -7,7 +8,12 @@ import Table from './Table/Table';
 import { columns, headerGroups } from '../data/columns';
 import { sideBarWidthPercent } from '../config';
 
-function CovidTable({ filter, onClickCellContent, sideBarsOpen }) {
+function CovidTable({
+  filters,
+  onClickCellContent,
+  onRequestFilter,
+  sideBarsOpen,
+}) {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -22,7 +28,7 @@ function CovidTable({ filter, onClickCellContent, sideBarsOpen }) {
       setLoading(true);
       const newData = await fetchDB({
         limit: fetchBlockSize,
-        selector: filter,
+        selector: filters,
       });
 
       setRows(newData.rows);
@@ -30,7 +36,7 @@ function CovidTable({ filter, onClickCellContent, sideBarsOpen }) {
     }
 
     fetchData();
-  }, [filter]);
+  }, [filters]);
 
   return loading ? (
     <LoadingBox width={width} />
@@ -38,15 +44,19 @@ function CovidTable({ filter, onClickCellContent, sideBarsOpen }) {
     <Box style={{ overflowX: 'hidden', width }}>
       <Table
         columns={preparedColumns}
+        filterBy={filters}
         headerGroups={headerGroups}
         noWrapHeader={false}
+        onRequestFilter={onRequestFilter}
+        order="desc"
         rows={rows}
         sortBy="drugs_in_covid_trials"
-        order="desc"
       />
     </Box>
   );
 }
 
 // There is nothing in props that should cause a rerender.
-export default memo(CovidTable, (prevProps, nextProps) => true);
+export default memo(CovidTable, (prevProps, nextProps) =>
+  _.isEqual(prevProps.filters, nextProps.filters)
+);

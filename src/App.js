@@ -16,8 +16,8 @@ import { createIndexes } from './db/indexes';
 function App() {
   const [content, setContent] = useState(null);
   const [contentOpen, setContentOpen] = useState(false);
-  const [filter, setFilter] = useState([
-    { FILTER_network: { $eq: true } },
+  const [filters, setFilters] = useState([
+    // { FILTER_network: { $eq: true } },
     // { biotype: { $in: ['protein_coding'] } },
   ]);
   const [filterOpen, setFilterOpen] = useState(true);
@@ -34,8 +34,9 @@ function App() {
     setContentOpen(true);
   };
 
-  const handleSetFilter = (filter) => {
-    setFilter(filter);
+  const handleSetFilters = (filters) => {
+    console.log('setting filters', filters);
+    setFilters(filters);
   };
 
   const handleToggleContentDrawer = () => {
@@ -86,14 +87,15 @@ function App() {
 
       <Box display="flex" alignItems="flex-start">
         <FilterDrawer
-          filter={filter}
-          onSetFilter={handleSetFilter}
+          filters={filters}
+          onSetFilter={handleSetFilters}
           onToggleDrawer={handleToggleFilterDrawer}
           open={filterOpen}
         />
         {ready ? (
           <CovidTable
-            filter={filter}
+            filters={filters}
+            onRequestFilter={handleSetFilters}
             onClickCellContent={handleSetContent}
             sideBarsOpen={[filterOpen, contentOpen]}
           />

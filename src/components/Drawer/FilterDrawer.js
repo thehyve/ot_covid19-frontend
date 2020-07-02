@@ -1,41 +1,51 @@
 import React from 'react';
-import { Box } from '@material-ui/core';
+import { Box, Paper, Typography } from '@material-ui/core';
+import FilterListIcon from '@material-ui/icons/FilterList';
 
 import Drawer from './Drawer';
-
-import BooleanFilter from './Filters/BooleanFilter';
-import MultiListFilter from './Filters/MultiListFilter';
-import { biotypeList } from '../../data/maps';
+import ListTitle from './ListTitle';
 import { drawerStyles } from './drawerStyles';
-import StringFilter from './Filters/StringFilter';
 
-const remFilter = (filterObj, oldFilter) =>
-  filterObj.filter((f) => !Object.keys(f).includes(oldFilter));
-
-const getFilter = (filterObj, curFilter) =>
-  filterObj.find((f) => Object.keys(f).includes(curFilter))?.[curFilter];
-
-const addFilter = (filterObj, newFilter) => [
-  ...remFilter(filterObj, Object.keys(newFilter)[0]),
-  newFilter,
-];
-
-function FilterDrawer({ filter, onSetFilter, onToggleDrawer, open }) {
+function FilterDrawer({ filters, onSetFilters, onToggleDrawer, open }) {
   const classes = drawerStyles();
 
-  const handleChangeFilter = (newFilter) => {
-    const newFilterObject = addFilter(filter, newFilter);
-    onSetFilter(newFilterObject);
-  };
-
-  const handleRemoveFilter = (oldFilter) => {
-    const newFilterObject = remFilter(filter, oldFilter);
-    onSetFilter(newFilterObject);
-  };
+  const FilterHelp = () => (
+    <Paper classes={{ root: classes.drawerBodyShort }}>
+      <ListTitle title="No filters selected" />
+      <Typography className={classes.drawerBodyTextHelp}>
+        Click on a <FilterListIcon className={classes.drawerBodyIconHelp} />{' '}
+        filter button in the header of a column to set up a filter.
+      </Typography>
+    </Paper>
+  );
 
   return (
     <Drawer title="Filters" open={open} position="left">
       <Box className={classes.drawerBodyNoBorder}>
+        {!filters.length ? (
+          <FilterHelp />
+        ) : (
+          filters.map((f) => Object.keys(f)[0])
+        )}
+      </Box>
+    </Drawer>
+  );
+}
+
+export default FilterDrawer;
+
+/*
+
+          // const handleChangeFilter = (newFilter) => {
+          //   const newFilterObject = addFilter(filter, newFilter);
+          //   onSetFilter(newFilterObject);
+          // };
+
+          // const handleRemoveFilter = (oldFilter) => {
+          //   const newFilterObject = remFilter(filter, oldFilter);
+          //   onSetFilter(newFilterObject);
+          // };
+
         <BooleanFilter
           name="FILTER_network"
           value={getFilter(filter, 'FILTER_network')}
@@ -115,10 +125,4 @@ function FilterDrawer({ filter, onSetFilter, onToggleDrawer, open }) {
           onRemove={handleRemoveFilter}
           title="UniProt ID"
           description={<span>Write a UniProt ID to search in the list.</span>}
-        />
-      </Box>
-    </Drawer>
-  );
-}
-
-export default FilterDrawer;
+        /> */
