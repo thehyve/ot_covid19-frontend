@@ -16,19 +16,22 @@ import {
   mapTractabilityTopBucketSM,
   mapTractabilityTopBucketAB,
   mapTractabilityTopBucketOther,
-  tractabilityTopBucketSMDescription,
-  tractabilityTopBucketABDescription,
-  tractabilityTopBucketOtherDescription,
+  tractabilityTopBucketSMCaptions,
+  tractabilityTopBucketABCaptions,
+  tractabilityTopBucketOtherCaptions,
 } from './maps';
 import {
   comparatorFromAccessorLength,
   comparatorFromMaps,
   naLabel,
 } from '../utils';
+import CellQuality from '../components/Cells/CellQuality';
 
-const qualityScale = chroma
-  .scale(['#c6e3c7', '#ffffea', '#fbc1af'])
-  .colors(tractabilityTopBucketABDescription.length);
+const qualityScale = (len) =>
+  chroma.scale(['#c6e3c7', '#ffffea', '#fbc1af']).colors(len);
+
+const qualityMidScale = (len) =>
+  chroma.scale(['#ffffea', '#fbc1af']).colors(len);
 
 const columnGroups = (onClickCellContent) => [
   {
@@ -185,8 +188,9 @@ const columnGroups = (onClickCellContent) => [
         id: 'max_phase',
         align: 'center',
         sortable: true,
-        renderCell: (row) =>
-          row.max_phase ? parseInt(row.max_phase) : <>{naLabel}</>,
+        renderCell: (row) => (
+          <CellQuality value={row.max_phase} colorScale={qualityMidScale(5)} />
+        ),
       },
       {
         id: 'drugs_in_clinic',
@@ -437,11 +441,11 @@ const columnGroups = (onClickCellContent) => [
         ),
         renderCell: (row) => (
           <CellTractability
-            buckets={tractabilityTopBucketSMDescription}
+            buckets={tractabilityTopBucketSMCaptions}
             selectedBucket={mapTractabilityTopBucketSM(
               row['Tractability_Top_bucket_(sm)']
             )}
-            colorScale={qualityScale}
+            colorScale={qualityScale(tractabilityTopBucketSMCaptions.length)}
             onClickCellContent={onClickCellContent}
             contentTitle="Tractability top bucket (small molecule)"
             contentDescription="small molecule"
@@ -460,11 +464,11 @@ const columnGroups = (onClickCellContent) => [
         ),
         renderCell: (row) => (
           <CellTractability
-            buckets={tractabilityTopBucketABDescription}
+            buckets={tractabilityTopBucketABCaptions}
             selectedBucket={mapTractabilityTopBucketAB(
               row['Tractability_Top_bucket_(ab)']
             )}
-            colorScale={qualityScale}
+            colorScale={qualityScale(tractabilityTopBucketABCaptions.length)}
             onClickCellContent={onClickCellContent}
             contentTitle="Tractability top bucket (antibody)"
             contentDescription="antibody"
@@ -483,11 +487,11 @@ const columnGroups = (onClickCellContent) => [
         ),
         renderCell: (row) => (
           <CellTractability
-            buckets={tractabilityTopBucketOtherDescription}
+            buckets={tractabilityTopBucketOtherCaptions}
             selectedBucket={mapTractabilityTopBucketOther(
               row['Tractability_Top_bucket_(other)']
             )}
-            colorScale={qualityScale}
+            colorScale={qualityScale(tractabilityTopBucketOtherCaptions.length)}
             onClickCellContent={onClickCellContent}
             contentTitle="Tractability top bucket (other)"
             contentDescription="other modalities"

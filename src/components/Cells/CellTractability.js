@@ -4,6 +4,7 @@ import { darken } from 'polished';
 
 import ListTitle from '../Drawer/ListTitle';
 import { naLabel } from '../../utils';
+import CellQuality from './CellQuality';
 
 export const CellTractability = ({
   buckets,
@@ -67,28 +68,12 @@ export const CellTractability = ({
     onClickCellContent(contents);
   };
 
-  const backgroundColor =
-    selectedBucket === naLabel
-      ? colorScale[colorScale.length - 1]
-      : colorScale[selectedBucket - 1] || '#fff';
-
-  const border = `2px solid ${darken(0.33, backgroundColor)}`;
-
   return (
-    <Link href="#" onClick={handleClickArrayLink}>
-      <Box
-        style={{
-          backgroundColor,
-          border,
-          borderRadius: '25px',
-          padding: '0 .25rem',
-          margin: 'auto',
-          width: '3rem',
-        }}
-      >
-        {selectedBucket}
-      </Box>
-    </Link>
+    <CellQuality
+      value={selectedBucket}
+      colorScale={colorScale}
+      onClick={handleClickArrayLink}
+    />
   );
 };
 

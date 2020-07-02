@@ -36,7 +36,7 @@ export const mapTractabilityTopBucketSM = (str) =>
     [naLabel]: naLabel,
   }[str?.trim() || naLabel]);
 
-export const tractabilityTopBucketSMDescription = [
+export const tractabilityTopBucketSMCaptions = [
   <span>Targets with drugs in phase IV.</span>,
   <span>Targets with drugs in phase II or phase III.</span>,
   <span>Targets with drugs in phase 0 or phase I.</span>,
@@ -82,7 +82,7 @@ export const mapTractabilityTopBucketAB = (str) =>
     [naLabel]: naLabel,
   }[str?.trim() || naLabel]);
 
-export const tractabilityTopBucketABDescription = [
+export const tractabilityTopBucketABCaptions = [
   <span>Targets with drugs in phase IV.</span>,
   <span>Targets with drugs in phase II or phase III.</span>,
   <span>Targets with drugs in phase 0 or phase I.</span>,
@@ -125,7 +125,7 @@ export const mapTractabilityTopBucketOther = (str) =>
     [naLabel]: naLabel,
   }[str?.trim() || naLabel]);
 
-export const tractabilityTopBucketOtherDescription = [
+export const tractabilityTopBucketOtherCaptions = [
   <span>Targets with drugs in phase IV.</span>,
   <span>Targets with drugs in phase II or phase III.</span>,
   <span>Targets with drugs in phase 0 or phase I.</span>,
