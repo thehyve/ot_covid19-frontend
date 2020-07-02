@@ -2,28 +2,24 @@ import React from 'react';
 import { Link } from '@material-ui/core';
 import chroma from 'chroma-js';
 
+import CellArray from '../components/Cells/CellArray';
+import CellDescription from '../components/Cells/CellDescription';
+import CellLink from '../components/Cells/CellLink';
+import CellBoolean from '../components/Cells/CellBoolean';
+import CellInvitro from '../components/Cells/CellInvitro';
+import CellTractability from '../components/Cells/CellTractability';
+import CellSafetyHas from '../components/Cells/CellSafetyHas';
+import CellSafetySource from '../components/Cells/CellSafetySource';
 import {
   mapScientificName,
   mapTissueDistribution,
   mapTractabilityTopBucketSM,
   mapTractabilityTopBucketAB,
   mapTractabilityTopBucketOther,
-  prepareInvitroCovidActivity,
   tractabilityTopBucketSMDescription,
   tractabilityTopBucketABDescription,
   tractabilityTopBucketOtherDescription,
 } from './maps';
-import {
-  renderArray,
-  renderBoolean,
-  renderBooleanFillNa,
-  renderDescription,
-  renderSafetyHas,
-  renderSafetySource,
-  renderLink,
-  renderInvitroArrays,
-  renderTractabilityTopBucket,
-} from './renderers';
 import {
   comparatorFromAccessorLength,
   comparatorFromMaps,
@@ -48,8 +44,9 @@ const columnGroups = (onClickCellContent) => [
         id: 'ensembl_id',
         label: 'Ensembl ID',
         sortable: true,
-        renderCell: (row) =>
-          renderLink({ prefix: 'ensembl', accession: row.ensembl_id }),
+        renderCell: (row) => (
+          <CellLink prefix="ensembl" accession={row.ensembl_id} />
+        ),
       },
       {
         id: 'name',
@@ -65,7 +62,7 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'description',
         sortable: true,
-        renderCell: (row) => renderDescription(row.description),
+        renderCell: (row) => <CellDescription description={row.description} />,
       },
       {
         id: 'uniprot_ids',
@@ -75,14 +72,15 @@ const columnGroups = (onClickCellContent) => [
         comparator: (a, b) =>
           (a.uniprot_ids?.split(',').length ?? 0) -
           (b.uniprot_ids?.split(',').length ?? 0),
-        renderCell: (row) =>
-          renderArray(
-            row.uniprot_ids?.split(','),
-            { prefix: 'uniprot' },
-            onClickCellContent,
-            'UniProt IDs',
-            'UniProt protein IDs if the target is a protein coding gene'
-          ),
+        renderCell: (row) => (
+          <CellArray
+            array={row.uniprot_ids?.split(',')}
+            link={{ prefix: 'uniprot' }}
+            onClickCellContent={onClickCellContent}
+            contentTitle="UniProt IDs"
+            contentDescription="UniProt protein IDs if the target is a protein coding gene"
+          />
+        ),
       },
       {
         id: 'COVID-19 UniprotKB',
@@ -101,36 +99,12 @@ const columnGroups = (onClickCellContent) => [
         align: 'center',
         minWidth: '7.5rem',
         sortable: true,
-        renderCell: (row) => renderBoolean(row['COVID-19 UniprotKB']),
+        renderCell: (row) => (
+          <CellBoolean value={row['COVID-19 UniprotKB']} fillNa={true} />
+        ),
       },
     ],
   },
-  // {
-  //   label: 'Filters',
-  //   columns: [
-  //     {
-  //       id: 'FILTER_network',
-  //       label: '1',
-  //       align: 'center',
-  //       sortable: true,
-  //       renderCell: (row) => renderBoolean(row.FILTER_network),
-  //     },
-  //     {
-  //       id: 'FILTER_network+drug',
-  //       label: '2',
-  //       align: 'center',
-  //       sortable: true,
-  //       renderCell: (row) => renderBoolean(row['FILTER_network+drug']),
-  //     },
-  //     {
-  //       id: 'FILTER_network+covid_tests',
-  //       label: '3',
-  //       align: 'center',
-  //       sortable: true,
-  //       renderCell: (row) => renderBoolean(row['FILTER_network+covid_tests']),
-  //     },
-  //   ],
-  // },
   {
     label: 'Protein Interactions',
     columns: [
@@ -147,14 +121,15 @@ const columnGroups = (onClickCellContent) => [
         ),
         sortable: true,
         comparator: comparatorFromAccessorLength('Covid_direct_interactions'),
-        renderCell: (row) =>
-          renderArray(
-            row.Covid_direct_interactions,
-            { prefix: 'intact' },
-            onClickCellContent,
-            'IntAct IDs',
-            'Target direct interaction with a viral protein'
-          ),
+        renderCell: (row) => (
+          <CellArray
+            array={row.Covid_direct_interactions}
+            link={{ prefix: 'intact' }}
+            onClickCellContent={onClickCellContent}
+            contentTitle="IntAct IDs"
+            contentDescription="Target direct interaction with a viral protein"
+          />
+        ),
       },
       {
         id: 'Covid_indirect_interactions',
@@ -169,17 +144,15 @@ const columnGroups = (onClickCellContent) => [
         ),
         sortable: true,
         comparator: comparatorFromAccessorLength('Covid_indirect_interactions'),
-        renderCell: (row) =>
-          renderArray(
-            row.Covid_indirect_interactions,
-            { prefix: 'intact' },
-            onClickCellContent,
-            'IntAct IDs',
-            <span>
-              Target interaction with one of the targets from the <i>Direct</i>{' '}
-              column
-            </span>
-          ),
+        renderCell: (row) => (
+          <CellArray
+            array={row.Covid_indirect_interactions}
+            link={{ prefix: 'intact' }}
+            onClickCellContent={onClickCellContent}
+            contentTitle="IntAct IDs"
+            contentDescription="Target interaction with one of the targets from the <i>Direct</i> column"
+          />
+        ),
       },
       {
         id: 'Implicated_in_viral_infection',
@@ -196,8 +169,12 @@ const columnGroups = (onClickCellContent) => [
         // TODO: ask if I can fill NAS in this column
         align: 'center',
         sortable: true,
-        renderCell: (row) =>
-          renderBooleanFillNa(row['Implicated_in_viral_infection']),
+        renderCell: (row) => (
+          <CellBoolean
+            value={row['Implicated_in_viral_infection']}
+            fillNa={true}
+          />
+        ),
       },
     ],
   },
@@ -227,14 +204,14 @@ const columnGroups = (onClickCellContent) => [
         renderCell: (row) => parseInt(row.drugs_in_clinic ?? 0),
       },
       {
-        // FILTER
         id: 'has_drug_in_covid_trials',
         label: 'COVID-19 CT',
         align: 'center',
         minWidth: '8rem',
         sortable: true,
-        // TODO: ask if I can fill NAS in this column
-        renderCell: (row) => renderBooleanFillNa(row.has_drug_in_covid_trials),
+        renderCell: (row) => (
+          <CellBoolean value={row.has_drug_in_covid_trials} fillNa={true} />
+        ),
       },
       {
         id: 'drugs_in_covid_trials',
@@ -250,14 +227,17 @@ const columnGroups = (onClickCellContent) => [
         ),
         sortable: true,
         comparator: comparatorFromAccessorLength('drugs_in_covid_trials', ';'),
-        renderCell: (row) =>
-          renderArray(
-            row.drugs_in_covid_trials?.split(';'),
-            { url: 'https://alpha.targetvalidation.org/search?q=$$&page=1' },
-            onClickCellContent,
-            'Drugs In COVID-19 trials',
-            'List of drugs whose mechanism of action is to modulate the given targets in clinical trials for COVID-19'
-          ),
+        renderCell: (row) => (
+          <CellArray
+            array={row.drugs_in_covid_trials?.split(';')}
+            link={{
+              url: 'https://alpha.targetvalidation.org/search?q=$$&page=1',
+            }}
+            onClickCellContent={onClickCellContent}
+            contentTitle="Drugs In COVID-19 trials"
+            contentDescription="List of drugs whose mechanism of action is to modulate the given targets in clinical trials for COVID-19"
+          />
+        ),
       },
       {
         id: 'has_invitro_covid_activity',
@@ -302,18 +282,17 @@ const columnGroups = (onClickCellContent) => [
         ),
         sortable: true,
         comparator: comparatorFromAccessorLength('invitro_covid_activity', ';'),
-        renderCell: (row) => {
-          const entries = row.invitro_covid_activity;
-
-          return renderInvitroArrays(
-            prepareInvitroCovidActivity(entries),
-            { url: 'https://alpha.targetvalidation.org/search?q=$$&page=1' },
-            onClickCellContent,
-            'In-vitro COVID-19 compound list',
-            'Compounds modulating given target that have been tested in in-vitro assays and whether they were active or not.',
-            entries?.split(';').length
-          );
-        },
+        renderCell: (row) => (
+          <CellInvitro
+            entries={row.invitro_covid_activity}
+            link={{
+              url: 'https://alpha.targetvalidation.org/search?q=$$&page=1',
+            }}
+            onClickCellContent={onClickCellContent}
+            contentTitle="In-vitro COVID-19 compound list"
+            contentDescription="Compounds modulating given target that have been tested in in-vitro assays and whether they were active or not."
+          />
+        ),
       },
     ],
   },
@@ -325,14 +304,17 @@ const columnGroups = (onClickCellContent) => [
         label: 'Subcellular location',
         sortable: true,
         comparator: comparatorFromAccessorLength('hpa_subcellular_location'),
-        renderCell: (row) =>
-          renderArray(
-            row.hpa_subcellular_location,
-            { url: 'https://www.proteinatlas.org/search/subcell_location:$$' },
-            onClickCellContent,
-            'Subcellular location',
-            'Predicted location of the target in the cell'
-          ),
+        renderCell: (row) => (
+          <CellArray
+            array={row.hpa_subcellular_location}
+            link={{
+              url: 'https://www.proteinatlas.org/search/subcell_location:$$',
+            }}
+            onClickCellContent={onClickCellContent}
+            contentTitle="Subcellular location"
+            contentDescription="Predicted location of the target in the cell"
+          />
+        ),
       },
       {
         id: 'hpa_rna_tissue_distribution',
@@ -355,17 +337,18 @@ const columnGroups = (onClickCellContent) => [
         label: 'RNA specific tissues',
         sortable: true,
         comparator: comparatorFromAccessorLength('hpa_rna_specific_tissues'),
-        renderCell: (row) =>
-          renderArray(
-            row.hpa_rna_specific_tissues,
-            {
+        renderCell: (row) => (
+          <CellArray
+            array={row.hpa_rna_specific_tissues}
+            link={{
               // TODO: Fix this links: https://www.proteinatlas.org/search/tissue_category_rna:Adipose+tissue;Tissue+enhanced
               url: 'https://www.proteinatlas.org/search/tissue_category_rna:$$',
-            },
-            onClickCellContent,
-            'RNA Specific tissues',
-            'List of tissues if target expression has some degree of specificity'
-          ),
+            }}
+            onClickCellContent={onClickCellContent}
+            contentTitle="RNA Specific tissues"
+            contentDescription="List of tissues if target expression has some degree of specificity"
+          />
+        ),
       },
     ],
   },
@@ -379,8 +362,12 @@ const columnGroups = (onClickCellContent) => [
         minWidth: '8rem',
         sortable: true,
         // TODO: ask if I can fill NAS in this column
-        renderCell: (row) =>
-          renderBooleanFillNa(row.respiratory_system_is_expressed),
+        renderCell: (row) => (
+          <CellBoolean
+            value={row.respiratory_system_is_expressed}
+            fillNa={true}
+          />
+        ),
       },
       {
         id: 'respiratory_system_expressed_tissue_list',
@@ -389,17 +376,18 @@ const columnGroups = (onClickCellContent) => [
         comparator: comparatorFromAccessorLength(
           'respiratory_system_expressed_tissue_list'
         ),
-        renderCell: (row) =>
-          renderArray(
-            row.respiratory_system_expressed_tissue_list,
-            {
+        renderCell: (row) => (
+          <CellArray
+            array={row.respiratory_system_expressed_tissue_list}
+            link={{
               url:
                 'https://www.ebi.ac.uk/gxa/search?conditionQuery=[{value:$$}]',
-            },
-            onClickCellContent,
-            'Respiratory system expressed tissues',
-            'List of tissues from the respiratory system where the target is expressed'
-          ),
+            }}
+            onClickCellContent={onClickCellContent}
+            contentTitle="Respiratory system expressed tissues"
+            contentDescription="List of tissues from the respiratory system where the target is expressed"
+          />
+        ),
       },
       {
         id: 'immune_system_is_expressed',
@@ -407,8 +395,9 @@ const columnGroups = (onClickCellContent) => [
         align: 'center',
         sortable: true,
         // TODO: ask if I can fill NAS in this column
-        renderCell: (row) =>
-          renderBooleanFillNa(row.immune_system_is_expressed),
+        renderCell: (row) => (
+          <CellBoolean value={row.immune_system_is_expressed} fillNa={true} />
+        ),
       },
       {
         id: 'immune_system_expressed_tissue_list',
@@ -418,17 +407,18 @@ const columnGroups = (onClickCellContent) => [
         comparator: comparatorFromAccessorLength(
           'immune_system_expressed_tissue_list'
         ),
-        renderCell: (row) =>
-          renderArray(
-            row.immune_system_expressed_tissue_list,
-            {
+        renderCell: (row) => (
+          <CellArray
+            array={row.immune_system_expressed_tissue_list}
+            link={{
               url:
                 'https://www.ebi.ac.uk/gxa/search?conditionQuery=[{value:$$}]',
-            },
-            onClickCellContent,
-            'Immune system expressed tissues',
-            'List of tissues from the immune system where the target is expressed'
-          ),
+            }}
+            onClickCellContent={onClickCellContent}
+            contentTitle="Immune system expressed tissues"
+            contentDescription="List of tissues from the immune system where the target is expressed"
+          />
+        ),
       },
     ],
   },
@@ -445,25 +435,18 @@ const columnGroups = (onClickCellContent) => [
           mapTractabilityTopBucketSM,
           { ascending: true }
         ),
-        renderCell: (row) =>
-          renderTractabilityTopBucket(
-            tractabilityTopBucketSMDescription,
-            qualityScale,
-            onClickCellContent,
-            mapTractabilityTopBucketSM(row['Tractability_Top_bucket_(sm)']),
-            'Tractability top bucket (small molecule)',
-            <span>
-              Name of the highest <strong>small molecule</strong> tractability
-              bucket. More information about{' '}
-              <Link
-                href="https://docs.targetvalidation.org/getting-started/target-tractability"
-                target="blank"
-              >
-                target tractability
-              </Link>
-              .
-            </span>
-          ),
+        renderCell: (row) => (
+          <CellTractability
+            buckets={tractabilityTopBucketSMDescription}
+            selectedBucket={mapTractabilityTopBucketSM(
+              row['Tractability_Top_bucket_(sm)']
+            )}
+            colorScale={qualityScale}
+            onClickCellContent={onClickCellContent}
+            contentTitle="Tractability top bucket (small molecule)"
+            contentDescription="small molecule"
+          />
+        ),
       },
       {
         id: 'Tractability_Top_bucket_(ab)',
@@ -475,25 +458,18 @@ const columnGroups = (onClickCellContent) => [
           mapTractabilityTopBucketAB,
           { ascending: true }
         ),
-        renderCell: (row) =>
-          renderTractabilityTopBucket(
-            tractabilityTopBucketABDescription,
-            qualityScale,
-            onClickCellContent,
-            mapTractabilityTopBucketAB(row['Tractability_Top_bucket_(ab)']),
-            'Tractability top bucket (antibody)',
-            <span>
-              Name of the highest <strong>antibody</strong> tractability bucket.
-              More information about{' '}
-              <Link
-                href="https://docs.targetvalidation.org/getting-started/target-tractability"
-                target="blank"
-              >
-                target tractability
-              </Link>
-              .
-            </span>
-          ),
+        renderCell: (row) => (
+          <CellTractability
+            buckets={tractabilityTopBucketABDescription}
+            selectedBucket={mapTractabilityTopBucketAB(
+              row['Tractability_Top_bucket_(ab)']
+            )}
+            colorScale={qualityScale}
+            onClickCellContent={onClickCellContent}
+            contentTitle="Tractability top bucket (antibody)"
+            contentDescription="antibody"
+          />
+        ),
       },
       {
         id: 'Tractability_Top_bucket_(other)',
@@ -505,27 +481,18 @@ const columnGroups = (onClickCellContent) => [
           mapTractabilityTopBucketOther,
           { ascending: true }
         ),
-        renderCell: (row) =>
-          renderTractabilityTopBucket(
-            tractabilityTopBucketOtherDescription,
-            qualityScale,
-            onClickCellContent,
-            mapTractabilityTopBucketOther(
+        renderCell: (row) => (
+          <CellTractability
+            buckets={tractabilityTopBucketOtherDescription}
+            selectedBucket={mapTractabilityTopBucketOther(
               row['Tractability_Top_bucket_(other)']
-            ),
-            'Tractability top bucket (other)',
-            <span>
-              Name of the highest tractability bucket for{' '}
-              <strong>other modalities</strong>. More information about{' '}
-              <Link
-                href="https://docs.targetvalidation.org/getting-started/target-tractability"
-                target="blank"
-              >
-                target tractability
-              </Link>
-              .
-            </span>
-          ),
+            )}
+            colorScale={qualityScale}
+            onClickCellContent={onClickCellContent}
+            contentTitle="Tractability top bucket (other)"
+            contentDescription="other modalities"
+          />
+        ),
       },
     ],
   },
@@ -536,16 +503,19 @@ const columnGroups = (onClickCellContent) => [
         id: 'has_safety_risk',
         align: 'center',
         sortable: true,
-        // TODO: ask if I can fill NAS in this column
-        renderCell: (row) => renderSafetyHas(row.has_safety_risk),
+        renderCell: (row) => <CellSafetyHas value={row.has_safety_risk} />,
       },
       {
         id: 'safety_info_source',
         label: 'Source',
         sortable: true,
         comparator: comparatorFromAccessorLength('safety_info_source'),
-        renderCell: (row) =>
-          renderSafetySource(row.safety_info_source, row.ensembl_id),
+        renderCell: (row) => (
+          <CellSafetySource
+            value={row.safety_info_source}
+            accession={row.ensembl_id}
+          />
+        ),
       },
       {
         id: 'safety_organs_systems_affected',
@@ -554,16 +524,17 @@ const columnGroups = (onClickCellContent) => [
         comparator: comparatorFromAccessorLength(
           'safety_organs_systems_affected'
         ),
-        renderCell: (row) =>
-          renderArray(
-            row.safety_organs_systems_affected,
-            {
+        renderCell: (row) => (
+          <CellArray
+            array={row.safety_organs_systems_affected}
+            link={{
               url: `https://alpha.targetvalidation.org/target/${row.ensembl_id}`,
-            },
-            onClickCellContent,
-            'Organ systems affected',
-            'List of organs where there are known safety risks for the target'
-          ),
+            }}
+            onClickCellContent={onClickCellContent}
+            contentTitle="Organ systems affected"
+            contentDescription="List of organs where there are known safety risks for the target"
+          />
+        ),
       },
     ],
   },
