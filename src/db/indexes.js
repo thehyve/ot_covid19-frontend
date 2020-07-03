@@ -1,11 +1,12 @@
 import openDB from './open';
 
 export const indexes = [
-  ['FILTER_network'],
-  ['FILTER_network+drug'],
-  ['FILTER_network+covid_tests'],
-  ['Implicated_in_viral_infection'],
-  ['biotype'],
+  ['COVID-19 UniprotKB'],
+  ['Covid_direct_interactions'],
+  ['Covid_indirect_interactions'],
+  ['max_phase'],
+  ['has_drug_in_covid_trials'],
+  ['hpa_subcellular_location'],
 ];
 
 export const createIndex = async (fields) => {

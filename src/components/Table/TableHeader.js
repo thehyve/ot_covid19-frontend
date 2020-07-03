@@ -18,7 +18,7 @@ import _ from 'lodash';
 import useDynamicColspan from '../../hooks/useDynamicColspans';
 import { getHiddenBreakpoints } from './utils';
 import { tableStyles } from './tableStyles';
-import { includeFilter } from '../Filters/filters';
+import { includeFilter } from '../Filters/utils';
 
 function HeaderCell({
   colspan,

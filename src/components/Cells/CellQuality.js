@@ -8,13 +8,17 @@ function CellQuality({ value, colorScale, onClick }) {
   const backgroundColor =
     value === naLabel
       ? colorScale[colorScale.length - 1]
-      : colorScale[value] || '#fff';
+      : colorScale[value - 1] || '#fff';
 
   const border = `2px solid ${darken(0.33, backgroundColor)}`;
 
+  const handleClick = () => {
+    onClick(value);
+  };
+
   const BoxWrapper = ({ onClick, children }) =>
     onClick ? (
-      <Link href="#" onClick={onClick}>
+      <Link href="#" onClick={handleClick}>
         {children}
       </Link>
     ) : (
@@ -30,6 +34,7 @@ function CellQuality({ value, colorScale, onClick }) {
           borderRadius: '25px',
           padding: '0 .25rem',
           margin: 'auto',
+          textAlign: 'center',
           width: '3rem',
         }}
       >

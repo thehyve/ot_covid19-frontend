@@ -13,11 +13,13 @@ import CheckCircleTwoTone from '@material-ui/icons/CheckCircleTwoTone';
 import HighlightOffTwoToneIcon from '@material-ui/icons/HighlightOffTwoTone';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
-import { drawerStyles } from '../drawerStyles';
+import { drawerStyles } from '../Drawer/drawerStyles';
 
 function BooleanFilter({
   name,
   value,
+  integer = false,
+  nullAsFalse = false,
   showRemove,
   onChange,
   onRemove,
@@ -26,10 +28,27 @@ function BooleanFilter({
 }) {
   const classes = drawerStyles();
 
-  const handleChangeFilter = (e) => {
-    const currentValue = e.target.checked;
+  const getFilter = (value) => {
+    if (!integer) {
+      return { $eq: value };
+    } else {
+      const comparator = value ? '$gt' : '$eq';
+      return { [comparator]: 0 };
+    }
+  };
 
-    onChange({ [name]: { $eq: currentValue } });
+  const isChecked = (value) => {
+    if (!integer) {
+      return value.$eq;
+    } else {
+      return Object.keys(value)[0] === '$gt';
+    }
+  };
+
+  const handleChangeFilter = (e) => {
+    const filter = getFilter(e.target.checked);
+
+    onChange({ [name]: filter });
   };
 
   const handleRemoveFilter = () => {
@@ -53,7 +72,7 @@ function BooleanFilter({
               indeterminateIcon={
                 <RadioButtonUncheckedIcon style={{ color: colors.grey[500] }} />
               }
-              checked={value?.$eq || false}
+              checked={isChecked(value)}
               indeterminate={typeof value === 'undefined'}
               onChange={handleChangeFilter}
             />

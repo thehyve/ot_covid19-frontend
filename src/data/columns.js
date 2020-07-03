@@ -30,7 +30,7 @@ import CellQuality from '../components/Cells/CellQuality';
 const qualityScale = (len) =>
   chroma.scale(['#c6e3c7', '#ffffea', '#dcdcdc' /*'#fbc1af'*/]).colors(len);
 
-const qualityMidScale = (len) =>
+export const qualityMidScale = (len) =>
   chroma.scale(['#ffffea', '#c6e3c7']).colors(len);
 
 const columnGroups = (onClickCellContent) => [
@@ -106,6 +106,7 @@ const columnGroups = (onClickCellContent) => [
         align: 'center',
         minWidth: '5.1rem',
         filterable: true,
+        defaultFilter: { $eq: true },
         sortable: true,
         renderCell: (row) => (
           <CellBoolean value={row['COVID-19 UniprotKB']} fillNa={true} />
@@ -129,6 +130,7 @@ const columnGroups = (onClickCellContent) => [
         ),
         filterable: true,
         sortable: true,
+        defaultFilter: { $gt: 0 },
         comparator: comparatorFromAccessorLength('Covid_direct_interactions'),
         renderCell: (row) => (
           <CellArray
@@ -153,6 +155,7 @@ const columnGroups = (onClickCellContent) => [
         ),
         filterable: true,
         sortable: true,
+        defaultFilter: { $gt: 0 },
         comparator: comparatorFromAccessorLength('Covid_indirect_interactions'),
         renderCell: (row) => (
           <CellArray
@@ -202,8 +205,9 @@ const columnGroups = (onClickCellContent) => [
         minWidth: '6rem',
         filterable: true,
         sortable: true,
+        defaultFilter: { $eq: 4 },
         renderCell: (row) => (
-          <CellQuality value={row.max_phase} colorScale={qualityMidScale(5)} />
+          <CellQuality value={row.max_phase} colorScale={qualityMidScale(4)} />
         ),
       },
       {
@@ -227,6 +231,7 @@ const columnGroups = (onClickCellContent) => [
         align: 'center',
         filterable: true,
         sortable: true,
+        defaultFilter: { $eq: true },
         renderCell: (row) => (
           <CellBoolean value={row.has_drug_in_covid_trials} fillNa={true} />
         ),

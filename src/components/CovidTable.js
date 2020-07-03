@@ -9,7 +9,7 @@ import { columns, headerGroups } from '../data/columns';
 import { sideBarWidthPercent } from '../config';
 
 function CovidTable({
-  filters,
+  filterBy,
   onClickCellContent,
   onRequestFilter,
   sideBarsOpen,
@@ -28,7 +28,7 @@ function CovidTable({
       setLoading(true);
       const newData = await fetchDB({
         limit: fetchBlockSize,
-        selector: filters,
+        selector: filterBy,
       });
 
       setRows(newData.rows);
@@ -36,14 +36,14 @@ function CovidTable({
     }
 
     fetchData();
-  }, [filters]);
+  }, [filterBy]);
 
   return (
     <>
       <Box style={{ overflowX: 'hidden', width }}>
         <Table
           columns={preparedColumns}
-          filterBy={filters}
+          filterBy={filterBy}
           headerGroups={headerGroups}
           noWrapHeader={false}
           onRequestFilter={onRequestFilter}
@@ -57,7 +57,7 @@ function CovidTable({
   );
 }
 
-// There is nothing in props that should cause a rerender.
+// Only rerender if filters change.
 export default memo(CovidTable, (prevProps, nextProps) =>
-  _.isEqual(prevProps.filters, nextProps.filters)
+  _.isEqual(prevProps.filterBy, nextProps.filterBy)
 );

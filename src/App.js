@@ -16,9 +16,9 @@ import { getNewestDatasetRevision, updateClient } from './db/update';
 function App() {
   const [content, setContent] = useState(null);
   const [contentOpen, setContentOpen] = useState(false);
-  const [filters, setFilters] = useState([
-    // { FILTER_network: { $eq: true } },
-    // { biotype: { $in: ['protein_coding'] } },
+  const [filterBy, setFilterBy] = useState([
+    { Covid_direct_interactions: { $gt: 0 } },
+    // { max_phase: { $eq: 3 } },
   ]);
   const [filterOpen, setFilterOpen] = useState(true);
   const [updating, setUpdating] = useState(false);
@@ -37,9 +37,9 @@ function App() {
     setContentOpen(true);
   };
 
-  const handleSetFilters = (filters) => {
-    console.log('setting filters', filters);
-    setFilters(filters);
+  const handleSetFilterBy = (filterBy) => {
+    console.log('setting filterBy', filterBy);
+    setFilterBy(filterBy);
   };
 
   const handleToggleContentDrawer = () => {
@@ -95,15 +95,15 @@ function App() {
 
       <Box display="flex" alignItems="flex-start">
         <FilterDrawer
-          filters={filters}
-          onSetFilter={handleSetFilters}
+          filterBy={filterBy}
+          onSetFilterBy={handleSetFilterBy}
           onToggleDrawer={handleToggleFilterDrawer}
           open={filterOpen}
         />
         {ready ? (
           <CovidTable
-            filters={filters}
-            onRequestFilter={handleSetFilters}
+            filterBy={filterBy}
+            onRequestFilter={handleSetFilterBy}
             onClickCellContent={handleSetContent}
             sideBarsOpen={[filterOpen, contentOpen]}
           />

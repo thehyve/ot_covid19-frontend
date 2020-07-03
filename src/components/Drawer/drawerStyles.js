@@ -15,6 +15,14 @@ export const drawerStyles = makeStyles((theme) => ({
     margin: '.25rem',
     overflowY: 'auto',
   },
+  drawerBodyDescription: {
+    color: theme.palette.grey[500],
+    fontSize: '0.7rem',
+    fontStyle: 'italic',
+    marginBottom: '.5rem',
+    padding: '0 .5rem',
+    textAlign: 'justify',
+  },
   drawerBodyNoBorder: {
     height: 'calc(100vh - 7.5rem)',
     margin: '.25rem',
@@ -34,13 +42,6 @@ export const drawerStyles = makeStyles((theme) => ({
   },
   drawerBodyTextHelp: {
     padding: '1rem',
-  },
-  drawerBodyDescription: {
-    color: theme.palette.grey[500],
-    fontSize: '0.7rem',
-    fontStyle: 'italic',
-    padding: '0 .5rem',
-    textAlign: 'justify',
   },
   drawerOpen: {
     display: 'block',

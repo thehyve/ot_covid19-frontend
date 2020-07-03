@@ -20,7 +20,7 @@ import {
 } from './dataPreparation';
 import { tableStyles } from './tableStyles';
 import useDimensions from '../../hooks/useDimensions';
-import { addFilter, includeFilter, remFilter } from '../Filters/filters';
+import { addFilter, includeFilter, remFilter } from '../Filters/utils';
 
 function Table({
   className,
@@ -71,12 +71,17 @@ function Table({
   };
 
   const handleRequestFilter = (newFilter) => {
+    const defaultFilter = columns.find((column) => column.id === newFilter)
+      ?.defaultFilter;
+
     let newFilterBy = filterBy;
 
     if (includeFilter(filterBy, newFilter)) {
       newFilterBy = remFilter(filterBy, newFilter);
     } else {
-      newFilterBy = addFilter(filterBy, { [newFilter]: {} });
+      newFilterBy = addFilter(filterBy, {
+        [newFilter]: defaultFilter,
+      });
     }
 
     onRequestFilter(newFilterBy);
