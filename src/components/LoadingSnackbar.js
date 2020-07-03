@@ -1,11 +1,10 @@
 import React from 'react';
 import {
-  LinearProgress,
   Snackbar,
   Box,
   Slide,
   makeStyles,
-  Typography,
+  LinearProgress,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 
@@ -16,14 +15,17 @@ const usesStyles = makeStyles((theme) => ({
     minWidth: '14.625rem',
     width: '12.5%',
   },
+  snackbarTitle: {
+    fontSize: '1rem',
+    fontWeight: 'bold',
+  },
   snackbarCaption: {
     fontSize: '.66rem',
   },
 }));
 
-function IndexingSnackbar({ open, onClose, indexCount, indexingProgress }) {
+function LoadingSnackbar({ open, onClose }) {
   const classes = usesStyles();
-  const progressValue = (indexingProgress * 100) / indexCount;
 
   return (
     <Snackbar
@@ -33,22 +35,14 @@ function IndexingSnackbar({ open, onClose, indexCount, indexingProgress }) {
       onClose={onClose}
       TransitionComponent={Slide}
     >
-      <Box display="flex" flexDirection="column">
+      <Box display="flex" flexDirection="column" flex="1">
         <Alert severity="info" elevation={6} onClose={onClose} variant="filled">
-          <Typography className={classes.snackbarCaption}>
-            The filters might be slow at first, while the indexes are generated.
-            This will only happen once. Please be patient.
-          </Typography>
+          Working...
         </Alert>
-        <LinearProgress
-          color="secondary"
-          style={{ height: '5px' }}
-          variant="determinate"
-          value={progressValue}
-        />
+        <LinearProgress color="secondary" style={{ height: '5px' }} />
       </Box>
     </Snackbar>
   );
 }
 
-export default IndexingSnackbar;
+export default LoadingSnackbar;

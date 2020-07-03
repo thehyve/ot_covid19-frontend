@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { Box } from '@material-ui/core';
 
 import fetchDB from '../db/fetch';
-import LoadingBox from './LoadingBox';
+import LoadingSnackbar from './LoadingSnackbar';
 import Table from './Table/Table';
 import { columns, headerGroups } from '../data/columns';
 import { sideBarWidthPercent } from '../config';
@@ -38,21 +38,22 @@ function CovidTable({
     fetchData();
   }, [filters]);
 
-  return loading ? (
-    <LoadingBox width={width} />
-  ) : (
-    <Box style={{ overflowX: 'hidden', width }}>
-      <Table
-        columns={preparedColumns}
-        filterBy={filters}
-        headerGroups={headerGroups}
-        noWrapHeader={false}
-        onRequestFilter={onRequestFilter}
-        order="desc"
-        rows={rows}
-        sortBy="drugs_in_covid_trials"
-      />
-    </Box>
+  return (
+    <>
+      <Box style={{ overflowX: 'hidden', width }}>
+        <Table
+          columns={preparedColumns}
+          filterBy={filters}
+          headerGroups={headerGroups}
+          noWrapHeader={false}
+          onRequestFilter={onRequestFilter}
+          order="desc"
+          rows={rows}
+          sortBy="drugs_in_covid_trials"
+        />
+      </Box>
+      <LoadingSnackbar open={loading} />
+    </>
   );
 }
 
