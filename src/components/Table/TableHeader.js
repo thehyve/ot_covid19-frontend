@@ -67,7 +67,7 @@ function HeaderCell({
       )}
       {sortable && (
         <TableSortLabel
-          classes={{ icon: classes.cellHeaderSortIcon }}
+          className={classes.cellHeaderSortIcon}
           {...sortParams}
         />
       )}

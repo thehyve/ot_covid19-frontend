@@ -51,8 +51,11 @@ export const tableStyles = makeStyles((theme) => ({
     opacity: 0.2,
   },
   cellHeaderSortIcon: {
-    opacity: 0.2,
-    margin: '0 .1rem',
+    // Override cascading bug when building bundle
+    '& svg': {
+      opacity: 0.2,
+      margin: '0 .1rem',
+    },
   },
   cellHeaderToolbar: {
     display: 'flex',
