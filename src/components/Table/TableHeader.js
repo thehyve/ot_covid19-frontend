@@ -45,7 +45,6 @@ function HeaderCell({
     ...labelStyle,
   };
   const isFiltered = includeFilter(filterBy, id);
-  console.log('isFiltered', isFiltered);
 
   const handleRequestFilter = () => {
     onRequestFilter(id);

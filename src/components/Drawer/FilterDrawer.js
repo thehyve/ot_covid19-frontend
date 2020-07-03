@@ -1,29 +1,28 @@
 import React from 'react';
-import { Box, Paper, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
 import Drawer from './Drawer';
-import ListTitle from './ListTitle';
+import DrawerHelp from './DrawerHelp';
 import { drawerStyles } from './drawerStyles';
 
 function FilterDrawer({ filters, onSetFilters, onToggleDrawer, open }) {
   const classes = drawerStyles();
 
-  const FilterHelp = () => (
-    <Paper classes={{ root: classes.drawerBodyShort }}>
-      <ListTitle title="No filters selected" />
-      <Typography className={classes.drawerBodyTextHelp}>
-        Click on a <FilterListIcon className={classes.drawerBodyIconHelp} />{' '}
-        filter button in the header of a column to set up a filter.
-      </Typography>
-    </Paper>
-  );
-
   return (
     <Drawer title="Filters" open={open} position="left">
       <Box className={classes.drawerBodyNoBorder}>
         {!filters.length ? (
-          <FilterHelp />
+          <DrawerHelp
+            title="No filters selected"
+            content={
+              <>
+                Click on a{' '}
+                <FilterListIcon className={classes.drawerBodyIconHelp} /> filter
+                button in the header of a column to set up a filter.
+              </>
+            }
+          />
         ) : (
           filters.map((f) => Object.keys(f)[0])
         )}

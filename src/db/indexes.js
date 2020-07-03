@@ -1,6 +1,16 @@
 import openDB from './open';
 
-const createIndex = async (db, fields) => {
+export const indexes = [
+  ['FILTER_network'],
+  ['FILTER_network+drug'],
+  ['FILTER_network+covid_tests'],
+  ['Implicated_in_viral_infection'],
+  ['biotype'],
+];
+
+export const createIndex = async (fields) => {
+  const db = openDB();
+
   const result = await db.createIndex({
     index: {
       fields: fields,
@@ -11,16 +21,3 @@ const createIndex = async (db, fields) => {
 
   return result;
 };
-
-export async function createIndexes() {
-  const db = openDB();
-  console.log('[DB] creating indexes');
-
-  await createIndex(db, ['FILTER_network']);
-  await createIndex(db, ['FILTER_network+drug']);
-  await createIndex(db, ['FILTER_network+covid_tests']);
-  await createIndex(db, ['Implicated_in_viral_infection']);
-  await createIndex(db, ['biotype']);
-
-  console.log('[DB] indexes created');
-}

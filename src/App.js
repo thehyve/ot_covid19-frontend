@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Snackbar } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Box } from '@material-ui/core';
 
-import CovidTable from './components/CovidTable';
-import DrawerButton from './components/Drawer/DrawerButton';
-import NavBar from './components/NavBar/NavBar';
 import OpenTargetsTitle from './components/NavBar/OpenTargetsTitle';
-import UpdatingModal from './components/UpdatingModal';
-
-import { getNewestDatasetRevision, updateClient } from './db/update';
+import NavBar from './components/NavBar/NavBar';
+import DrawerButton from './components/Drawer/DrawerButton';
 import ContentDrawer from './components/Drawer/ContentDrawer';
+import CovidTable from './components/CovidTable';
 import FilterDrawer from './components/Drawer/FilterDrawer';
-import { createIndexes } from './db/indexes';
+import UpdatingModal from './components/UpdatingModal';
+import IndexingSnackbar from './components/IndexingSnackbar';
+
+import { createIndex, indexes } from './db/indexes';
+import { getNewestDatasetRevision, updateClient } from './db/update';
 
 function App() {
   const [content, setContent] = useState(null);
@@ -23,9 +23,12 @@ function App() {
   const [filterOpen, setFilterOpen] = useState(true);
   const [updating, setUpdating] = useState(false);
   const [indexing, setIndexing] = useState(false);
+  const [indexingProgress, setIndexingProgress] = useState(0);
   const [ready, setReady] = useState(false);
 
-  const handleCloseIndexingInfo = () => {
+  const handleCloseIndexing = (_, reason) => {
+    if (reason === 'clickaway') return;
+
     setIndexing(false);
   };
 
@@ -59,7 +62,12 @@ function App() {
         setReady(true);
 
         setIndexing(true);
-        await createIndexes();
+        let indexesCreated = 0;
+        for (const index of indexes) {
+          await createIndex(index);
+          indexesCreated++;
+          setIndexingProgress(indexesCreated);
+        }
         setIndexing(false);
       }
 
@@ -110,12 +118,12 @@ function App() {
         </ContentDrawer>
       </Box>
       <UpdatingModal open={updating} />
-      <Snackbar open={indexing} onClose={handleCloseIndexingInfo}>
-        <Alert severity="info" elevation={6} onClose={handleCloseIndexingInfo}>
-          The first filter might be slow while the indexes are generated. This
-          will only happen once. Please be patient.
-        </Alert>
-      </Snackbar>
+      <IndexingSnackbar
+        open={indexing}
+        onClose={handleCloseIndexing}
+        indexCount={indexes.length}
+        indexingProgress={indexingProgress}
+      />
     </div>
   );
 }
