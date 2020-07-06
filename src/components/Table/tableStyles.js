@@ -64,17 +64,19 @@ export const tableStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[100],
     border: `1px solid ${theme.palette.grey[200]}`,
   },
+  // The !important tags solve Stylesheet conflicts on production build bug.
   cellHeaderTooltip: {
-    backgroundColor: theme.palette.common.white,
-    border: `1px solid ${theme.palette.grey[300]}`,
-    color: theme.palette.text.primary,
-    boxShadow: theme.shadows[1],
-    fontSize: 11,
+    backgroundColor: `${theme.palette.common.white} !important`,
+    border: `1px solid ${theme.palette.grey[300]} !important`,
+    color: `${theme.palette.text.primary} !important`,
+    boxShadow: `${theme.shadows[1]} !important`,
+    fontSize: `11 !important`,
   },
+  // The !important tags solve Stylesheet conflicts on production build bug.
   cellHeaderTooltipArrow: {
     '&:before': {
-      backgroundColor: theme.palette.common.white,
-      border: `1px solid ${theme.palette.grey[300]}`,
+      backgroundColor: `${theme.palette.common.white} !important`,
+      border: `1px solid ${theme.palette.grey[300]} !important`,
     },
   },
   cellHeaderTooltipIcon: {
