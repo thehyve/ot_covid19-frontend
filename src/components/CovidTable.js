@@ -57,7 +57,13 @@ function CovidTable({
   );
 }
 
-// Only rerender if filters change.
-export default memo(CovidTable, (prevProps, nextProps) =>
-  _.isEqual(prevProps.filterBy, nextProps.filterBy)
-);
+// Only rerender if filters/sideBarsOpen change.
+export default memo(CovidTable, (prevProps, nextProps) => {
+  const filtersChanged = !_.isEqual(prevProps.filterBy, nextProps.filterBy);
+  const sideBarsOpenChanged = !_.isEqual(
+    prevProps.sideBarsOpen,
+    nextProps.sideBarsOpen
+  );
+
+  return !(filtersChanged || sideBarsOpenChanged);
+});
