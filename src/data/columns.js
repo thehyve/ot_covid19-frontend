@@ -319,6 +319,7 @@ const columnGroups = (onClickCellContent) => [
         tooltip: tooltips.abundanceRegOnCovidTooltip,
         minWidth: '8.1rem',
         sortable: true,
+        comparator: comparatorFromAccessorLength('abundance_reg_on_covid'),
         renderCell: (row) => (
           <CellRegulation value={row.abundance_reg_on_covid} />
         ),
