@@ -4,13 +4,14 @@ import { darken } from 'polished';
 
 import { naLabel } from '../../utils';
 
-function CellQuality({ value, colorScale, onClick }) {
+function CellQuality({ value, colorScale, onClick, selected }) {
   const backgroundColor =
     value === naLabel
       ? colorScale[colorScale.length - 1]
       : colorScale[value - 1] || '#fff';
 
-  const border = `2px solid ${darken(0.33, backgroundColor)}`;
+  const borderColor = darken(0.33, backgroundColor);
+  const border = `2px solid ${borderColor}`;
 
   const handleClick = () => {
     onClick(value);
@@ -36,6 +37,9 @@ function CellQuality({ value, colorScale, onClick }) {
           margin: 'auto',
           textAlign: 'center',
           width: '3rem',
+          boxShadow: selected
+            ? `inset 0px 0px 0px 3px ${borderColor}, rgb(127, 127, 127) 0px 0px 5px 0px`
+            : 'none',
         }}
       >
         {value}

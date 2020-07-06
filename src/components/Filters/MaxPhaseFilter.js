@@ -39,10 +39,11 @@ function MaxPhaseFilter({
       <Box display="flex" justifyContent="space-evenly">
         {[1, 2, 3, 4].map((maxPhase) => (
           <CellQuality
-            key={maxPhase}
-            value={maxPhase}
-            onClick={handleChangeFilter}
             colorScale={colorScale}
+            key={maxPhase}
+            onClick={handleChangeFilter}
+            selected={maxPhase === value.$eq}
+            value={maxPhase}
           />
         ))}
       </Box>
