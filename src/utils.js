@@ -85,6 +85,5 @@ export const comparatorFromMaps = (accessor, map, settings = {}) => (a, b) => {
 export const naLabel = 'N/A';
 
 // client data versioning
-export const getDatasetRevision = () => localStorage.getItem('datasetRevision');
-export const setDatasetRevision = (rev) =>
-  localStorage.setItem('datasetRevision', rev);
+export const getLS = (key, _default) => localStorage.getItem(key) || _default;
+export const setLS = (key, value) => localStorage.setItem(key, value);

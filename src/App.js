@@ -12,6 +12,7 @@ import IndexingSnackbar from './components/IndexingSnackbar';
 
 import { createIndex, indexes } from './db/indexes';
 import { getNewestDatasetRevision, updateClient } from './db/update';
+import { getLS, setLS } from './utils';
 
 function App() {
   const [content, setContent] = useState(null);
@@ -51,30 +52,34 @@ function App() {
   };
 
   useEffect(() => {
-    async function checkRevisionAndUpdate() {
+    async function checkLocalData() {
       const currentDatasetRevision = await getNewestDatasetRevision();
+      const indexesReady = getLS('indexesReady');
 
       if (currentDatasetRevision) {
         setUpdating(true);
         await updateClient(currentDatasetRevision);
         setUpdating(false);
+      }
 
-        setReady(true);
+      setReady(true);
 
-        setIndexing(true);
+      if (!indexesReady) {
         let indexesCreated = 0;
+        setIndexing(true);
+
         for (const index of indexes) {
           await createIndex(index);
           indexesCreated++;
           setIndexingProgress(indexesCreated);
         }
-        setIndexing(false);
-      }
 
-      setReady(true);
+        setLS(indexesReady, 1);
+      }
+      setIndexing(false);
     }
 
-    checkRevisionAndUpdate();
+    checkLocalData();
   }, []);
 
   return (

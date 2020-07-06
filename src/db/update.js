@@ -1,7 +1,7 @@
 import openDB from './open';
 import populateDB from './populate';
 
-import { getDatasetRevision, setDatasetRevision } from '../utils';
+import { getLS, setLS } from '../utils';
 import { storeUrl } from '../config';
 import JSZip from 'jszip';
 
@@ -9,7 +9,7 @@ export async function getNewestDatasetRevision() {
   const res = await fetch(`${storeUrl}/current_revision.json`);
   const resJson = await res.json();
   const currentDatasetRevision = resJson.current_revision;
-  const clientDatasetRevision = getDatasetRevision();
+  const clientDatasetRevision = getLS('datasetRevision');
 
   console.log(`[DB] local dataset: [${clientDatasetRevision}]`);
   console.log(`[DB] current dataset: [${currentDatasetRevision}]`);
@@ -50,6 +50,7 @@ export async function updateClient(datasetRevision) {
     const updateResult = await populateDB(newDB, dataArray);
     console.log(`[DB] imported ${updateResult.length} rows`);
 
-    setDatasetRevision(datasetRevision);
+    setLS('datasetRevision', datasetRevision);
+    setLS('currentIndexes', []);
   });
 }
