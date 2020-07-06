@@ -17,7 +17,7 @@ import { drawerStyles } from '../Drawer/drawerStyles';
 function BooleanFilter({
   name,
   value,
-  showRemove,
+  showRemove = true,
   onChange,
   onRemove,
   title,
