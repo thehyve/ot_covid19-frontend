@@ -9,18 +9,19 @@ import {
 import ClearIcon from '@material-ui/icons/Clear';
 import { Autocomplete } from '@material-ui/lab';
 
-import { drawerStyles } from '../drawerStyles';
-import { naLabel } from '../../../utils';
+import { drawerStyles } from '../Drawer/drawerStyles';
+import { naLabel } from '../../utils';
 
 function MultiListFilter({
-  list,
   name,
+  list,
   value,
-  showRemove,
+  showRemove = true,
   onChange,
   onRemove,
   title,
   description,
+  placeholder = 'Select items...',
 }) {
   const classes = drawerStyles();
 
@@ -39,7 +40,7 @@ function MultiListFilter({
 
   return (
     <Paper classes={{ root: classes.drawerBodyShort }}>
-      <Box display="flex" justifyContent="space-between">
+      <Box display="flex" justifyContent="space-between" padding=".25rem .5rem">
         <Typography variant="body1">{title}</Typography>
         {showRemove && (
           <IconButton onClick={handleRemoveFilter}>
@@ -54,29 +55,26 @@ function MultiListFilter({
           </Typography>
         </Box>
       )}
-      <Autocomplete
-        disableCloseOnSelect
-        disableClearable
-        getOptionLabel={(option) => (option ? option : naLabel)}
-        multiple
-        onChange={handleChangeFilter}
-        options={list}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Biotype"
-            margin="normal"
-            style={{ margin: 0 }}
-          />
-        )}
-        renderOption={(option) => (
-          <Typography className={classes.drawerSelectOption}>
-            {option}
-          </Typography>
-        )}
-        size="small"
-        value={value?.$in || []}
-      />
+      <Box padding="0 .5rem .5rem .5rem">
+        <Autocomplete
+          disableCloseOnSelect
+          disableClearable
+          getOptionLabel={(option) => (option ? option : naLabel)}
+          multiple
+          onChange={handleChangeFilter}
+          options={list}
+          renderInput={(params) => (
+            <TextField {...params} label={placeholder} />
+          )}
+          renderOption={(option) => (
+            <Typography className={classes.drawerSelectOption}>
+              {option}
+            </Typography>
+          )}
+          size="small"
+          value={value?.$in || []}
+        />
+      </Box>
     </Paper>
   );
 }

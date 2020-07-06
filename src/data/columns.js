@@ -127,7 +127,7 @@ const columnGroups = (onClickCellContent) => [
         tooltip: tooltips.indirectInteractionsTooltip,
         filterable: true,
         sortable: true,
-        defaultFilter: { $gt: 0 },
+        defaultFilter: { $ne: null },
         comparator: comparatorFromAccessorLength('Covid_indirect_interactions'),
         renderCell: (row) => (
           <CellArray
@@ -256,6 +256,7 @@ const columnGroups = (onClickCellContent) => [
         tooltip: tooltips.subcellularLocationTooltip,
         filterable: true,
         sortable: true,
+        defaultFilter: { $in: ['Plasma membrane'] },
         comparator: comparatorFromAccessorLength('hpa_subcellular_location'),
         renderCell: (row) => (
           <CellArray
@@ -466,7 +467,7 @@ const columnGroups = (onClickCellContent) => [
         align: 'center',
         filterable: true,
         sortable: true,
-        defaultFilter: { $eq: true },
+        defaultFilter: { $eq: false },
         renderCell: (row) => <CellSafetyHas value={row.has_safety_risk} />,
       },
       {

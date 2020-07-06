@@ -39,7 +39,6 @@ function App() {
   };
 
   const handleSetFilterBy = (filterBy) => {
-    console.log('setting filterBy', filterBy);
     setFilterBy(filterBy);
   };
 

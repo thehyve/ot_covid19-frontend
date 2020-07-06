@@ -6,6 +6,7 @@ export const indexes = [
   ['Covid_indirect_interactions'],
   ['max_phase'],
   ['hpa_subcellular_location'],
+  ['has_safety_risk'],
 ];
 
 export const createIndex = async (fields) => {

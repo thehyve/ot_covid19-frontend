@@ -28,7 +28,7 @@ function MaxPhaseFilter({
 
   return (
     <Paper classes={{ root: classes.drawerBodyShort }}>
-      <Box display="flex" justifyContent="space-between" paddingLeft=".5rem">
+      <Box display="flex" justifyContent="space-between" padding=".25rem .5rem">
         <Typography>{title}</Typography>
         {showRemove && (
           <IconButton onClick={handleRemoveFilter}>
@@ -36,7 +36,7 @@ function MaxPhaseFilter({
           </IconButton>
         )}
       </Box>
-      <Box display="flex" justifyContent="space-evenly">
+      <Box display="flex" justifyContent="space-evenly" marginBottom=".5rem">
         {[1, 2, 3, 4].map((maxPhase) => (
           <CellQuality
             colorScale={colorScale}

@@ -3,8 +3,10 @@ import React from 'react';
 import BooleanFilter from './BooleanFilter';
 import ListFilter from './ListFilter';
 import MaxPhaseFilter from './MaxPhaseFilter';
+import MultiListFilter from './MultiListFilter';
 import * as tooltips from '../../data/tooltips';
 import { getFilter } from './utils';
+import { subcellularLocationList } from '../../data/maps';
 
 export const filters = (filterBy, onChange, onRemove) => ({
   'COVID-19 UniprotKB': (
@@ -46,15 +48,10 @@ export const filters = (filterBy, onChange, onRemove) => ({
       key="max_phase"
       value={getFilter(filterBy, 'max_phase')}
       integer
-      showRemove
       onChange={onChange}
       onRemove={onRemove}
-      title="Max CT phase"
-      description={
-        <span>
-          Max phase for any drug targeting this gene/protein for any indication.
-        </span>
-      }
+      title="Max phase"
+      description="Max clinical trial phase for any drug targeting this gene/protein for any indication."
     />
   ),
   has_drug_in_covid_trials: (
@@ -62,16 +59,22 @@ export const filters = (filterBy, onChange, onRemove) => ({
       name="has_drug_in_covid_trials"
       key="has_drug_in_covid_trials"
       value={getFilter(filterBy, 'has_drug_in_covid_trials')}
-      showRemove
       onChange={onChange}
       onRemove={onRemove}
       title="Drugs in COVID-19 CT"
-      description={
-        <span>
-          Whether or not there are drugs in clinical trials for COVID-19 whose
-          mechanism of action is to modulate the given target.
-        </span>
-      }
+      description="Whether or not there are drugs in clinical trials for COVID-19 whose mechanism of action is to modulate the given target."
+    />
+  ),
+  hpa_subcellular_location: (
+    <MultiListFilter
+      name="hpa_subcellular_location"
+      key="hpa_subcellular_location"
+      list={subcellularLocationList}
+      value={getFilter(filterBy, 'hpa_subcellular_location')}
+      onChange={onChange}
+      onRemove={onRemove}
+      title="Subcellular location"
+      description="Predicted location of the target in the cell."
     />
   ),
   has_safety_risk: (
@@ -79,16 +82,11 @@ export const filters = (filterBy, onChange, onRemove) => ({
       name="has_safety_risk"
       key="has_safety_risk"
       value={getFilter(filterBy, 'has_safety_risk')}
-      showRemove
       onChange={onChange}
       onRemove={onRemove}
       title="Safety risk"
-      description={
-        <span>
-          Whether or not there are drugs in clinical trials for COVID-19 whose
-          mechanism of action is to modulate the given target.
-        </span>
-      }
+      description="Whether or not there is any safety risk information for the target."
+      placeholder="Pick locations..."
     />
   ),
 });
