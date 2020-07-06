@@ -28,7 +28,7 @@ function MaxPhaseFilter({
 
   return (
     <Paper classes={{ root: classes.drawerBodyShort }}>
-      <Box display="flex" justifyContent="space-between">
+      <Box display="flex" justifyContent="space-between" paddingLeft=".5rem">
         <Typography>{title}</Typography>
         {showRemove && (
           <IconButton onClick={handleRemoveFilter}>

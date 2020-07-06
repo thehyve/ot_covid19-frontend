@@ -21,7 +21,6 @@ export const drawerStyles = makeStyles((theme) => ({
     fontStyle: 'italic',
     marginBottom: '.5rem',
     padding: '0 .5rem',
-    textAlign: 'justify',
   },
   drawerBodyNoBorder: {
     height: 'calc(100vh - 7.5rem)',

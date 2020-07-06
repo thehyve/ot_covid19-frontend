@@ -14,19 +14,21 @@ import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
 import { drawerStyles } from '../Drawer/drawerStyles';
 
-function BooleanFilter({
+function ListFilter({
   name,
   value,
-  showRemove,
+  showRemove = true,
   onChange,
   onRemove,
   title,
   description,
 }) {
   const classes = drawerStyles();
+  const isChecked = value.hasOwnProperty('$ne');
 
   const handleChangeFilter = (e) => {
-    onChange({ [name]: { $eq: e.target.checked } });
+    const filter = e.target.checked ? { $ne: null } : { $eq: null };
+    onChange({ [name]: filter });
   };
 
   const handleRemoveFilter = () => {
@@ -50,7 +52,7 @@ function BooleanFilter({
               indeterminateIcon={
                 <RadioButtonUncheckedIcon style={{ color: colors.grey[500] }} />
               }
-              checked={value.$eq}
+              checked={isChecked}
               indeterminate={typeof value === 'undefined'}
               onChange={handleChangeFilter}
             />
@@ -71,4 +73,4 @@ function BooleanFilter({
   );
 }
 
-export default BooleanFilter;
+export default ListFilter;

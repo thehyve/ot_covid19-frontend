@@ -18,7 +18,7 @@ function App() {
   const [content, setContent] = useState(null);
   const [contentOpen, setContentOpen] = useState(false);
   const [filterBy, setFilterBy] = useState([
-    { Covid_direct_interactions: { $gt: 0 } },
+    { Covid_direct_interactions: { $ne: null } },
     // { max_phase: { $eq: 3 } },
   ]);
   const [filterOpen, setFilterOpen] = useState(true);

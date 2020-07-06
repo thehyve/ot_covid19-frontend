@@ -109,7 +109,7 @@ const columnGroups = (onClickCellContent) => [
         tooltip: tooltips.directInteractionsTooltip,
         filterable: true,
         sortable: true,
-        defaultFilter: { $gt: 0 },
+        defaultFilter: { $ne: null },
         comparator: comparatorFromAccessorLength('Covid_direct_interactions'),
         renderCell: (row) => (
           <CellArray
@@ -316,7 +316,7 @@ const columnGroups = (onClickCellContent) => [
         id: 'abundance_reg_on_covid',
         label: 'Regulated',
         tooltip: tooltips.abundanceRegOnCovidTooltip,
-        minWidth: '8rem',
+        minWidth: '8.1rem',
         sortable: true,
         renderCell: (row) => (
           <CellRegulation value={row.abundance_reg_on_covid} />
@@ -466,6 +466,7 @@ const columnGroups = (onClickCellContent) => [
         align: 'center',
         filterable: true,
         sortable: true,
+        defaultFilter: { $eq: true },
         renderCell: (row) => <CellSafetyHas value={row.has_safety_risk} />,
       },
       {
