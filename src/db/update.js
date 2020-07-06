@@ -1,7 +1,7 @@
 import openDB from './open';
 import populateDB from './populate';
 
-import { getLS, setLS } from '../utils';
+import { delLS, getLS, setLS } from '../utils';
 import { storeUrl } from '../config';
 import JSZip from 'jszip';
 
@@ -51,6 +51,6 @@ export async function updateClient(datasetRevision) {
     console.log(`[DB] imported ${updateResult.length} rows`);
 
     setLS('datasetRevision', datasetRevision);
-    setLS('currentIndexes', []);
+    delLS('currentIndexes', null);
   });
 }

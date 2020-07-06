@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from '@material-ui/core';
 import chroma from 'chroma-js';
 
 import CellArray from '../components/Cells/CellArray';
@@ -7,25 +6,20 @@ import CellDescription from '../components/Cells/CellDescription';
 import CellLink from '../components/Cells/CellLink';
 import CellBoolean from '../components/Cells/CellBoolean';
 import CellInvitro from '../components/Cells/CellInvitro';
-import CellTractability from '../components/Cells/CellTractability';
+import CellRegulation from '../components/Cells/CellRegulation';
+import CellQuality from '../components/Cells/CellQuality';
 import CellSafetyHas from '../components/Cells/CellSafetyHas';
 import CellSafetySource from '../components/Cells/CellSafetySource';
-import {
-  mapScientificName,
-  mapTissueDistribution,
-  mapTractabilityTopBucketSM,
-  mapTractabilityTopBucketAB,
-  mapTractabilityTopBucketOther,
-  tractabilityTopBucketSMCaptions,
-  tractabilityTopBucketABCaptions,
-  tractabilityTopBucketOtherCaptions,
-} from './maps';
+import CellTractability from '../components/Cells/CellTractability';
+
+import * as maps from './maps';
+import * as tooltips from './tooltips';
+
 import {
   comparatorFromAccessorLength,
   comparatorFromMaps,
   naLabel,
 } from '../utils';
-import CellQuality from '../components/Cells/CellQuality';
 
 const qualityScale = (len) =>
   chroma.scale(['#c6e3c7', '#ffffea', '#dcdcdc' /*'#fbc1af'*/]).colors(len);
@@ -40,9 +34,10 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'scientificName',
         label: 'Species',
+        tooltip: tooltips.speciesTooltip,
         minWidth: '5.125rem',
         sortable: true,
-        renderCell: (row) => mapScientificName(row.scientificName),
+        renderCell: (row) => maps.mapScientificName(row.scientificName),
       },
       {
         id: 'ensembl_id',
@@ -63,6 +58,7 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'biotype',
         label: 'Gene biotype',
+        tooltip: tooltips.geneBiotypeTooltip,
         sortable: true,
       },
       {
@@ -92,17 +88,7 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'COVID-19 UniprotKB',
         label: 'UniProt COVID-19',
-        tooltip: (
-          <>
-            <span>
-              Whether or not the target was included in the{' '}
-              <Link href="https://covid-19.uniprot.org">
-                COVID-19 Uniprot website
-              </Link>
-              .
-            </span>
-          </>
-        ),
+        tooltip: tooltips.uniprotCovidTooltip,
         align: 'center',
         minWidth: '5.1rem',
         filterable: true,
@@ -120,14 +106,7 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'Covid_direct_interactions',
         label: 'Direct',
-        tooltip: (
-          <>
-            <span>
-              <strong>Direct interaction: </strong>Target directly interacts
-              with a viral protein.
-            </span>
-          </>
-        ),
+        tooltip: tooltips.directInteractionsTooltip,
         filterable: true,
         sortable: true,
         defaultFilter: { $gt: 0 },
@@ -145,14 +124,7 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'Covid_indirect_interactions',
         label: 'Indirect',
-        tooltip: (
-          <>
-            <span>
-              <strong>Indirect interaction: </strong>Target interacts with one
-              of the targets from the <i>Direct</i> column.
-            </span>
-          </>
-        ),
+        tooltip: tooltips.indirectInteractionsTooltip,
         filterable: true,
         sortable: true,
         defaultFilter: { $gt: 0 },
@@ -175,15 +147,7 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'Implicated_in_viral_infection',
         label: 'Infection',
-        tooltip: (
-          <>
-            <span>
-              <strong>Implicated in viral infection: </strong>Target does not
-              interact with a CoV-SARS-X protein but interacts with another
-              virus.
-            </span>
-          </>
-        ),
+        tooltip: tooltips.implicatedInViralInfectionTooltip,
         // TODO: ask if I can fill NAS in this column
         align: 'center',
         sortable: true,
@@ -197,10 +161,11 @@ const columnGroups = (onClickCellContent) => [
     ],
   },
   {
-    label: 'Drugs and compounds for target',
+    label: 'Clinical data',
     columns: [
       {
         id: 'max_phase',
+        tooltip: tooltips.maxPhaseTooltip,
         align: 'center',
         minWidth: '6rem',
         filterable: true,
@@ -213,41 +178,16 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'drugs_in_clinic',
         align: 'center',
-        label: 'Drugs in CT',
-        tooltip: (
-          <>
-            <span>
-              <strong>Drugs in Clinical Trial: </strong>Total number of drugs in
-              clinical trials for a given target.
-            </span>
-          </>
-        ),
+        label: 'Drugs',
+        tooltip: tooltips.drugsInClinicTooltip,
         sortable: true,
         renderCell: (row) => parseInt(row.drugs_in_clinic ?? 0),
       },
       {
-        id: 'has_drug_in_covid_trials',
-        label: 'COVID-19 CT',
-        align: 'center',
-        filterable: true,
-        sortable: true,
-        defaultFilter: { $eq: true },
-        renderCell: (row) => (
-          <CellBoolean value={row.has_drug_in_covid_trials} fillNa={true} />
-        ),
-      },
-      {
         id: 'drugs_in_covid_trials',
-        label: 'Drugs',
-        tooltip: (
-          <>
-            <span>
-              <strong>Drugs in COVID-19 Clinical Trials: </strong>List of drugs
-              whose mechanism of action is to modulate the given targets in
-              clinical trials for COVID-19.
-            </span>
-          </>
-        ),
+        label: 'COVID-19 drugs',
+        minWidth: '8.4375rem',
+        tooltip: tooltips.drugsInCovidTrialsTooltip,
         sortable: true,
         comparator: comparatorFromAccessorLength('drugs_in_covid_trials', ';'),
         renderCell: (row) => (
@@ -262,21 +202,17 @@ const columnGroups = (onClickCellContent) => [
           />
         ),
       },
+    ],
+  },
+  {
+    label: 'COVID-19 Bioassays',
+    columns: [
       {
         id: 'has_invitro_covid_activity',
-        label: 'In-vitro',
+        label: 'Bioactivity',
         minWidth: '6rem',
         align: 'center',
-        tooltip: (
-          <>
-            <span>
-              <strong>In-vitro COVID-19 activity: </strong>Rate of assays where
-              the compounds modulating given target have been active against
-              COVID-19 compared to all assays that have tested compounds
-              modulating it.
-            </span>
-          </>
-        ),
+        tooltip: tooltips.hasInvitroCovidActivityTooltip,
         sortable: true,
         comparator: (a, b) => {
           const getNumDen = (d) =>
@@ -294,15 +230,7 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'invitro_covid_activity',
         label: 'Compounds',
-        tooltip: (
-          <>
-            <span>
-              <strong>In-vitro COVID-19 compound list: </strong>Compounds
-              modulating given target that have been tested in in-vitro assays
-              and whether they were active or not.
-            </span>
-          </>
-        ),
+        tooltip: tooltips.invitroCovidActivityTooltip,
         sortable: true,
         comparator: comparatorFromAccessorLength('invitro_covid_activity', ';'),
         renderCell: (row) => (
@@ -320,11 +248,12 @@ const columnGroups = (onClickCellContent) => [
     ],
   },
   {
-    label: 'Baseline gene expression (HPA)',
+    label: 'Baseline gene expression',
     columns: [
       {
         id: 'hpa_subcellular_location',
         label: 'Subcellular location',
+        tooltip: tooltips.subcellularLocationTooltip,
         filterable: true,
         sortable: true,
         comparator: comparatorFromAccessorLength('hpa_subcellular_location'),
@@ -343,22 +272,25 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'hpa_rna_tissue_distribution',
         label: 'RNA tissue distribution',
+        tooltip: tooltips.rnaTissueDistributionTooltip,
         sortable: true,
         comparator: comparatorFromMaps(
           'hpa_rna_tissue_distribution',
-          mapTissueDistribution
+          maps.mapTissueDistribution
         ),
         renderCell: (row) => row.hpa_rna_tissue_distribution || naLabel,
       },
       {
         id: 'hpa_rna_tissue_specificity',
         label: 'RNA tissue specificity',
+        tooltip: tooltips.rnaTissueSpecifityTooltip,
         sortable: true,
         renderCell: (row) => row.hpa_rna_tissue_specificity || naLabel,
       },
       {
         id: 'hpa_rna_specific_tissues',
         label: 'RNA specific tissues',
+        tooltip: tooltips.rnaSpecificTissuesTooltip,
         minWidth: '7rem',
         sortable: true,
         comparator: comparatorFromAccessorLength('hpa_rna_specific_tissues'),
@@ -378,25 +310,28 @@ const columnGroups = (onClickCellContent) => [
     ],
   },
   {
-    label: 'Baseline gene expression (EA)',
+    label: 'Host proteins',
     columns: [
       {
-        id: 'respiratory_system_is_expressed',
-        label: 'Respiratory system',
-        align: 'center',
+        id: 'abundance_reg_on_covid',
+        label: 'Regulated',
+        tooltip: tooltips.abundanceRegOnCovidTooltip,
         minWidth: '8rem',
         sortable: true,
-        // TODO: ask if I can fill NAS in this column
         renderCell: (row) => (
-          <CellBoolean
-            value={row.respiratory_system_is_expressed}
-            fillNa={true}
-          />
+          <CellRegulation value={row.abundance_reg_on_covid} />
         ),
       },
+    ],
+  },
+  {
+    label: 'Baseline gene expression',
+    columns: [
       {
         id: 'respiratory_system_expressed_tissue_list',
-        label: 'Tissue list',
+        label: 'Respiratory system tissues',
+        tooltip: tooltips.respiratorySystemTissuesTooltip,
+        minWidth: '8rem',
         sortable: true,
         comparator: comparatorFromAccessorLength(
           'respiratory_system_expressed_tissue_list'
@@ -415,18 +350,9 @@ const columnGroups = (onClickCellContent) => [
         ),
       },
       {
-        id: 'immune_system_is_expressed',
-        label: 'Immune system',
-        align: 'center',
-        sortable: true,
-        // TODO: ask if I can fill NAS in this column
-        renderCell: (row) => (
-          <CellBoolean value={row.immune_system_is_expressed} fillNa={true} />
-        ),
-      },
-      {
         id: 'immune_system_expressed_tissue_list',
-        label: 'Tissue list',
+        label: 'Immune system tissues',
+        tooltip: tooltips.immuneSystemTissuesTooltip,
         minWidth: '8rem',
         sortable: true,
         comparator: comparatorFromAccessorLength(
@@ -453,20 +379,23 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'Tractability_Top_bucket_(sm)',
         label: 'Small molecule',
+        tooltip: tooltips.tractabilityBucketSMTooltip,
         align: 'center',
         sortable: true,
         comparator: comparatorFromMaps(
           'Tractability_Top_bucket_(sm)',
-          mapTractabilityTopBucketSM,
+          maps.mapTractabilityTopBucketSM,
           { ascending: true }
         ),
         renderCell: (row) => (
           <CellTractability
-            buckets={tractabilityTopBucketSMCaptions}
-            selectedBucket={mapTractabilityTopBucketSM(
+            buckets={maps.tractabilityTopBucketSMCaptions}
+            selectedBucket={maps.mapTractabilityTopBucketSM(
               row['Tractability_Top_bucket_(sm)']
             )}
-            colorScale={qualityScale(tractabilityTopBucketSMCaptions.length)}
+            colorScale={qualityScale(
+              maps.tractabilityTopBucketSMCaptions.length
+            )}
             onClickCellContent={onClickCellContent}
             contentTitle="Tractability top bucket (small molecule)"
             contentDescription="small molecule"
@@ -476,20 +405,23 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'Tractability_Top_bucket_(ab)',
         label: 'Antibody',
+        tooltip: tooltips.tractabilityBucketABTooltip,
         align: 'center',
         sortable: true,
         comparator: comparatorFromMaps(
           'Tractability_Top_bucket_(ab)',
-          mapTractabilityTopBucketAB,
+          maps.mapTractabilityTopBucketAB,
           { ascending: true }
         ),
         renderCell: (row) => (
           <CellTractability
-            buckets={tractabilityTopBucketABCaptions}
-            selectedBucket={mapTractabilityTopBucketAB(
+            buckets={maps.tractabilityTopBucketABCaptions}
+            selectedBucket={maps.mapTractabilityTopBucketAB(
               row['Tractability_Top_bucket_(ab)']
             )}
-            colorScale={qualityScale(tractabilityTopBucketABCaptions.length)}
+            colorScale={qualityScale(
+              maps.tractabilityTopBucketABCaptions.length
+            )}
             onClickCellContent={onClickCellContent}
             contentTitle="Tractability top bucket (antibody)"
             contentDescription="antibody"
@@ -499,20 +431,23 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'Tractability_Top_bucket_(other)',
         label: 'Other modalities',
+        tooltip: tooltips.tractabilityBucketOtherTooltip,
         align: 'center',
         sortable: true,
         comparator: comparatorFromMaps(
           'Tractability_Top_bucket_(other)',
-          mapTractabilityTopBucketOther,
+          maps.mapTractabilityTopBucketOther,
           { ascending: true }
         ),
         renderCell: (row) => (
           <CellTractability
-            buckets={tractabilityTopBucketOtherCaptions}
-            selectedBucket={mapTractabilityTopBucketOther(
+            buckets={maps.tractabilityTopBucketOtherCaptions}
+            selectedBucket={maps.mapTractabilityTopBucketOther(
               row['Tractability_Top_bucket_(other)']
             )}
-            colorScale={qualityScale(tractabilityTopBucketOtherCaptions.length)}
+            colorScale={qualityScale(
+              maps.tractabilityTopBucketOtherCaptions.length
+            )}
             onClickCellContent={onClickCellContent}
             contentTitle="Tractability top bucket (other)"
             contentDescription="other modalities"
@@ -527,6 +462,7 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'has_safety_risk',
         label: 'Safety risk',
+        tooltip: tooltips.hasSafetyRiskTooltip,
         align: 'center',
         filterable: true,
         sortable: true,
@@ -535,6 +471,7 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'safety_info_source',
         label: 'Source',
+        tooltip: tooltips.safetyInfoSourceTooltip,
         sortable: true,
         comparator: comparatorFromAccessorLength('safety_info_source'),
         renderCell: (row) => (
@@ -547,6 +484,7 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'safety_organs_systems_affected',
         label: 'Systems affected',
+        tooltip: tooltips.safetyOrgansSystemsAffectedTooltip,
         sortable: true,
         comparator: comparatorFromAccessorLength(
           'safety_organs_systems_affected'

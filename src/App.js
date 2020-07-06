@@ -74,7 +74,7 @@ function App() {
           setIndexingProgress(indexesCreated);
         }
 
-        setLS(indexesReady, 1);
+        setLS('indexesReady', 'yes');
       }
       setIndexing(false);
     }

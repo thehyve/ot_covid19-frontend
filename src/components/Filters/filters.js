@@ -79,7 +79,6 @@ export const filters = (filterBy, onChange, onRemove) => ({
       name="has_drug_in_covid_trials"
       key="has_drug_in_covid_trials"
       value={getFilter(filterBy, 'has_drug_in_covid_trials')}
-      nullAsFalse
       showRemove
       onChange={onChange}
       onRemove={onRemove}

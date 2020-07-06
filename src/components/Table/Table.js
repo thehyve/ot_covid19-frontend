@@ -51,7 +51,7 @@ function Table({
   const containerRef = useRef();
   const { height } = useDimensions(containerRef);
 
-  pageSize = Math.floor((height - 150) / 37);
+  pageSize = Math.floor((height - (110 + 36 + 15 + 1)) / 37);
 
   const [processedRows, emptyRows, effectiveRowCount = rowCount] = serverSide
     ? prepareDataServerSide(rows, fixedRows, pageSize)

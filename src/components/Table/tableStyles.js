@@ -67,7 +67,7 @@ export const tableStyles = makeStyles((theme) => ({
   cellHeaderTooltip: {
     backgroundColor: theme.palette.common.white,
     border: `1px solid ${theme.palette.grey[300]}`,
-    color: 'rgba(0, 0, 0, 0.87)',
+    color: theme.palette.text.primary,
     boxShadow: theme.shadows[1],
     fontSize: 11,
   },

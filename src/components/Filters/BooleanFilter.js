@@ -19,7 +19,6 @@ function BooleanFilter({
   name,
   value,
   integer = false,
-  nullAsFalse = false,
   showRemove,
   onChange,
   onRemove,

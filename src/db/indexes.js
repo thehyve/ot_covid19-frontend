@@ -5,7 +5,6 @@ export const indexes = [
   ['Covid_direct_interactions'],
   ['Covid_indirect_interactions'],
   ['max_phase'],
-  ['has_drug_in_covid_trials'],
   ['hpa_subcellular_location'],
 ];
 
