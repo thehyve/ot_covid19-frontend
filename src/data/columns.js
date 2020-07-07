@@ -291,6 +291,8 @@ const columnGroups = (onClickCellContent) => [
         id: 'hpa_rna_tissue_distribution',
         label: 'RNA tissue distribution',
         tooltip: tooltips.rnaTissueDistributionTooltip,
+        filterable: true,
+        defaultFilter: { $in: ['Detected in single'] },
         sortable: true,
         comparator: comparatorFromMaps(
           'hpa_rna_tissue_distribution',
@@ -302,6 +304,8 @@ const columnGroups = (onClickCellContent) => [
         id: 'hpa_rna_tissue_specificity',
         label: 'RNA tissue specificity',
         tooltip: tooltips.rnaTissueSpecifityTooltip,
+        filterable: true,
+        defaultFilter: { $in: ['Tissue enriched'] },
         sortable: true,
         renderCell: (row) => row.hpa_rna_tissue_specificity || naLabel,
       },

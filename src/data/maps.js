@@ -264,6 +264,22 @@ export const subcellularLocationList = [
   'Endosomes',
 ].sort();
 
+export const tissueSpecificityList = [
+  'Tissue enriched',
+  'Tissue enhanced',
+  'Group enriched',
+  'Low tissue specificity',
+  'Not detected',
+].sort();
+
+export const tissueDistributionList = [
+  'Detected in all',
+  'Detected in many',
+  'Detected in some',
+  'Detected in single',
+  'Not detected',
+].sort();
+
 export const redToGreen9Step = [
   '#c6e3c7',
   '#d4ead0',

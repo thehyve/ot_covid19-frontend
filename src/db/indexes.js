@@ -6,6 +6,8 @@ export const indexes = [
   ['Covid_direct_interactions'],
   ['Covid_indirect_interactions'],
   ['max_phase'],
+  ['hpa_rna_tissue_distribution'],
+  ['hpa_rna_tissue_specificity'],
   ['hpa_subcellular_location'],
   ['has_safety_risk'],
 ];

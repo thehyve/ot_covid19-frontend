@@ -6,7 +6,12 @@ import MaxPhaseFilter from './MaxPhaseFilter';
 import MultiListFilter from './MultiListFilter';
 import * as tooltips from '../../data/tooltips';
 import { getFilter } from './utils';
-import { biotypeList, subcellularLocationList } from '../../data/maps';
+import {
+  biotypeList,
+  subcellularLocationList,
+  tissueDistributionList,
+  tissueSpecificityList,
+} from '../../data/maps';
 
 export const filters = (filterBy, onChange, onRemove) => ({
   biotype: (
@@ -63,6 +68,30 @@ export const filters = (filterBy, onChange, onRemove) => ({
       onRemove={onRemove}
       title="Max phase"
       description="Max clinical trial phase for any drug targeting this gene/protein for any indication."
+    />
+  ),
+  hpa_rna_tissue_distribution: (
+    <MultiListFilter
+      name="hpa_rna_tissue_distribution"
+      key="hpa_rna_tissue_distribution"
+      list={tissueDistributionList}
+      value={getFilter(filterBy, 'hpa_rna_tissue_distribution')}
+      onChange={onChange}
+      onRemove={onRemove}
+      title="RNA tissue distribution"
+      description="Expression distribution in different tissues."
+    />
+  ),
+  hpa_rna_tissue_specificity: (
+    <MultiListFilter
+      name="hpa_rna_tissue_specificity"
+      key="hpa_rna_tissue_specificity"
+      list={tissueSpecificityList}
+      value={getFilter(filterBy, 'hpa_rna_tissue_specificity')}
+      onChange={onChange}
+      onRemove={onRemove}
+      title="RNA tissue specificity"
+      description="Expression specificity in different tissues."
     />
   ),
   has_drug_in_covid_trials: (
