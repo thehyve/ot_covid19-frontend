@@ -14,8 +14,8 @@ export const CellTractability = ({
   contentTitle,
   contentDescription,
 }) => {
-  const bucketIndex =
-    selectedBucket === naLabel ? buckets.length : selectedBucket;
+  if (selectedBucket === naLabel || selectedBucket === null)
+    return <>{naLabel}</>;
 
   const description = (
     <span>
@@ -36,7 +36,7 @@ export const CellTractability = ({
       <ListTitle title={contentTitle} description={description} />
       {buckets.map((bucket, i) => {
         const boxShadow =
-          bucketIndex === i + 1
+          selectedBucket === i + 1
             ? `inset 0px 0px 0px 3px ${darken(0.33, colorScale[i])}`
             : 'none';
         const border = `1px solid ${darken(0.33, colorScale[i])}`;

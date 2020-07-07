@@ -64,7 +64,6 @@ export const tractabilityTopBucketSMCaptions = [
       .
     </small>
   </span>,
-  <span>{naLabel}</span>,
 ];
 
 // TODO: THIS IS NOT CORRECTLY SORTED https://docs.targetvalidation.org/getting-started/target-tractability
@@ -114,7 +113,6 @@ export const tractabilityTopBucketABCaptions = [
     Targets with main location term indicative for plasma membrane -{' '}
     <strong>high confidence</strong>.
   </span>,
-  <span>{naLabel}</span>,
 ];
 
 export const mapTractabilityTopBucketOther = (str) =>
@@ -129,7 +127,6 @@ export const tractabilityTopBucketOtherCaptions = [
   <span>Targets with drugs in phase IV.</span>,
   <span>Targets with drugs in phase II or phase III.</span>,
   <span>Targets with drugs in phase 0 or phase I.</span>,
-  <span>{naLabel}</span>,
 ];
 
 export const mapSource = (sourceName, sourceAccession) =>

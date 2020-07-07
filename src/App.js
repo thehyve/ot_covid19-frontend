@@ -18,6 +18,7 @@ function App() {
   const [content, setContent] = useState(null);
   const [contentOpen, setContentOpen] = useState(false);
   const [filterBy, setFilterBy] = useState([
+    // TODO: remove this filter
     { Covid_direct_interactions: { $ne: null } },
     // { max_phase: { $eq: 3 } },
   ]);
