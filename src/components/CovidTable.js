@@ -47,9 +47,9 @@ function CovidTable({
           headerGroups={headerGroups}
           noWrapHeader={false}
           onRequestFilter={onRequestFilter}
-          order="desc"
+          order="asc"
           rows={rows}
-          sortBy="drugs_in_covid_trials"
+          sortBy="covid_literature"
         />
       </Box>
       <LoadingSnackbar open={loading} />

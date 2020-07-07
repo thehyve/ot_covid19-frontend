@@ -51,6 +51,6 @@ export async function updateClient(datasetRevision) {
     console.log(`[DB] imported ${updateResult.length} rows`);
 
     setLS('datasetRevision', datasetRevision);
-    delLS('currentIndexes', null);
+    delLS('indexesReady');
   });
 }

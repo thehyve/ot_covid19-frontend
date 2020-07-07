@@ -91,6 +91,17 @@ export const uniprotCovidTooltip = (
   </span>
 );
 
+export const covidLiteratureTooltip = (
+  <span>
+    Number of papers mentioning the target and COVID-19 in the same sentence.
+    <hr />
+    <strong>Source:</strong>{' '}
+    <Link href="https://www.targetvalidation.org/" target="blank">
+      Open Targets
+    </Link>
+  </span>
+);
+
 export const directInteractionsTooltip = (
   <span>
     <strong>Direct interaction: </strong>Target directly interacts with a viral

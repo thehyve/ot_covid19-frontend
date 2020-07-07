@@ -4,6 +4,7 @@ import chroma from 'chroma-js';
 import CellArray from '../components/Cells/CellArray';
 import CellDescription from '../components/Cells/CellDescription';
 import CellLink from '../components/Cells/CellLink';
+import CellLiterature from '../components/Cells/CellLiterature';
 import CellBoolean from '../components/Cells/CellBoolean';
 import CellInvitro from '../components/Cells/CellInvitro';
 import CellRegulation from '../components/Cells/CellRegulation';
@@ -96,6 +97,20 @@ const columnGroups = (onClickCellContent) => [
         sortable: true,
         renderCell: (row) => (
           <CellBoolean value={row['COVID-19 UniprotKB']} fillNa={true} />
+        ),
+      },
+      {
+        id: 'covid_literature',
+        label: 'COVID-19 Literature',
+        tooltip: tooltips.covidLiteratureTooltip,
+        align: 'center',
+        minWidth: '5.1rem',
+        sortable: true,
+        renderCell: (row) => (
+          <CellLiterature
+            value={row.covid_literature}
+            ensemblId={row.ensembl_id}
+          />
         ),
       },
     ],
