@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, colors, Link, Tooltip, makeStyles } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrosshairs, faFlask } from '@fortawesome/free-solid-svg-icons';
+import { tableStyles } from '../Table/tableStyles';
 
 const usesStyles = (etPresent, tsPresent) =>
   makeStyles((theme) => ({
@@ -19,10 +20,18 @@ function CellSafetySource({ value, accession }) {
   const etPresent = value?.includes('experimental_toxicity');
   const tsPresent = value?.includes('known_target_safety');
   const classes = usesStyles(etPresent, tsPresent)();
+  const tableClasses = tableStyles();
 
   const IconWrapper = ({ title, children, present }) =>
     present ? (
-      <Tooltip title={title}>
+      <Tooltip
+        title={title}
+        arrow
+        classes={{
+          tooltip: tableClasses.cellHeaderTooltip,
+          arrow: tableClasses.cellHeaderTooltipArrow,
+        }}
+      >
         <Link
           href={`https://alpha.targetvalidation.org/target/${accession}`}
           target="blank"
@@ -41,13 +50,17 @@ function CellSafetySource({ value, accession }) {
         present={etPresent}
       >
         <Box>
-          <FontAwesomeIcon className={classes.et} icon={faFlask} />
+          <FontAwesomeIcon className={classes.et} icon={faFlask} fixedWidth />
         </Box>
       </IconWrapper>
 
       <IconWrapper title="Target safety effects" present={tsPresent}>
         <Box>
-          <FontAwesomeIcon className={classes.ts} icon={faCrosshairs} />
+          <FontAwesomeIcon
+            className={classes.ts}
+            icon={faCrosshairs}
+            fixedWidth
+          />
         </Box>
       </IconWrapper>
     </Box>

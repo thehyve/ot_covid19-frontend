@@ -14,6 +14,7 @@ export const indexes = [
   ['has_drug_in_covid_trials'],
   ['hpa_subcellular_location'],
   ['has_safety_risk'],
+  ['safety_info_source'],
   ['safety_organs_systems_affected'],
 ];
 

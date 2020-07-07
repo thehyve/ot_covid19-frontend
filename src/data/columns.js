@@ -252,7 +252,7 @@ const columnGroups = (onClickCellContent) => [
         tooltip: tooltips.invitroCovidActivityTooltip,
         filterable: true,
         sortable: true,
-        defaultFilter: { $regex: 'INE' },
+        defaultFilter: { $regex: 'HYDROXYCHLOROQUINE' },
         comparator: comparatorFromAccessorLength('invitro_covid_activity', ';'),
         renderCell: (row) => (
           <CellInvitro
@@ -502,7 +502,9 @@ const columnGroups = (onClickCellContent) => [
         id: 'safety_info_source',
         label: 'Source',
         tooltip: tooltips.safetyInfoSourceTooltip,
+        filterable: true,
         sortable: true,
+        defaultFilter: { $all: ['experimental_toxicity'] },
         comparator: comparatorFromAccessorLength('safety_info_source'),
         renderCell: (row) => (
           <CellSafetySource

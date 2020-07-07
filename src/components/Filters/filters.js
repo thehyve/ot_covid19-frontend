@@ -5,9 +5,13 @@ import IntegerFilter from './IntegerFilter';
 import ListFilter from './ListFilter';
 import MaxPhaseFilter from './MaxPhaseFilter';
 import MultiListFilter from './MultiListFilter';
+import SafetySourceFilter from './SafetySourceFilter';
 import StringFilter from './StringFilter';
+
 import * as tooltips from '../../data/tooltips';
+
 import { getFilter } from './utils';
+
 import {
   biotypeList,
   subcellularLocationList,
@@ -165,6 +169,17 @@ export const filters = (filterBy, onChange, onRemove) => ({
       title="Safety risk"
       description="Whether or not there is any safety risk information for the target."
       placeholder="Pick locations..."
+    />
+  ),
+  safety_info_source: (
+    <SafetySourceFilter
+      name="safety_info_source"
+      key="safety_info_source"
+      value={getFilter(filterBy, 'safety_info_source')}
+      onChange={onChange}
+      onRemove={onRemove}
+      title="Safety risk source"
+      description="Source of the safety risk info."
     />
   ),
   safety_organs_systems_affected: (
