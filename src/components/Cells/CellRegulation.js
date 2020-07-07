@@ -46,11 +46,19 @@ function CellRegulation({ value }) {
 
   const values = value.split(';');
 
-  return values.map((value, i) => {
-    const [time, direction] = splitStringInParentheses(value);
+  return values
+    .sort((a, b) => {
+      const [aTime] = splitStringInParentheses(a);
+      const [bTime] = splitStringInParentheses(b);
 
-    return <CellRegulationUnit key={i} direction={direction} time={time} />;
-  });
+      // time ascending
+      return parseInt(aTime) - parseInt(bTime);
+    })
+    .map((value, i) => {
+      const [time, direction] = splitStringInParentheses(value);
+
+      return <CellRegulationUnit key={i} direction={direction} time={time} />;
+    });
 }
 
 export default CellRegulation;
