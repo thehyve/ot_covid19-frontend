@@ -40,7 +40,11 @@ function MultiListFilter({
 
   return (
     <Paper classes={{ root: classes.drawerBodyShort }}>
-      <Box display="flex" justifyContent="space-between" padding=".25rem .5rem">
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        padding=".25rem 0 .25rem .5rem"
+      >
         <Typography variant="body1">{title}</Typography>
         {showRemove && (
           <IconButton onClick={handleRemoveFilter}>

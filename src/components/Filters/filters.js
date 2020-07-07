@@ -5,6 +5,7 @@ import IntegerFilter from './IntegerFilter';
 import ListFilter from './ListFilter';
 import MaxPhaseFilter from './MaxPhaseFilter';
 import MultiListFilter from './MultiListFilter';
+import StringFilter from './StringFilter';
 import * as tooltips from '../../data/tooltips';
 import { getFilter } from './utils';
 import {
@@ -80,6 +81,19 @@ export const filters = (filterBy, onChange, onRemove) => ({
       onRemove={onRemove}
       title="Drugs in clinic"
       description="Number of drugs in clinical trials for a given target."
+    />
+  ),
+  invitro_covid_activity: (
+    <StringFilter
+      name="invitro_covid_activity"
+      key="invitro_covid_activity"
+      value={getFilter(filterBy, 'invitro_covid_activity')}
+      capitalize
+      onChange={onChange}
+      onRemove={onRemove}
+      title="In-vitro compound activity"
+      description="Compounds modulating given target that have been tested in in-vitro assays and whether they were active or not."
+      placeholder="Search by compound"
     />
   ),
   hpa_rna_tissue_distribution: (

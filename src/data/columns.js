@@ -250,7 +250,9 @@ const columnGroups = (onClickCellContent) => [
         id: 'invitro_covid_activity',
         label: 'Compounds',
         tooltip: tooltips.invitroCovidActivityTooltip,
+        filterable: true,
         sortable: true,
+        defaultFilter: { $regex: 'INE' },
         comparator: comparatorFromAccessorLength('invitro_covid_activity', ';'),
         renderCell: (row) => (
           <CellInvitro

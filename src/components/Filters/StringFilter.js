@@ -8,18 +8,20 @@ import {
 } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 
-import useDebounce from '../../../hooks/useDebounce';
-import useUpdateEffect from '../../../hooks/useUpdateEffect';
-import { drawerStyles } from '../drawerStyles';
+import useDebounce from '../../hooks/useDebounce';
+import useUpdateEffect from '../../hooks/useUpdateEffect';
+import { drawerStyles } from '../Drawer/drawerStyles';
 
 function StringFilter({
   name,
   value,
-  showRemove,
+  capitalize = false,
+  showRemove = true,
   onChange,
   onRemove,
   title,
   description,
+  placeholder = 'Enter text...',
 }) {
   const classes = drawerStyles();
   const [inputValue, setInputValue] = useState(value?.$regex || '');
@@ -35,13 +37,21 @@ function StringFilter({
   };
 
   useUpdateEffect(() => {
-    onChange({ [name]: { $regex: debouncedInputValue } });
+    const finalValue = capitalize
+      ? debouncedInputValue.toUpperCase()
+      : debouncedInputValue;
+
+    onChange({ [name]: { $regex: finalValue } });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedInputValue]);
 
   return (
     <Paper classes={{ root: classes.drawerBodyShort }}>
-      <Box display="flex" justifyContent="space-between">
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        padding=".25rem 0 .25rem .5rem"
+      >
         <Typography variant="body1">{title}</Typography>
         {showRemove && (
           <IconButton onClick={handleRemoveFilter}>
@@ -56,11 +66,13 @@ function StringFilter({
           </Typography>
         </Box>
       )}
-      <TextField
-        label="Biotype"
-        onChange={handleChangeFilter}
-        value={inputValue}
-      />
+      <Box padding="0 .5rem .5rem .5rem">
+        <TextField
+          label={placeholder}
+          onChange={handleChangeFilter}
+          value={inputValue}
+        />
+      </Box>
     </Paper>
   );
 }
