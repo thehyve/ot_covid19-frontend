@@ -1,6 +1,7 @@
 import React from 'react';
 
 import BooleanFilter from './BooleanFilter';
+import IntegerFilter from './IntegerFilter';
 import ListFilter from './ListFilter';
 import MaxPhaseFilter from './MaxPhaseFilter';
 import MultiListFilter from './MultiListFilter';
@@ -68,6 +69,17 @@ export const filters = (filterBy, onChange, onRemove) => ({
       onRemove={onRemove}
       title="Max phase"
       description="Max clinical trial phase for any drug targeting this gene/protein for any indication."
+    />
+  ),
+  drugs_in_clinic: (
+    <IntegerFilter
+      name="drugs_in_clinic"
+      key="drugs_in_clinic"
+      value={getFilter(filterBy, 'drugs_in_clinic')}
+      onChange={onChange}
+      onRemove={onRemove}
+      title="Drugs in clinic"
+      description="Number of drugs in clinical trials for a given target."
     />
   ),
   hpa_rna_tissue_distribution: (

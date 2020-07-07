@@ -197,7 +197,9 @@ const columnGroups = (onClickCellContent) => [
         align: 'center',
         label: 'Drugs',
         tooltip: tooltips.drugsInClinicTooltip,
+        filterable: true,
         sortable: true,
+        defaultFilter: { $gte: 1 },
         renderCell: (row) => parseInt(row.drugs_in_clinic ?? 0),
       },
       {
