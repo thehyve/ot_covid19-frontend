@@ -227,7 +227,7 @@ export const biotypeList = [
   'IG_pseudogene',
   'vaultRNA',
   'Mt_rRNA',
-];
+].sort();
 
 export const subcellularLocationList = [
   'Centrosome',
@@ -262,7 +262,7 @@ export const subcellularLocationList = [
   'Cleavage furrow',
   'Lysosomes',
   'Endosomes',
-];
+].sort();
 
 export const redToGreen9Step = [
   '#c6e3c7',
