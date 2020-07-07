@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faScroll } from '@fortawesome/free-solid-svg-icons';
+import { faFileAlt } from '@fortawesome/free-solid-svg-icons';
 
 import CellLink from './CellLink';
 import { naLabel } from '../../utils';
@@ -10,7 +10,7 @@ function CellLiterature({ value, ensemblId }) {
 
   return (
     <>
-      <FontAwesomeIcon icon={faScroll} />{' '}
+      <FontAwesomeIcon icon={faFileAlt} />{' '}
       <CellLink
         url="https://www.targetvalidation.org/evidence/$$/MONDO_0100096?view=sec:literature"
         accession={ensemblId}
