@@ -10,9 +10,11 @@ export const indexes = [
   ['invitro_covid_activity'],
   ['hpa_rna_tissue_distribution'],
   ['hpa_rna_tissue_specificity'],
+  ['hpa_rna_specific_tissues'],
   ['has_drug_in_covid_trials'],
   ['hpa_subcellular_location'],
   ['has_safety_risk'],
+  ['safety_organs_systems_affected'],
 ];
 
 export const createIndex = async (fields) => {

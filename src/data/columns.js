@@ -318,7 +318,9 @@ const columnGroups = (onClickCellContent) => [
         label: 'RNA specific tissues',
         tooltip: tooltips.rnaSpecificTissuesTooltip,
         minWidth: '7rem',
+        filterable: true,
         sortable: true,
+        defaultFilter: { $regex: 'lung' },
         comparator: comparatorFromAccessorLength('hpa_rna_specific_tissues'),
         renderCell: (row) => (
           <CellArray
@@ -513,7 +515,9 @@ const columnGroups = (onClickCellContent) => [
         id: 'safety_organs_systems_affected',
         label: 'Systems affected',
         tooltip: tooltips.safetyOrgansSystemsAffectedTooltip,
+        filterable: true,
         sortable: true,
+        defaultFilter: { $regex: 'cardiovascular' },
         comparator: comparatorFromAccessorLength(
           'safety_organs_systems_affected'
         ),

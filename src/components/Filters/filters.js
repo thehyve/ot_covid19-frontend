@@ -120,6 +120,18 @@ export const filters = (filterBy, onChange, onRemove) => ({
       description="Expression specificity in different tissues."
     />
   ),
+  hpa_rna_specific_tissues: (
+    <StringFilter
+      name="hpa_rna_specific_tissues"
+      key="hpa_rna_specific_tissues"
+      value={getFilter(filterBy, 'hpa_rna_specific_tissues')}
+      onChange={onChange}
+      onRemove={onRemove}
+      title="RNA specific tissues"
+      description="List of tissues if target expression has some degree of specificity."
+      placeholder="Specific to..."
+    />
+  ),
   has_drug_in_covid_trials: (
     <BooleanFilter
       name="has_drug_in_covid_trials"
@@ -153,6 +165,18 @@ export const filters = (filterBy, onChange, onRemove) => ({
       title="Safety risk"
       description="Whether or not there is any safety risk information for the target."
       placeholder="Pick locations..."
+    />
+  ),
+  safety_organs_systems_affected: (
+    <StringFilter
+      name="safety_organs_systems_affected"
+      key="safety_organs_systems_affected"
+      value={getFilter(filterBy, 'safety_organs_systems_affected')}
+      onChange={onChange}
+      onRemove={onRemove}
+      title="Systems affected"
+      description="List of organs where there are known safety risks for the target."
+      placeholder="Safety risk affects..."
     />
   ),
 });
