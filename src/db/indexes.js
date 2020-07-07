@@ -1,6 +1,7 @@
 import openDB from './open';
 
 export const indexes = [
+  ['biotype'],
   ['COVID-19 UniprotKB'],
   ['Covid_direct_interactions'],
   ['Covid_indirect_interactions'],

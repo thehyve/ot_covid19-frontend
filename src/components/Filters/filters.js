@@ -6,9 +6,20 @@ import MaxPhaseFilter from './MaxPhaseFilter';
 import MultiListFilter from './MultiListFilter';
 import * as tooltips from '../../data/tooltips';
 import { getFilter } from './utils';
-import { subcellularLocationList } from '../../data/maps';
+import { biotypeList, subcellularLocationList } from '../../data/maps';
 
 export const filters = (filterBy, onChange, onRemove) => ({
+  biotype: (
+    <MultiListFilter
+      name="biotype"
+      key="biotype"
+      list={biotypeList}
+      value={getFilter(filterBy, 'biotype')}
+      onChange={onChange}
+      onRemove={onRemove}
+      title="Gene biotype"
+    />
+  ),
   'COVID-19 UniprotKB': (
     <BooleanFilter
       name="COVID-19 UniprotKB"

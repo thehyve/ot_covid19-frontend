@@ -59,6 +59,8 @@ const columnGroups = (onClickCellContent) => [
       {
         id: 'biotype',
         label: 'Gene biotype',
+        filterable: true,
+        defaultFilter: { $in: ['protein_coding'] },
         tooltip: tooltips.geneBiotypeTooltip,
         sortable: true,
       },
