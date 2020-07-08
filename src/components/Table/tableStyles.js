@@ -34,28 +34,30 @@ export const tableStyles = makeStyles((theme) => ({
     display: 'flex',
     flexGrow: 1,
   },
-  cellHeaderFilterIcon: {
+  cellHeaderIcon: {
+    '& span, & svg': {
+      opacity: 1,
+    },
+    '&:hover': {
+      color: theme.palette.primary.main,
+      opacity: 1,
+      '& svg': { opacity: '1 !important' },
+    },
+  },
+  cellHeaderIconActive: {
+    opacity: 1,
+    color: theme.palette.secondary.main,
+    '& svg': { color: `${theme.palette.secondary.main} !important` },
+  },
+  cellHeaderIconHelp: {
+    fontSize: '1rem',
+    margin: '0 .1rem',
+  },
+  cellHeaderIconFilter: {
     height: '1rem',
+    fontSize: '1.33rem',
     margin: '0 .2rem',
     width: '1rem',
-    '& span': {
-      '& svg': {
-        fontSize: '1.33rem',
-        '&:hover': {
-          opacity: 0.5,
-        },
-      },
-    },
-  },
-  cellHeaderFilterIconOff: {
-    opacity: 0.2,
-  },
-  cellHeaderSortIcon: {
-    // Override cascading bug when building bundle
-    '& svg': {
-      opacity: 0.2,
-      margin: '0 .1rem',
-    },
   },
   cellHeaderToolbar: {
     display: 'flex',
@@ -78,10 +80,6 @@ export const tableStyles = makeStyles((theme) => ({
       backgroundColor: `${theme.palette.common.white} !important`,
       border: `1px solid ${theme.palette.grey[300]} !important`,
     },
-  },
-  cellHeaderTooltipIcon: {
-    fontSize: '1rem',
-    margin: '0 .1rem',
   },
   cellGroup: {
     padding: '1rem',

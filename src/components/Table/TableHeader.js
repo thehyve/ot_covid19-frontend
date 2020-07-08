@@ -62,23 +62,28 @@ function HeaderCell({
           interactive
           title={tooltip}
         >
-          <TooltipIcon className={classes.cellHeaderTooltipIcon} />
+          <TooltipIcon
+            className={clsx(classes.cellHeaderIcon, classes.cellHeaderIconHelp)}
+          />
         </Tooltip>
       )}
       {sortable && (
         <TableSortLabel
-          className={classes.cellHeaderSortIcon}
+          classes={{
+            root: classes.cellHeaderIcon,
+            active: classes.cellHeaderIconActive,
+          }}
           {...sortParams}
         />
       )}
       {filterable && (
         <IconButton
-          className={classes.cellHeaderFilterIcon}
+          className={clsx(classes.cellHeaderIcon, classes.cellHeaderIconFilter)}
           disableRipple
           onClick={handleRequestFilter}
         >
           <FilterListIcon
-            className={clsx(!isFiltered && classes.cellHeaderFilterIconOff)}
+            className={clsx(isFiltered && classes.cellHeaderIconActive)}
           />
         </IconButton>
       )}
