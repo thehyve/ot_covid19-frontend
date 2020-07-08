@@ -1,20 +1,11 @@
 import React from 'react';
-import {
-  Box,
-  colors,
-  Tooltip,
-  makeStyles,
-  Paper,
-  Typography,
-  IconButton,
-} from '@material-ui/core';
-import ClearIcon from '@material-ui/icons/Clear';
-import { ToggleButton } from '@material-ui/lab';
+import { Box, colors, Tooltip, makeStyles, Paper } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrosshairs, faFlask } from '@fortawesome/free-solid-svg-icons';
+import { ToggleButton } from '@material-ui/lab';
 
-import { drawerStyles } from '../Drawer/drawerStyles';
-import { tableStyles } from '../Table/tableStyles';
+import { FilterHeader } from './common';
+import { filterStyles } from './filterStyles';
 
 const usesStyles = (etPresent, tsPresent) =>
   makeStyles((theme) => ({
@@ -30,18 +21,15 @@ const usesStyles = (etPresent, tsPresent) =>
 
 function SafetySourceFilter({
   name,
-  value,
-  showRemove = true,
   onChange,
   onRemove,
-  title,
-  description,
+  value,
+  ...headerProps
 }) {
   const etPresent = value.$all?.includes('experimental_toxicity');
   const tsPresent = value.$all?.includes('known_target_safety');
-  const classes = usesStyles(etPresent, tsPresent)();
-  const drawerClasses = drawerStyles();
-  const tableClasses = tableStyles();
+  const buttonClasses = usesStyles(etPresent, tsPresent)();
+  const classes = filterStyles();
 
   const handleToggle = (entryValue, entryString) => {
     let newValue;
@@ -74,10 +62,7 @@ function SafetySourceFilter({
         <Tooltip
           title={title}
           arrow
-          classes={{
-            tooltip: tableClasses.cellHeaderTooltip,
-            arrow: tableClasses.cellHeaderTooltipArrow,
-          }}
+          classes={{ tooltip: classes.tooltip, arrow: classes.tooltipArrow }}
         >
           <ToggleButton
             onChange={handleChange}
@@ -92,33 +77,19 @@ function SafetySourceFilter({
   };
 
   return (
-    <Paper classes={{ root: drawerClasses.drawerBodyShort }}>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        padding=".25rem 0 .25rem .5rem"
-      >
-        <Typography variant="body1">{title}</Typography>
-        {showRemove && (
-          <IconButton onClick={handleRemoveFilter}>
-            <ClearIcon />
-          </IconButton>
-        )}
-      </Box>
-      {description && (
-        <Box>
-          <Typography className={drawerClasses.drawerBodyDescription}>
-            {description}
-          </Typography>
-        </Box>
-      )}
-      <Box display="flex" justifyContent="space-evenly" padding="1rem .5rem">
+    <Paper className={classes.filterContainer}>
+      <FilterHeader onRemove={handleRemoveFilter} {...headerProps} />
+      <Box className={classes.filterBodyContainerRow}>
         <ButtonWrapper
           title="Non-clinical experimental toxicity"
           present={etPresent}
           presentString="experimental_toxicity"
         >
-          <FontAwesomeIcon className={classes.et} icon={faFlask} fixedWidth />
+          <FontAwesomeIcon
+            className={buttonClasses.et}
+            icon={faFlask}
+            fixedWidth
+          />
         </ButtonWrapper>
         <ButtonWrapper
           title="Target safety effects"
@@ -126,7 +97,7 @@ function SafetySourceFilter({
           presentString="known_target_safety"
         >
           <FontAwesomeIcon
-            className={classes.ts}
+            className={buttonClasses.ts}
             icon={faCrosshairs}
             fixedWidth
           />

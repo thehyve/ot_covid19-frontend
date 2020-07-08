@@ -1,37 +1,44 @@
 import React from 'react';
 import {
   Box,
-  IconButton,
   Typography,
   Paper,
   TextField,
+  List,
+  ListItem,
+  Chip,
 } from '@material-ui/core';
-import ClearIcon from '@material-ui/icons/Clear';
 import { Autocomplete } from '@material-ui/lab';
 
-import { drawerStyles } from '../Drawer/drawerStyles';
+import { FilterHeader } from './common';
+import { filterStyles } from './filterStyles';
 import { naLabel } from '../../utils';
 
 function MultiListFilter({
-  name,
   list,
-  value,
-  showRemove = true,
+  name,
   onChange,
   onRemove,
-  title,
-  description,
   placeholder = 'Select items...',
+  value,
+  ...headerProps
 }) {
-  const classes = drawerStyles();
+  const classes = filterStyles();
 
-  const handleChangeFilter = (_, value) => {
-    if (!value.length) {
+  const handleChangeFilter = (_, newEntries) => {
+    if (!newEntries.length) {
       onRemove(name);
       return;
     }
 
-    onChange({ [name]: { $in: value } });
+    onChange({ [name]: { $in: newEntries } });
+  };
+
+  const handleDelete = (entry) => {
+    handleChangeFilter(
+      null,
+      value.$in.filter((valueEntry) => valueEntry !== entry)
+    );
   };
 
   const handleRemoveFilter = () => {
@@ -39,29 +46,24 @@ function MultiListFilter({
   };
 
   return (
-    <Paper classes={{ root: classes.drawerBodyShort }}>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        padding=".25rem 0 .25rem .5rem"
-      >
-        <Typography variant="body1">{title}</Typography>
-        {showRemove && (
-          <IconButton onClick={handleRemoveFilter}>
-            <ClearIcon />
-          </IconButton>
-        )}
-      </Box>
-      {description && (
-        <Box>
-          <Typography className={classes.drawerBodyDescription}>
-            {description}
-          </Typography>
-        </Box>
-      )}
-      <Box padding="0 .5rem .5rem .5rem">
+    <Paper className={classes.filterContainer}>
+      <FilterHeader onRemove={handleRemoveFilter} {...headerProps} />
+      <Box className={classes.filterBodyContainerColumn}>
+        <List className={classes.multiListList}>
+          {value.$in.map((entry, i) => (
+            <ListItem key={i} className={classes.multiListListItem}>
+              <Chip
+                className={classes.multiListListChip}
+                color="primary"
+                label={entry}
+                onDelete={() => handleDelete(entry)}
+                size="small"
+              />
+            </ListItem>
+          ))}
+        </List>
         <Autocomplete
-          disableCloseOnSelect
+          className={classes.multiListAutocomplete}
           disableClearable
           getOptionLabel={(option) => (option ? option : naLabel)}
           multiple
@@ -71,10 +73,11 @@ function MultiListFilter({
             <TextField {...params} label={placeholder} />
           )}
           renderOption={(option) => (
-            <Typography className={classes.drawerSelectOption}>
+            <Typography className={classes.multiListAutocompleteOption}>
               {option}
             </Typography>
           )}
+          renderTags={() => null}
           size="small"
           value={value?.$in || []}
         />

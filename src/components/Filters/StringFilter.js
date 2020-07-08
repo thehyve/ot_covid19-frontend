@@ -1,29 +1,21 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  IconButton,
-  Typography,
-  Paper,
-  TextField,
-} from '@material-ui/core';
-import ClearIcon from '@material-ui/icons/Clear';
+import { Paper, TextField } from '@material-ui/core';
 
 import useDebounce from '../../hooks/useDebounce';
 import useUpdateEffect from '../../hooks/useUpdateEffect';
-import { drawerStyles } from '../Drawer/drawerStyles';
+import { FilterHeader } from './common';
+import { filterStyles } from './filterStyles';
 
 function StringFilter({
-  name,
-  value,
   capitalize = false,
-  showRemove = true,
+  name,
   onChange,
   onRemove,
-  title,
-  description,
   placeholder = 'Enter text...',
+  value,
+  ...headerProps
 }) {
-  const classes = drawerStyles();
+  const classes = filterStyles();
   const [inputValue, setInputValue] = useState(value?.$regex || '');
   const debouncedInputValue = useDebounce(inputValue, 1000);
 
@@ -46,33 +38,14 @@ function StringFilter({
   }, [debouncedInputValue]);
 
   return (
-    <Paper classes={{ root: classes.drawerBodyShort }}>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        padding=".25rem 0 .25rem .5rem"
-      >
-        <Typography variant="body1">{title}</Typography>
-        {showRemove && (
-          <IconButton onClick={handleRemoveFilter}>
-            <ClearIcon />
-          </IconButton>
-        )}
-      </Box>
-      {description && (
-        <Box>
-          <Typography className={classes.drawerBodyDescription}>
-            {description}
-          </Typography>
-        </Box>
-      )}
-      <Box padding="0 .5rem .5rem .5rem">
-        <TextField
-          label={placeholder}
-          onChange={handleChangeFilter}
-          value={inputValue}
-        />
-      </Box>
+    <Paper className={classes.filterContainer}>
+      <FilterHeader onRemove={handleRemoveFilter} {...headerProps} />
+      <TextField
+        className={classes.filterBodyContainerRow}
+        label={placeholder}
+        onChange={handleChangeFilter}
+        value={inputValue}
+      />
     </Paper>
   );
 }

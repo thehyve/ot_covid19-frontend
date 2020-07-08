@@ -1,33 +1,25 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  IconButton,
-  Typography,
-  Paper,
-  TextField,
-} from '@material-ui/core';
-import ClearIcon from '@material-ui/icons/Clear';
+import { Paper, TextField } from '@material-ui/core';
 
 import useDebounce from '../../hooks/useDebounce';
 import useUpdateEffect from '../../hooks/useUpdateEffect';
-import { drawerStyles } from '../Drawer/drawerStyles';
+import { FilterHeader } from './common';
+import { filterStyles } from './filterStyles';
 
 function IntegerFilter({
   name,
-  value,
-  range = [0, 100],
-  showRemove = true,
   onChange,
   onRemove,
-  title,
-  description,
+  range = { min: 1, max: 100 },
+  value,
+  ...headerProps
 }) {
-  const classes = drawerStyles();
+  const classes = filterStyles();
   const [inputValue, setInputValue] = useState(value?.$gte || '');
   const debouncedInputValue = useDebounce(inputValue, 1000);
 
   const handleChangeFilter = (e) => {
-    setInputValue(e.target.value);
+    setInputValue(parseInt(e.target.value));
   };
 
   const handleRemoveFilter = () => {
@@ -36,44 +28,21 @@ function IntegerFilter({
   };
 
   useUpdateEffect(() => {
-    onChange({ [name]: { $regex: debouncedInputValue } });
+    onChange({ [name]: { $gte: debouncedInputValue } });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedInputValue]);
 
   return (
-    <Paper classes={{ root: classes.drawerBodyShort }}>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        padding=".25rem 0 .25rem .5rem"
-      >
-        <Typography variant="body1">{title}</Typography>
-        {showRemove && (
-          <IconButton onClick={handleRemoveFilter}>
-            <ClearIcon />
-          </IconButton>
-        )}
-      </Box>
-      {description && (
-        <Box>
-          <Typography className={classes.drawerBodyDescription}>
-            {description}
-          </Typography>
-        </Box>
-      )}
-      <Box padding="0 .5rem .5rem .5rem">
-        <TextField
-          id="standard-number"
-          label="At least..."
-          InputLabelProps={{
-            shrink: true,
-          }}
-          style={{ width: '5rem' }}
-          type="number"
-          onChange={handleChangeFilter}
-          value={inputValue}
-        />
-      </Box>
+    <Paper className={classes.filterContainer}>
+      <FilterHeader onRemove={handleRemoveFilter} {...headerProps} />
+      <TextField
+        className={classes.filterBodyContainerRow}
+        InputProps={{ inputProps: range }}
+        label="At least..."
+        onChange={handleChangeFilter}
+        type="number"
+        value={inputValue}
+      />
     </Paper>
   );
 }

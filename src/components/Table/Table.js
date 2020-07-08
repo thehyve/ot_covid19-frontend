@@ -4,9 +4,7 @@ import {
   Grid,
   Table as MUITable,
   TableBody,
-  TableCell,
   TablePagination,
-  TableRow as MUITableRow,
 } from '@material-ui/core';
 
 import DataDownloader from './DataDownloader';
@@ -53,6 +51,7 @@ function Table({
 
   pageSize = Math.floor((height - (98 + 36 + 15 + 1)) / 37);
 
+  // eslint-disable-next-line no-unused-vars
   const [processedRows, emptyRows, effectiveRowCount = rowCount] = serverSide
     ? prepareDataServerSide(rows, fixedRows, pageSize)
     : prepareDataClientSide(
@@ -179,18 +178,6 @@ function Table({
                     noWrap={noWrap}
                   />
                 ))}
-                {noWrap && emptyRows > 0 && (
-                  <MUITableRow style={{ height: `${1.6875 * emptyRows}rem` }}>
-                    <TableCell
-                      colSpan={columns.length}
-                      classes={{
-                        root: `${classes.cellBody} ${classes.noData}`,
-                      }}
-                    >
-                      {!processedRows.length && 'No data'}
-                    </TableCell>
-                  </MUITableRow>
-                )}
               </TableBody>
             </MUITable>
           </Grid>

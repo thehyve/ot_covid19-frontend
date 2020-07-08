@@ -1,21 +1,13 @@
 import React from 'react';
-import { Box, IconButton, Typography, Paper } from '@material-ui/core';
-import ClearIcon from '@material-ui/icons/Clear';
+import { Box, Paper } from '@material-ui/core';
 
 import CellQuality from '../Cells/CellQuality';
-import { drawerStyles } from '../Drawer/drawerStyles';
+import { FilterHeader } from './common';
+import { filterStyles } from './filterStyles';
 import { qualityMidScale } from '../../data/columns';
 
-function MaxPhaseFilter({
-  name,
-  value,
-  showRemove = true,
-  onChange,
-  onRemove,
-  title,
-  description,
-}) {
-  const classes = drawerStyles();
+function MaxPhaseFilter({ name, onChange, onRemove, value, ...headerProps }) {
+  const classes = filterStyles();
   const colorScale = qualityMidScale(4);
 
   const handleChangeFilter = (value) => {
@@ -27,20 +19,9 @@ function MaxPhaseFilter({
   };
 
   return (
-    <Paper classes={{ root: classes.drawerBodyShort }}>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        padding=".25rem 0 .25rem .5rem"
-      >
-        <Typography>{title}</Typography>
-        {showRemove && (
-          <IconButton onClick={handleRemoveFilter}>
-            <ClearIcon />
-          </IconButton>
-        )}
-      </Box>
-      <Box display="flex" justifyContent="space-evenly" marginBottom=".5rem">
+    <Paper className={classes.filterContainer}>
+      <FilterHeader onRemove={handleRemoveFilter} {...headerProps} />
+      <Box className={classes.filterBodyContainerRow}>
         {[1, 2, 3, 4].map((maxPhase) => (
           <CellQuality
             colorScale={colorScale}
@@ -51,13 +32,6 @@ function MaxPhaseFilter({
           />
         ))}
       </Box>
-      {description && (
-        <Box>
-          <Typography className={classes.drawerBodyDescription}>
-            {description}
-          </Typography>
-        </Box>
-      )}
     </Paper>
   );
 }

@@ -38,7 +38,7 @@ export const filters = (filterBy, onChange, onRemove) => ({
       value={getFilter(filterBy, 'COVID-19 UniprotKB')}
       onChange={onChange}
       onRemove={onRemove}
-      title="In COVID-19 UniprotKB"
+      title="UniProt COVID-19 "
       description={tooltips.uniprotCovidTooltip}
     />
   ),

@@ -17,11 +17,7 @@ import { getLS, setLS } from './utils';
 function App() {
   const [content, setContent] = useState(null);
   const [contentOpen, setContentOpen] = useState(false);
-  const [filterBy, setFilterBy] = useState([
-    // TODO: remove this filter
-    { Covid_direct_interactions: { $ne: null } },
-    // { max_phase: { $eq: 3 } },
-  ]);
+  const [filterBy, setFilterBy] = useState([]);
   const [filterOpen, setFilterOpen] = useState(true);
   const [updating, setUpdating] = useState(false);
   const [indexing, setIndexing] = useState(false);
