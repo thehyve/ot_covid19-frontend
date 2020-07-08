@@ -8,7 +8,7 @@ import { drawerStyles } from './drawerStyles';
 import { addFilter, remFilter } from '../Filters/utils';
 import { filters } from '../Filters/filters';
 
-function FilterDrawer({ filterBy, onSetFilterBy, open }) {
+function FilterDrawer({ filterBy, onSetFilterBy, onToggleDrawer, open }) {
   const classes = drawerStyles();
 
   const handleChangeFilterBy = (newFilter) => {
@@ -28,23 +28,28 @@ function FilterDrawer({ filterBy, onSetFilterBy, open }) {
   );
 
   return (
-    <Drawer title="Filters" open={open} position="left">
-      <Box className={classes.drawerBodyNoBorder}>
-        {!filterBy.length ? (
-          <DrawerHelp
-            title="No filters selected"
-            content={
-              <>
-                Click on a{' '}
-                <FilterListIcon className={classes.drawerBodyIconHelp} /> filter
-                button in the header of a column to set up a filter.
-              </>
-            }
-          />
-        ) : (
-          filterBy.map((f) => preparedFilters[Object.keys(f)[0]])
-        )}
-      </Box>
+    <Drawer
+      caption="Filters"
+      open={open}
+      position="left"
+      onHide={onToggleDrawer}
+    >
+      {!filterBy.length ? (
+        <DrawerHelp
+          title="No filters selected"
+          content={
+            <>
+              Click on a{' '}
+              <FilterListIcon className={classes.drawerBodyIconHelp} /> filter
+              button in the header of a column to set up a filter.
+            </>
+          }
+        />
+      ) : (
+        <Box className={classes.drawerBodyNoBorder}>
+          {filterBy.map((f) => preparedFilters[Object.keys(f)[0]])}
+        </Box>
+      )}
     </Drawer>
   );
 }

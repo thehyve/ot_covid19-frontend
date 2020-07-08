@@ -1,21 +1,26 @@
 import React from 'react';
-import { IconButton } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 
-function DrawerButton({ onClick, position = 'right', open }) {
-  const ToggleDrawerIcon =
-    (position === 'right' && open) || (position === 'left' && !open)
-      ? ChevronLeft
-      : ChevronRight;
+import { drawerStyles } from './drawerStyles';
+
+function DrawerButton({ onClick, position = 'right', caption, open }) {
+  const classes = drawerStyles();
 
   return (
-    <IconButton
+    <Button
+      className={classes.drawerTitleButton}
       color="inherit"
       onClick={onClick}
       edge={position === 'right' ? 'end' : 'start'}
+      style={{
+        justifyContent: position === 'left' ? 'flex-start' : 'flex-end',
+      }}
     >
-      <ToggleDrawerIcon />
-    </IconButton>
+      {position === 'left' && <ChevronRight />}
+      Show {caption}
+      {position === 'right' && <ChevronLeft />}
+    </Button>
   );
 }
 

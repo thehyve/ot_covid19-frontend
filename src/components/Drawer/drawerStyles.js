@@ -1,3 +1,4 @@
+import { darken } from 'polished';
 import { makeStyles } from '@material-ui/core';
 import { sideBarWidthPercent } from '../../config';
 
@@ -6,8 +7,8 @@ export const drawerStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[300],
     minWidth: '250px',
     width: `${sideBarWidthPercent}%`,
-    height: 'calc(100vh - 3rem)',
-    zIndex: 10,
+    height: '100vh',
+    zIndex: theme.zIndex.drawer,
   },
   drawerBody: {
     border: '1px solid #ccc',
@@ -49,8 +50,16 @@ export const drawerStyles = makeStyles((theme) => ({
     display: 'none',
   },
   drawerTitle: {
-    borderBottom: '1px solid #ccc',
-    padding: '1rem',
+    alignItems: 'center',
+    backgroundColor: darken(0.05, theme.palette.primary.main),
+    display: 'flex',
+    height: '48px',
+  },
+  drawerTitleButton: {
+    color: theme.palette.primary.contrastText,
+    margin: '0 .5rem',
+    padding: 0,
+    width: '9rem',
   },
   drawerTitleCaption: {
     color: theme.palette.grey[700],

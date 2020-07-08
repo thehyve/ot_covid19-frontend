@@ -5,11 +5,16 @@ import Drawer from './Drawer';
 import { drawerStyles } from './drawerStyles';
 import DrawerHelp from './DrawerHelp';
 
-function ContentDrawer({ children, open }) {
+function ContentDrawer({ children, onToggleDrawer, open }) {
   const classes = drawerStyles();
 
   return (
-    <Drawer title="Content" open={open} position="right">
+    <Drawer
+      title="Content"
+      open={open}
+      onHide={onToggleDrawer}
+      position="right"
+    >
       {!React.Children.count(children) ? (
         <DrawerHelp
           title="No cell selected"

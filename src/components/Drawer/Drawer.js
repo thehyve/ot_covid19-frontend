@@ -1,14 +1,15 @@
 import React from 'react';
-import { Box, Paper, Typography } from '@material-ui/core';
+import { Paper, Button, Box } from '@material-ui/core';
+import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 
 import { drawerStyles } from './drawerStyles';
 
 function Drawer({
-  title,
-  subtitle,
+  caption,
   children,
-  position = 'right',
   open = false,
+  onHide,
+  position = 'left',
 }) {
   const classes = drawerStyles();
 
@@ -21,22 +22,26 @@ function Drawer({
       }}
       elevation={5}
     >
-      <Paper classes={{ root: classes.drawerTitle }} elevation={0}>
-        <Box display="flex" flexDirection="column">
-          <Typography className={classes.drawerTitleCaption} align={position}>
-            {title}
-          </Typography>
-          {subtitle && (
-            <Typography
-              className={classes.drawerSubtitleCaption}
-              align={position}
-            >
-              {subtitle}
-            </Typography>
-          )}
+      <Box>
+        <Box
+          className={classes.drawerTitle}
+          justifyContent={position === 'left' ? 'flex-start' : 'flex-end'}
+        >
+          <Button
+            className={classes.drawerTitleButton}
+            edge={position === 'right' ? 'end' : 'start'}
+            onClick={onHide}
+            style={{
+              justifyContent: position === 'left' ? 'flex-start' : 'flex-end',
+            }}
+          >
+            {position === 'left' && <ChevronLeft />}
+            Hide {caption}
+            {position === 'right' && <ChevronRight />}
+          </Button>
         </Box>
-      </Paper>
-      {React.Children.count(children) ? children : null}
+        {React.Children.count(children) ? children : null}
+      </Box>
     </Paper>
   );
 }

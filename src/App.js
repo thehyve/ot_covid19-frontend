@@ -82,12 +82,14 @@ function App() {
     <div className="App">
       <NavBar name="Platform" openLeft={filterOpen} openRight={contentOpen}>
         <DrawerButton
+          caption="filters"
           onClick={handleToggleFilterDrawer}
           open={!filterOpen}
           position="left"
         />
         <OpenTargetsTitle subtitle="COVID-19" />
         <DrawerButton
+          caption="content"
           onClick={handleToggleContentDrawer}
           open={!contentOpen}
           position="right"

@@ -40,7 +40,7 @@ function CovidTable({
 
   return (
     <>
-      <Box style={{ overflowX: 'hidden', width }}>
+      <Box style={{ paddingTop: '3rem', overflowX: 'hidden', width }}>
         <Table
           columns={preparedColumns}
           filterBy={filterBy}
