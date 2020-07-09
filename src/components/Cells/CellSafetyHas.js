@@ -6,7 +6,7 @@ import NaLabel from './NaLabel';
 import { cellStyles } from './cellStyles';
 
 function CellSafetyHas({ value }) {
-  if (!value) return <NaLabel />;
+  if (!value) return <NaLabel center />;
 
   const classes = cellStyles();
 

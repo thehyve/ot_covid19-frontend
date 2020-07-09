@@ -10,19 +10,13 @@ export const cellStyles = makeStyles((theme) => ({
   iconCell: {
     verticalAlign: 'middle',
   },
-  maxPhaseContainer: {
-    margin: 'auto',
-    textAlign: 'center',
-    fontSize: '0.8125rem',
-    lineHeight: '1.05',
-    width: '19px',
-    fontWeight: 'bold',
-  },
   naLabel: {
-    border: `1.5px solid ${theme.palette.grey[500]}`,
+    border: `1px solid ${theme.palette.grey[500]}`,
     borderRadius: '50px',
+    width: '1.25rem',
+  },
+  naLabelCenter: {
     margin: 'auto',
-    width: '1.5rem',
   },
   qualityContainer: {
     borderRadius: '25px',

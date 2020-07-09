@@ -14,7 +14,7 @@ export const CellTractability = ({
   contentTitle,
   contentDescription,
 }) => {
-  if (selectedBucket === null) return <NaLabel />;
+  if (!selectedBucket) return <NaLabel center />;
 
   const description = (
     <span>

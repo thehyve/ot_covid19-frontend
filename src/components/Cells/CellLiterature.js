@@ -6,7 +6,7 @@ import CellLink from './CellLink';
 import NaLabel from './NaLabel';
 
 function CellLiterature({ value, ensemblId }) {
-  if (!value) return <NaLabel />;
+  if (!value) return <NaLabel center />;
 
   return (
     <>

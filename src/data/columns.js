@@ -185,9 +185,7 @@ const columnGroups = (onClickCellContent) => [
         filterable: true,
         sortable: true,
         defaultFilter: { $eq: 4 },
-        renderCell: (row) => (
-          <CellMaxPhase value={row.max_phase} colorScale={qualityMidScale(4)} />
-        ),
+        renderCell: (row) => <CellMaxPhase value={row.max_phase} />,
       },
       {
         id: 'drugs_in_clinic',
