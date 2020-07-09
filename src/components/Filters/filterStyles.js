@@ -25,11 +25,11 @@ export const filterStyles = makeStyles((theme) => ({
   },
   filterTitle: {
     lineHeight: '2',
-    // marginLeft: '2rem',
   },
   filterTitleContainer: {
     display: 'flex',
     justifyContent: 'space-between',
+    paddingLeft: '.5rem',
   },
   maxPhaseButton: {
     fontWeight: 'bold',

@@ -1,10 +1,11 @@
 import React from 'react';
-import { Paper } from '@material-ui/core';
+import { Checkbox, Paper, Box } from '@material-ui/core';
 
-import { FilterHeaderBoolean } from './common';
+import { IconFalse, IconIndeterminate, IconTrue, FilterHeader } from './common';
+
 import { filterStyles } from './filterStyles';
 
-function BooleanFilter({ name, onChange, onRemove, value, ...titleProps }) {
+function BooleanFilter({ name, onChange, onRemove, value, ...headerProps }) {
   const classes = filterStyles();
 
   const handleChangeFilter = (e) => {
@@ -17,12 +18,17 @@ function BooleanFilter({ name, onChange, onRemove, value, ...titleProps }) {
 
   return (
     <Paper className={classes.filterContainer}>
-      <FilterHeaderBoolean
-        onChange={handleChangeFilter}
-        onRemove={handleRemoveFilter}
-        value={value.$eq}
-        {...titleProps}
-      />
+      <FilterHeader onRemove={handleRemoveFilter} {...headerProps} />
+      <Box className={classes.filterBodyContainerRow}>
+        <Checkbox
+          icon={IconFalse}
+          checkedIcon={IconTrue}
+          indeterminateIcon={IconIndeterminate}
+          checked={value.$eq}
+          indeterminate={typeof value === 'undefined'}
+          onChange={handleChangeFilter}
+        />
+      </Box>
     </Paper>
   );
 }
