@@ -1,21 +1,31 @@
 import React from 'react';
+import clsx from 'clsx';
 import { Button, Typography, makeStyles } from '@material-ui/core';
 
+import '../../assets/GothamRounded-Light.otf';
+import '../../assets/GothamRounded-Medium.otf';
+
 const useStyles = makeStyles({
-  titleThin: {
-    fontWeight: 300,
+  title: {
+    fontFamily: 'Gotham Rounded, Sans',
     textTransform: 'capitalize',
   },
+  titleThin: { fontWeight: 200 },
+  titleMedium: { fontWeight: 350 },
 });
 
-function OpenTargetsTitle({ subtitle }) {
+function OpenTargetsTitle({ onClick, subtitle }) {
   const classes = useStyles();
 
   return (
-    <Button to="/" color="inherit">
+    <Button color="inherit" onClick={onClick}>
       <Typography variant="h6" color="inherit">
-        <span>Open Targets </span>
-        <span className={classes.titleThin}>{subtitle}</span>
+        <span className={clsx(classes.title, classes.titleMedium)}>
+          Open Targets{' '}
+        </span>
+        <span className={clsx(classes.title, classes.titleThin)}>
+          {subtitle}
+        </span>
       </Typography>
     </Button>
   );

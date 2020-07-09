@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 
 import Logo from '../assets/logo';
-import { setLS } from '../utils';
+import { setLS, getLS } from '../utils';
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function UpdatingModal({ open, onClose, updating }) {
+function UpdatingModal({ open, onClose, updating, showWelcomeCheck }) {
   const [dontShowWelcome, setDontShowWelcome] = useState(false);
   const classes = useStyles();
 
@@ -136,25 +136,29 @@ function UpdatingModal({ open, onClose, updating }) {
             ) : (
               <Fade in={!updating}>
                 <Box className={classes.readyContainer}>
-                  <Typography variant="caption" className={classes.readyText}>
-                    Data is ready.
-                  </Typography>
+                  {showWelcomeCheck && (
+                    <Typography variant="caption" className={classes.readyText}>
+                      Data is ready.
+                    </Typography>
+                  )}
                   <Button onClick={handleClose} color="primary">
-                    Start
+                    {showWelcomeCheck ? 'Start' : 'Continue'}
                   </Button>
-                  <FormControlLabel
-                    classes={{
-                      root: classes.dontShowWelcomeRoot,
-                      label: classes.dontShowWelcomeLabel,
-                    }}
-                    control={
-                      <Checkbox
-                        checked={dontShowWelcome}
-                        onChange={handleChangeDontShowWelcome}
-                      />
-                    }
-                    label="Don't show this message"
-                  />
+                  {showWelcomeCheck && (
+                    <FormControlLabel
+                      classes={{
+                        root: classes.dontShowWelcomeRoot,
+                        label: classes.dontShowWelcomeLabel,
+                      }}
+                      control={
+                        <Checkbox
+                          checked={dontShowWelcome}
+                          onChange={handleChangeDontShowWelcome}
+                        />
+                      }
+                      label="Don't show this message"
+                    />
+                  )}
                 </Box>
               </Fade>
             )}

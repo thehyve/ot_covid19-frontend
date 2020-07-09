@@ -28,6 +28,7 @@ function App() {
   const [filterOpen, setFilterOpen] = useState(true);
   const [updating, setUpdating] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
+  const [showWelcomeCheck, setShowWelcomeCheck] = useState(true);
   const [indexing, setIndexing] = useState(false);
   const [indexingProgress, setIndexingProgress] = useState(0);
   const [ready, setReady] = useState(false);
@@ -36,6 +37,11 @@ function App() {
     if (reason === 'clickaway') return;
 
     setIndexing(false);
+  };
+
+  const handleOpenModal = () => {
+    setShowWelcomeCheck(false);
+    setShowWelcome(true);
   };
 
   const handleCloseModal = () => {
@@ -100,7 +106,7 @@ function App() {
           open={!filterOpen}
           position="left"
         />
-        <OpenTargetsTitle subtitle="COVID-19" />
+        <OpenTargetsTitle onClick={handleOpenModal} subtitle="COVID-19" />
         <DrawerButton
           caption="content"
           onClick={handleToggleContentDrawer}
@@ -136,6 +142,7 @@ function App() {
       <WelcomeModal
         open={showWelcome}
         onClose={handleCloseModal}
+        showWelcomeCheck={showWelcomeCheck}
         updating={updating}
       />
       <IndexingSnackbar
