@@ -1,9 +1,10 @@
 import React from 'react';
-import { Box, colors, Tooltip, makeStyles, Paper } from '@material-ui/core';
+import { Box, colors, makeStyles, Paper } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrosshairs, faFlask } from '@fortawesome/free-solid-svg-icons';
 import { ToggleButton } from '@material-ui/lab';
 
+import Tooltip from '../Table/Tooltip';
 import { FilterHeader } from './common';
 import { filterStyles } from './filterStyles';
 
@@ -59,11 +60,7 @@ function SafetySourceFilter({
 
     return (
       <Box>
-        <Tooltip
-          title={title}
-          arrow
-          classes={{ tooltip: classes.tooltip, arrow: classes.tooltipArrow }}
-        >
+        <Tooltip title={title}>
           <ToggleButton
             onChange={handleChange}
             value={title}

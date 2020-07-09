@@ -6,7 +6,6 @@ import {
   TableRow,
   TableCell,
   TableSortLabel,
-  Tooltip,
   withWidth,
   IconButton,
 } from '@material-ui/core';
@@ -15,6 +14,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import clsx from 'clsx';
 import _ from 'lodash';
 
+import Tooltip from './Tooltip';
 import useDynamicColspan from '../../hooks/useDynamicColspans';
 import { getHiddenBreakpoints } from './utils';
 import { tableStyles } from './tableStyles';
@@ -53,39 +53,38 @@ function HeaderCell({
   const headerToolbar = (
     <Box className={classes.cellHeaderToolbar}>
       {tooltip && (
-        <Tooltip
-          arrow
-          classes={{
-            tooltip: classes.cellHeaderTooltip,
-            arrow: classes.cellHeaderTooltipArrow,
-          }}
-          interactive
-          title={tooltip}
-        >
+        <Tooltip title={tooltip}>
           <TooltipIcon
             className={clsx(classes.cellHeaderIcon, classes.cellHeaderIconHelp)}
           />
         </Tooltip>
       )}
       {sortable && (
-        <TableSortLabel
-          classes={{
-            root: classes.cellHeaderIcon,
-            active: classes.cellHeaderIconActive,
-          }}
-          {...sortParams}
-        />
+        <Tooltip title="Sort the table using this column">
+          <TableSortLabel
+            classes={{
+              root: classes.cellHeaderIcon,
+              active: classes.cellHeaderIconActive,
+            }}
+            {...sortParams}
+          />
+        </Tooltip>
       )}
       {filterable && (
-        <IconButton
-          className={clsx(classes.cellHeaderIcon, classes.cellHeaderIconFilter)}
-          disableRipple
-          onClick={handleRequestFilter}
-        >
-          <FilterListIcon
-            className={clsx(isFiltered && classes.cellHeaderIconActive)}
-          />
-        </IconButton>
+        <Tooltip title="Create a filter with this column">
+          <IconButton
+            className={clsx(
+              classes.cellHeaderIcon,
+              classes.cellHeaderIconFilter
+            )}
+            disableRipple
+            onClick={handleRequestFilter}
+          >
+            <FilterListIcon
+              className={clsx(isFiltered && classes.cellHeaderIconActive)}
+            />
+          </IconButton>
+        </Tooltip>
       )}
     </Box>
   );

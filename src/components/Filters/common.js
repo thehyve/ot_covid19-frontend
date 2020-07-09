@@ -1,11 +1,11 @@
 import React from 'react';
+
 import {
   Box,
   Checkbox,
   colors,
   IconButton,
   FormControlLabel,
-  Tooltip,
   Typography,
 } from '@material-ui/core';
 
@@ -15,6 +15,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import HighlightOffTwoToneIcon from '@material-ui/icons/HighlightOffTwoTone';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
+import Tooltip from '../Table/Tooltip';
 import { filterStyles } from './filterStyles';
 
 export const IconFalse = (
@@ -30,16 +31,8 @@ export const IconIndeterminate = (
 );
 
 function RemoveFilter({ onRemove }) {
-  const classes = filterStyles();
   return (
-    <Tooltip
-      title="Remove filter"
-      arrow
-      classes={{
-        tooltip: classes.tooltip,
-        arrow: classes.tooltipArrow,
-      }}
-    >
+    <Tooltip title="Remove filter">
       <IconButton onClick={onRemove}>
         <ClearIcon />
       </IconButton>

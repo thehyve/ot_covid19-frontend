@@ -1,9 +1,10 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Box, colors, Link, Tooltip, makeStyles } from '@material-ui/core';
+import { Box, colors, Link, makeStyles } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrosshairs, faFlask } from '@fortawesome/free-solid-svg-icons';
 
+import Tooltip from '../Table/Tooltip';
 import { cellStyles } from './cellStyles';
 
 const usesStyles = (etPresent, tsPresent) =>
@@ -20,14 +21,7 @@ function CellSafetySource({ value, accession }) {
 
   const IconWrapper = ({ title, children, present }) =>
     present ? (
-      <Tooltip
-        title={title}
-        arrow
-        classes={{
-          tooltip: classes.tooltip,
-          arrow: classes.tooltipArrow,
-        }}
-      >
+      <Tooltip title={title}>
         <Link
           href={`https://alpha.targetvalidation.org/target/${accession}`}
           target="blank"

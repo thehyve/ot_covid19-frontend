@@ -53,19 +53,4 @@ export const filterStyles = makeStyles((theme) => ({
     width: '100%',
     justifyContent: 'space-between',
   },
-  // The !important tags solve Stylesheet conflicts on production build bug.
-  tooltip: {
-    backgroundColor: `${theme.palette.common.white} !important`,
-    border: `1px solid ${theme.palette.grey[300]} !important`,
-    color: `${theme.palette.text.primary} !important`,
-    boxShadow: `${theme.shadows[1]} !important`,
-    fontSize: `11 !important`,
-  },
-  // The !important tags solve Stylesheet conflicts on production build bug.
-  tooltipArrow: {
-    '&:before': {
-      backgroundColor: `${theme.palette.common.white} !important`,
-      border: `1px solid ${theme.palette.grey[300]} !important`,
-    },
-  },
 }));
