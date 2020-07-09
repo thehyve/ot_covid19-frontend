@@ -7,7 +7,7 @@ import DrawerButton from './components/Drawer/DrawerButton';
 import ContentDrawer from './components/Drawer/ContentDrawer';
 import CovidTable from './components/CovidTable';
 import FilterDrawer from './components/Drawer/FilterDrawer';
-import UpdatingModal from './components/UpdatingModal';
+import WelcomeModal from './components/WelcomeModal';
 import IndexingSnackbar from './components/IndexingSnackbar';
 
 import { createIndex, indexes } from './db/indexes';
@@ -27,6 +27,7 @@ function App() {
   ]);
   const [filterOpen, setFilterOpen] = useState(true);
   const [updating, setUpdating] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
   const [indexing, setIndexing] = useState(false);
   const [indexingProgress, setIndexingProgress] = useState(0);
   const [ready, setReady] = useState(false);
@@ -35,6 +36,10 @@ function App() {
     if (reason === 'clickaway') return;
 
     setIndexing(false);
+  };
+
+  const handleCloseModal = () => {
+    setShowWelcome(false);
   };
 
   const handleSetContent = (content) => {
@@ -82,6 +87,7 @@ function App() {
       setIndexing(false);
     }
 
+    setShowWelcome(!getLS('showWelcome'));
     checkLocalData();
   }, []);
 
@@ -127,7 +133,11 @@ function App() {
           {content}
         </ContentDrawer>
       </Box>
-      <UpdatingModal open={updating} />
+      <WelcomeModal
+        open={showWelcome}
+        onClose={handleCloseModal}
+        updating={updating}
+      />
       <IndexingSnackbar
         open={indexing}
         onClose={handleCloseIndexing}
