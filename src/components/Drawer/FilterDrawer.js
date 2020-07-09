@@ -4,9 +4,26 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 
 import Drawer from './Drawer';
 import DrawerHelp from './DrawerHelp';
-import { drawerStyles } from './drawerStyles';
 import { addFilter, remFilter } from '../Filters/utils';
+import { drawerStyles } from './drawerStyles';
 import { filters } from '../Filters/filters';
+import Tooltip from '../Table/Tooltip';
+
+function FilterJoin({ type = 'AND' }) {
+  const classes = drawerStyles();
+
+  const filterCaption = (type) =>
+    ({
+      AND: 'The filter above and the filter below must both match',
+      OR: 'Either the filter above or the filter below must match',
+    }[type]);
+
+  return (
+    <Tooltip title={filterCaption(type)}>
+      <Box className={classes.filterJoin}>{type}</Box>
+    </Tooltip>
+  );
+}
 
 function FilterDrawer({ filterBy, onSetFilterBy, onToggleDrawer, open }) {
   const classes = drawerStyles();
@@ -47,7 +64,12 @@ function FilterDrawer({ filterBy, onSetFilterBy, onToggleDrawer, open }) {
         />
       ) : (
         <Box className={classes.drawerBodyNoBorder}>
-          {filterBy.map((f) => preparedFilters[Object.keys(f)[0]])}
+          {filterBy.map((f, i) => (
+            <React.Fragment key={i}>
+              {preparedFilters[Object.keys(f)[0]]}
+              {i < filterBy.length - 1 && <FilterJoin />}
+            </React.Fragment>
+          ))}
         </Box>
       )}
     </Drawer>
@@ -55,38 +77,3 @@ function FilterDrawer({ filterBy, onSetFilterBy, onToggleDrawer, open }) {
 }
 
 export default FilterDrawer;
-
-/*<BooleanFilter
-          name="Implicated_in_viral_infection"
-          value={getFilter(filter, 'Implicated_in_viral_infection')}
-          showRemove
-          onChange={handleChangeFilter}
-          onRemove={handleRemoveFilter}
-          title="Implicated in viral infection"
-          description={
-            <span>
-              Target does not interact with a{' '}
-              <strong>CoV-SARS-X protein</strong> but interacts with another
-              virus.
-            </span>
-          }
-        />
-        <MultiListFilter
-          list={biotypeList}
-          name="biotype"
-          value={getFilter(filter, 'biotype')}
-          showRemove
-          onChange={handleChangeFilter}
-          onRemove={handleRemoveFilter}
-          title="Gene biotype"
-          description={<span>Select biotypes to show relevant entries.</span>}
-        />
-        <StringFilter
-          name="uniprot_ids"
-          value={getFilter(filter, 'uniprot')}
-          showRemove
-          onChange={handleChangeFilter}
-          onRemove={handleRemoveFilter}
-          title="UniProt ID"
-          description={<span>Write a UniProt ID to search in the list.</span>}
-        /> */

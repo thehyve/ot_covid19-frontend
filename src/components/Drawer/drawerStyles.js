@@ -1,5 +1,5 @@
-import { darken } from 'polished';
-import { makeStyles } from '@material-ui/core';
+import { darken, lighten } from 'polished';
+import { colors, makeStyles } from '@material-ui/core';
 import { sideBarWidthPercent } from '../../config';
 
 export const drawerStyles = makeStyles((theme) => ({
@@ -70,5 +70,13 @@ export const drawerStyles = makeStyles((theme) => ({
     color: theme.palette.grey[400],
     fontSize: '0.8rem',
     fontStyle: 'italic',
+  },
+  filterJoin: {
+    width: '3rem',
+    margin: '.5rem auto',
+    textAlign: 'center',
+    border: `2px solid ${colors.green[500]}`,
+    borderRadius: '25px',
+    backgroundColor: lighten(0.3, colors.green[500]),
   },
 }));

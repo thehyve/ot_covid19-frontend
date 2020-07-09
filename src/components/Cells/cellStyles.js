@@ -1,4 +1,4 @@
-import { makeStyles, colors } from '@material-ui/core';
+import { colors, makeStyles } from '@material-ui/core';
 
 export const cellStyles = makeStyles((theme) => ({
   booleanIconTrue: {
