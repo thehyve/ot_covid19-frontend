@@ -4,6 +4,7 @@ import { darken } from 'polished';
 
 import { FilterHeader } from './common';
 import { filterStyles } from './filterStyles';
+import { mapMaxPhase } from '../../data/maps';
 import { qualityMidScale } from '../../data/columns';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 
@@ -12,6 +13,10 @@ function MaxPhaseFilter({ name, onChange, onRemove, value, ...headerProps }) {
   const colorScale = qualityMidScale(4);
 
   const handleChangeFilter = (_, value) => {
+    if (!value) {
+      return;
+    }
+
     onChange({ [name]: { $eq: value } });
   };
 
@@ -41,7 +46,7 @@ function MaxPhaseFilter({ name, onChange, onRemove, value, ...headerProps }) {
                 style={{ backgroundColor }}
                 value={maxPhase}
               >
-                {maxPhase}
+                {mapMaxPhase(maxPhase)}
               </ToggleButton>
             );
           })}

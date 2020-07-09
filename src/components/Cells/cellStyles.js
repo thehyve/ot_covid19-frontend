@@ -15,7 +15,7 @@ export const cellStyles = makeStyles((theme) => ({
     textAlign: 'center',
     fontSize: '0.8125rem',
     lineHeight: '1.05',
-    width: '1.0625rem',
+    width: '19px',
     fontWeight: 'bold',
   },
   naLabel: {

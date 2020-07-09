@@ -32,6 +32,8 @@ export const filterStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
   maxPhaseButton: {
+    fontWeight: 'bold',
+    width: '3rem',
     padding: '.25rem .75rem',
   },
   multiListAutocomplete: {
