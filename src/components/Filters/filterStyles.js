@@ -50,7 +50,8 @@ export const filterStyles = makeStyles((theme) => ({
     width: '100%',
   },
   toggleButton: {
-    padding: 0,
+    // CRA build bugfix
+    padding: '0 !important',
   },
   toggleButtonContent: {
     display: 'flex',
