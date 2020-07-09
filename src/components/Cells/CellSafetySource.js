@@ -1,26 +1,22 @@
 import React from 'react';
+import clsx from 'clsx';
 import { Box, colors, Link, Tooltip, makeStyles } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrosshairs, faFlask } from '@fortawesome/free-solid-svg-icons';
-import { tableStyles } from '../Table/tableStyles';
+
+import { cellStyles } from './cellStyles';
 
 const usesStyles = (etPresent, tsPresent) =>
   makeStyles((theme) => ({
-    et: {
-      color: etPresent ? theme.primary : colors.grey[200],
-      fontSize: '1.25rem',
-    },
-    ts: {
-      color: tsPresent ? theme.primary : colors.grey[200],
-      fontSize: '1.25rem',
-    },
+    et: { color: etPresent ? theme.primary : colors.grey[200] },
+    ts: { color: tsPresent ? theme.primary : colors.grey[200] },
   }));
 
 function CellSafetySource({ value, accession }) {
   const etPresent = value?.includes('experimental_toxicity');
   const tsPresent = value?.includes('known_target_safety');
-  const classes = usesStyles(etPresent, tsPresent)();
-  const tableClasses = tableStyles();
+  const classes = cellStyles();
+  const presenceClasses = usesStyles(etPresent, tsPresent)();
 
   const IconWrapper = ({ title, children, present }) =>
     present ? (
@@ -28,8 +24,8 @@ function CellSafetySource({ value, accession }) {
         title={title}
         arrow
         classes={{
-          tooltip: tableClasses.cellHeaderTooltip,
-          arrow: tableClasses.cellHeaderTooltipArrow,
+          tooltip: classes.tooltip,
+          arrow: classes.tooltipArrow,
         }}
       >
         <Link
@@ -50,14 +46,18 @@ function CellSafetySource({ value, accession }) {
         present={etPresent}
       >
         <Box>
-          <FontAwesomeIcon className={classes.et} icon={faFlask} fixedWidth />
+          <FontAwesomeIcon
+            className={clsx(presenceClasses.et, classes.safetySourceIcon)}
+            icon={faFlask}
+            fixedWidth
+          />
         </Box>
       </IconWrapper>
 
       <IconWrapper title="Target safety effects" present={tsPresent}>
         <Box>
           <FontAwesomeIcon
-            className={classes.ts}
+            className={clsx(presenceClasses.ts, classes.safetySourceIcon)}
             icon={faCrosshairs}
             fixedWidth
           />

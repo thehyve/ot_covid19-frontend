@@ -3,7 +3,7 @@ import { Box, Link, Typography } from '@material-ui/core';
 import { darken } from 'polished';
 
 import ListTitle from '../Drawer/ListTitle';
-import { naLabel } from '../../utils';
+import NaLabel from './NaLabel';
 import CellQuality from './CellQuality';
 
 export const CellTractability = ({
@@ -14,8 +14,7 @@ export const CellTractability = ({
   contentTitle,
   contentDescription,
 }) => {
-  if (selectedBucket === naLabel || selectedBucket === null)
-    return <>{naLabel}</>;
+  if (selectedBucket === null) return <NaLabel />;
 
   const description = (
     <span>

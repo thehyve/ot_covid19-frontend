@@ -8,6 +8,7 @@ export const tableStyles = makeStyles((theme) => ({
     '&:last-child': {
       paddingRight: '1rem',
     },
+    height: '2.3125rem',
   },
   cellBody: {
     padding: '.25rem .5rem',

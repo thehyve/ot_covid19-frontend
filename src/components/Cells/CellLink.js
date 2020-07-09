@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from '@material-ui/core';
 
-import { naLabel } from '../../utils';
+import NaLabel from './NaLabel';
 import { resolverUrl } from '../../config';
 
 function CellLink({ url, prefix, accession, label = accession }) {
@@ -22,7 +22,7 @@ function CellLink({ url, prefix, accession, label = accession }) {
       </Link>
     );
 
-  return naLabel;
+  return <NaLabel />;
 }
 
 export default CellLink;

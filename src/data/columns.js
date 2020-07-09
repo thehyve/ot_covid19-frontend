@@ -2,25 +2,22 @@ import React from 'react';
 import chroma from 'chroma-js';
 
 import CellArray from '../components/Cells/CellArray';
+import CellBoolean from '../components/Cells/CellBoolean';
 import CellDescription from '../components/Cells/CellDescription';
+import CellInvitro from '../components/Cells/CellInvitro';
 import CellLink from '../components/Cells/CellLink';
 import CellLiterature from '../components/Cells/CellLiterature';
-import CellBoolean from '../components/Cells/CellBoolean';
-import CellInvitro from '../components/Cells/CellInvitro';
+import CellMaxPhase from '../components/Cells/CellMaxPhase';
 import CellRegulation from '../components/Cells/CellRegulation';
-import CellQuality from '../components/Cells/CellQuality';
 import CellSafetyHas from '../components/Cells/CellSafetyHas';
 import CellSafetySource from '../components/Cells/CellSafetySource';
 import CellTractability from '../components/Cells/CellTractability';
+import NaLabel from '../components/Cells/NaLabel';
 
 import * as maps from './maps';
 import * as tooltips from './tooltips';
 
-import {
-  comparatorFromAccessorLength,
-  comparatorFromMaps,
-  naLabel,
-} from '../utils';
+import { comparatorFromAccessorLength, comparatorFromMaps } from '../utils';
 
 const qualityScale = (len) =>
   chroma.scale(['#c6e3c7', '#ffffea', '#dcdcdc' /*'#fbc1af'*/]).colors(len);
@@ -189,7 +186,7 @@ const columnGroups = (onClickCellContent) => [
         sortable: true,
         defaultFilter: { $eq: 4 },
         renderCell: (row) => (
-          <CellQuality value={row.max_phase} colorScale={qualityMidScale(4)} />
+          <CellMaxPhase value={row.max_phase} colorScale={qualityMidScale(4)} />
         ),
       },
       {
@@ -302,7 +299,7 @@ const columnGroups = (onClickCellContent) => [
           'hpa_rna_tissue_distribution',
           maps.mapTissueDistribution
         ),
-        renderCell: (row) => row.hpa_rna_tissue_distribution || naLabel,
+        renderCell: (row) => row.hpa_rna_tissue_distribution || <NaLabel />,
       },
       {
         id: 'hpa_rna_tissue_specificity',
@@ -311,7 +308,7 @@ const columnGroups = (onClickCellContent) => [
         filterable: true,
         defaultFilter: { $in: ['Tissue enriched'] },
         sortable: true,
-        renderCell: (row) => row.hpa_rna_tissue_specificity || naLabel,
+        renderCell: (row) => row.hpa_rna_tissue_specificity || <NaLabel />,
       },
       {
         id: 'hpa_rna_specific_tissues',

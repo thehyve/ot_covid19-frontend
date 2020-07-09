@@ -6,6 +6,7 @@ import {
   TableBody,
   TablePagination,
 } from '@material-ui/core';
+import clsx from 'clsx';
 
 import DataDownloader from './DataDownloader';
 import GlobalFilter from './GlobalFilter';
@@ -153,7 +154,7 @@ function Table({
           <Grid item xs={12} className={classes.tableWrapper}>
             <MUITable
               classes={{
-                root: `${classes.table} ${fixed ? classes.tableFixed : ''}`,
+                root: clsx(classes.table, fixed && classes.tableFixed),
               }}
             >
               <TableHeader

@@ -1,16 +1,17 @@
 import React from 'react';
 import { Box, Paper } from '@material-ui/core';
+import { darken } from 'polished';
 
-import CellQuality from '../Cells/CellQuality';
 import { FilterHeader } from './common';
 import { filterStyles } from './filterStyles';
 import { qualityMidScale } from '../../data/columns';
+import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 
 function MaxPhaseFilter({ name, onChange, onRemove, value, ...headerProps }) {
   const classes = filterStyles();
   const colorScale = qualityMidScale(4);
 
-  const handleChangeFilter = (value) => {
+  const handleChangeFilter = (_, value) => {
     onChange({ [name]: { $eq: value } });
   };
 
@@ -22,15 +23,29 @@ function MaxPhaseFilter({ name, onChange, onRemove, value, ...headerProps }) {
     <Paper className={classes.filterContainer}>
       <FilterHeader onRemove={handleRemoveFilter} {...headerProps} />
       <Box className={classes.filterBodyContainerRow}>
-        {[1, 2, 3, 4].map((maxPhase) => (
-          <CellQuality
-            colorScale={colorScale}
-            key={maxPhase}
-            onClick={handleChangeFilter}
-            selected={maxPhase === value.$eq}
-            value={maxPhase}
-          />
-        ))}
+        <ToggleButtonGroup
+          exclusive
+          onChange={handleChangeFilter}
+          value={value.$eq}
+        >
+          {[1, 2, 3, 4].map((maxPhase, i) => {
+            const selected = maxPhase === value.$eq;
+            const backgroundColor = selected
+              ? darken(0.3, colorScale[i])
+              : colorScale[i];
+            return (
+              <ToggleButton
+                className={classes.maxPhaseButton}
+                key={maxPhase}
+                selected={selected}
+                style={{ backgroundColor }}
+                value={maxPhase}
+              >
+                {maxPhase}
+              </ToggleButton>
+            );
+          })}
+        </ToggleButtonGroup>
       </Box>
     </Paper>
   );

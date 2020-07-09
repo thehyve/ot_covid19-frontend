@@ -3,7 +3,7 @@ import _ from 'lodash';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import ListTitle from '../Drawer/ListTitle';
-import { naLabel } from '../../utils';
+import NaLabel from './NaLabel';
 import {
   ExpansionPanel,
   ExpansionPanelSummary,
@@ -22,7 +22,7 @@ export const CellInvitro = ({
   contentTitle = '',
   contentDescription = '',
 }) => {
-  if (!entries) return <>{naLabel}</>;
+  if (!entries) return <NaLabel />;
 
   const entryGroups = prepareInvitroCovidActivity(entries);
   const entryCount = entries.split(';').length;

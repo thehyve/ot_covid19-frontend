@@ -81,9 +81,6 @@ export const comparatorFromMaps = (accessor, map, settings = {}) => (a, b) => {
   return settings.ascending ? bValue - aValue : aValue - bValue;
 };
 
-// label stuff
-export const naLabel = 'N/A';
-
 // client data versioning
 export const getLS = (key, _default) => localStorage.getItem(key) || _default;
 export const setLS = (key, value) => localStorage.setItem(key, value);

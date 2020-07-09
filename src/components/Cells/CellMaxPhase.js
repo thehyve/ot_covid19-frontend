@@ -4,14 +4,14 @@ import { darken } from 'polished';
 
 import NaLabel from './NaLabel';
 import { cellStyles } from './cellStyles';
+import { mapMaxPhase } from '../../data/maps';
 
-function CellQuality({ value, colorScale, onClick, selected }) {
+function CellMaxPhase({ value, colorScale, onClick }) {
+  const classes = cellStyles();
   if (!value) return <NaLabel />;
 
-  const classes = cellStyles();
   const backgroundColor = colorScale[value - 1] || '#fff';
-  const borderColor = darken(0.33, backgroundColor);
-  const border = `2px solid ${borderColor}`;
+  const border = `2px solid ${darken(0.33, backgroundColor)}`;
 
   const handleClick = () => {
     onClick(value);
@@ -29,13 +29,13 @@ function CellQuality({ value, colorScale, onClick, selected }) {
   return (
     <BoxWrapper onClick={onClick}>
       <Box
-        className={classes.qualityContainer}
+        className={classes.maxPhaseContainer}
         style={{ backgroundColor, border }}
       >
-        {value}
+        {mapMaxPhase(value)}
       </Box>
     </BoxWrapper>
   );
 }
 
-export default CellQuality;
+export default CellMaxPhase;

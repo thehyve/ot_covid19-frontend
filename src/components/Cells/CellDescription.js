@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from '@material-ui/core';
 
+import NaLabel from './NaLabel';
 import { mapSource } from '../../data/maps';
-import { naLabel, splitStringInBrackets } from '../../utils';
+import { splitStringInBrackets } from '../../utils';
 
 export const CellDescription = ({ description }) => {
-  if (!description) return <>{naLabel}</>;
+  if (!description) return <NaLabel />;
 
   const [label, source] = splitStringInBrackets(description);
   const sourcePair = source?.split(';');

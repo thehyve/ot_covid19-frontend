@@ -1,16 +1,23 @@
 import React from 'react';
 import _ from 'lodash';
 
-import { naLabel, splitStringInParentheses } from '../utils';
+import { splitStringInParentheses } from '../utils';
 import { Link } from '@material-ui/core';
+
+export const mapMaxPhase = (value) =>
+  ({
+    1: String.fromCodePoint(8544),
+    2: String.fromCodePoint(8545),
+    3: String.fromCodePoint(8546),
+    4: String.fromCodePoint(8547),
+  }[value]);
 
 export const mapScientificName = (str) =>
   ({
     'Homo sapiens': 'Human',
     'Severe acute respiratory syndrome-related coronavirus': 'CoV-SARS-1',
     'Severe acute respiratory syndrome coronavirus 2': 'CoV-SARS-2',
-    [naLabel]: naLabel,
-  }[str?.trim() || naLabel]);
+  }[str?.trim()]);
 
 export const mapTissueDistribution = (str) =>
   ({
@@ -19,8 +26,7 @@ export const mapTissueDistribution = (str) =>
     'Detected in some': 20,
     'Detected in many': 30,
     'Detected in all': 40,
-    [naLabel]: naLabel,
-  }[str?.trim() || naLabel]);
+  }[str?.trim()]);
 
 export const mapTractabilityTopBucketSM = (str) =>
   ({
@@ -33,8 +39,7 @@ export const mapTractabilityTopBucketSM = (str) =>
     'Targets with drugEBIlity between zero and 0.7': 6,
     'Targets with ligands': 7,
     'Targets with a predicted Ro5 druggable domain (druggable genome)': 8,
-    [naLabel]: naLabel,
-  }[str?.trim() || naLabel]);
+  }[str?.trim()]);
 
 export const tractabilityTopBucketSMCaptions = [
   <span>Targets with drugs in phase IV.</span>,
@@ -77,9 +82,8 @@ export const mapTractabilityTopBucketAB = (str) =>
     'GO cell component - medium confidence': 8,
     'Targets with GO cell component terms plasma membrane or secreted with low or unknown confidence': 8,
     'Targets located in the plasma membrane': 9,
-    'Human Protein Atlas - high confidence': naLabel,
-    [naLabel]: naLabel,
-  }[str?.trim() || naLabel]);
+    'Human Protein Atlas - high confidence': 4,
+  }[str?.trim()]);
 
 export const tractabilityTopBucketABCaptions = [
   <span>Targets with drugs in phase IV.</span>,
@@ -120,8 +124,7 @@ export const mapTractabilityTopBucketOther = (str) =>
     'Targets with drugs in phase IV': 1,
     'Targets with drugs in phase II or phase III': 2,
     'Targets with drugs in phase 0 or phase I': 3,
-    [naLabel]: naLabel,
-  }[str?.trim() || naLabel]);
+  }[str?.trim()]);
 
 export const tractabilityTopBucketOtherCaptions = [
   <span>Targets with drugs in phase IV.</span>,

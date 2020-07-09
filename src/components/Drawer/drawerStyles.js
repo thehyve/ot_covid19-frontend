@@ -12,7 +12,7 @@ export const drawerStyles = makeStyles((theme) => ({
   },
   drawerBody: {
     border: '1px solid #ccc',
-    height: 'calc(100vh - 7.5rem)',
+    height: 'calc(100vh - 3.5rem)',
     margin: '.25rem',
     overflowY: 'auto',
   },
@@ -24,7 +24,7 @@ export const drawerStyles = makeStyles((theme) => ({
     padding: '0 .5rem',
   },
   drawerBodyNoBorder: {
-    height: 'calc(100vh - 7.5rem)',
+    height: 'calc(100vh - 3.5rem)',
     margin: '.25rem',
     overflowY: 'auto',
   },

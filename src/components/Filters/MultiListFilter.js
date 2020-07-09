@@ -10,9 +10,9 @@ import {
 } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 
+import NaLabel from '../Cells/NaLabel';
 import { FilterHeader } from './common';
 import { filterStyles } from './filterStyles';
-import { naLabel } from '../../utils';
 
 function MultiListFilter({
   list,
@@ -65,7 +65,7 @@ function MultiListFilter({
         <Autocomplete
           className={classes.multiListAutocomplete}
           disableClearable
-          getOptionLabel={(option) => (option ? option : naLabel)}
+          getOptionLabel={(option) => (option ? option : <NaLabel />)}
           multiple
           onChange={handleChangeFilter}
           options={list}

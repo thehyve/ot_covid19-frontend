@@ -1,6 +1,7 @@
 import React from 'react';
 import { List, ListItem, Link } from '@material-ui/core';
 
+import NaLabel from './NaLabel';
 import CellLink from './CellLink';
 import ListTitle from '../Drawer/ListTitle';
 
@@ -11,7 +12,7 @@ export const CellArray = ({
   contentTitle = '',
   contentDescription = '',
 }) => {
-  if (!array || !array.length) return <>No entries</>;
+  if (!array || !array.length) return <NaLabel />;
 
   if (array.length <= 1)
     return link ? <CellLink {...link} accession={array[0]} /> : array[0];

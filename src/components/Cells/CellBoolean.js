@@ -1,23 +1,30 @@
 import React from 'react';
-import { colors } from '@material-ui/core';
 import CheckCircleTwoTone from '@material-ui/icons/CheckCircleTwoTone';
 import HighlightOffTwoToneIcon from '@material-ui/icons/HighlightOffTwoTone';
 
+import clsx from 'clsx';
 import CellLink from './CellLink';
-import { naLabel } from '../../utils';
+import NaLabel from './NaLabel';
+import { cellStyles } from './cellStyles';
 
 const IconWrapper = ({ link, children }) =>
   link ? <CellLink {...link} label={children} /> : children;
 
 function CellBoolean({ value, link, fillNa = false }) {
-  if (value === null && !fillNa) return <>{naLabel}</>;
+  const classes = cellStyles();
+
+  if (value === null && !fillNa) return <NaLabel />;
 
   return (
     <IconWrapper link={link}>
       {value ? (
-        <CheckCircleTwoTone style={{ color: colors.green[500] }} />
+        <CheckCircleTwoTone
+          className={clsx(classes.iconCell, classes.booleanIconTrue)}
+        />
       ) : (
-        <HighlightOffTwoToneIcon style={{ color: colors.deepOrange.A400 }} />
+        <HighlightOffTwoToneIcon
+          className={clsx(classes.iconCell, classes.booleanIconFalse)}
+        />
       )}
     </IconWrapper>
   );

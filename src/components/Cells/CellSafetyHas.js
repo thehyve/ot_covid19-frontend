@@ -1,11 +1,20 @@
 import React from 'react';
+import clsx from 'clsx';
 import WarningTwoToneIcon from '@material-ui/icons/WarningTwoTone';
-import { colors } from '@material-ui/core';
+
+import NaLabel from './NaLabel';
+import { cellStyles } from './cellStyles';
 
 function CellSafetyHas({ value }) {
-  return value ? (
-    <WarningTwoToneIcon style={{ color: colors.yellow[800] }} />
-  ) : null;
+  if (!value) return <NaLabel />;
+
+  const classes = cellStyles();
+
+  return (
+    <WarningTwoToneIcon
+      className={clsx(classes.iconCell, classes.safetyHasIcon)}
+    />
+  );
 }
 
 export default CellSafetyHas;

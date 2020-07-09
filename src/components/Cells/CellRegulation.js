@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Chip } from '@material-ui/core';
+import { Chip } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowAltCircleUp,
@@ -7,17 +7,11 @@ import {
   faDotCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
+import { cellStyles } from './cellStyles';
 import { splitStringInParentheses } from '../../utils';
 
-const usesStyles = makeStyles((theme) => ({
-  cellRegulationIcon: {
-    color: theme.palette.grey[700],
-    fontSize: '1.25rem',
-  },
-}));
-
 export function CellRegulationUnit({ direction, time }) {
-  const classes = usesStyles();
+  const classes = cellStyles();
 
   const getIcon = (direction) =>
     ({
@@ -30,7 +24,7 @@ export function CellRegulationUnit({ direction, time }) {
     <Chip
       icon={
         <FontAwesomeIcon
-          className={classes.cellRegulationIcon}
+          className={classes.regulationIcon}
           icon={getIcon(direction)}
         />
       }
