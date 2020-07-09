@@ -1,12 +1,14 @@
 import React from 'react';
 
-import BooleanFilter from './BooleanFilter';
 import IntegerFilter from './IntegerFilter';
-import ListFilter from './ListFilter';
-import MaxPhaseFilter from './MaxPhaseFilter';
 import MultiListFilter from './MultiListFilter';
 import SafetySourceFilter from './SafetySourceFilter';
 import StringFilter from './StringFilter';
+import ToggleFilter from './ToggleFilter';
+
+import NaLabel from '../Cells/NaLabel';
+import { mapMaxPhase } from '../../data/maps';
+import { IconTrue, IconFalse, IconExists, IconWarning } from '../common';
 
 import * as tooltips from '../../data/tooltips';
 
@@ -19,11 +21,20 @@ import {
   tissueSpecificityList,
 } from '../../data/maps';
 
+const trueFalseOptions = [
+  { label: <IconTrue />, tooltip: 'True', value: { $eq: true } },
+  { label: <IconFalse />, tooltip: 'False', value: { $eq: false } },
+];
+
+const presentAbsentOptions = [
+  { label: <IconExists />, tooltip: 'Values present', value: { $ne: null } },
+  { label: <NaLabel />, tooltip: 'Values absent', value: { $eq: null } },
+];
+
 export const filters = (filterBy, onChange, onRemove) => ({
   biotype: (
     <MultiListFilter
       name="biotype"
-      key="biotype"
       list={biotypeList}
       value={getFilter(filterBy, 'biotype')}
       onChange={onChange}
@@ -32,46 +43,50 @@ export const filters = (filterBy, onChange, onRemove) => ({
     />
   ),
   'COVID-19 UniprotKB': (
-    <BooleanFilter
+    <ToggleFilter
       name="COVID-19 UniprotKB"
-      key="COVID-19 UniprotKB"
       value={getFilter(filterBy, 'COVID-19 UniprotKB')}
       onChange={onChange}
       onRemove={onRemove}
-      title="UniProt COVID-19 "
+      options={trueFalseOptions}
+      title="UniProt COVID-19"
       description={tooltips.uniprotCovidTooltip}
     />
   ),
   Covid_direct_interactions: (
-    <ListFilter
+    <ToggleFilter
       name="Covid_direct_interactions"
-      key="Covid_direct_interactions"
       value={getFilter(filterBy, 'Covid_direct_interactions')}
       onChange={onChange}
       onRemove={onRemove}
+      options={presentAbsentOptions}
       title="Direct interactions"
       description="Target directly interacts with a viral protein."
     />
   ),
   Covid_indirect_interactions: (
-    <ListFilter
+    <ToggleFilter
       name="Covid_indirect_interactions"
-      key="Covid_indirect_interactions"
       value={getFilter(filterBy, 'Covid_indirect_interactions')}
       onChange={onChange}
       onRemove={onRemove}
+      options={presentAbsentOptions}
       title="Indirect interactions"
       description="Target interacts with one of the targets from the Direct column."
     />
   ),
   max_phase: (
-    <MaxPhaseFilter
+    <ToggleFilter
       name="max_phase"
-      key="max_phase"
       value={getFilter(filterBy, 'max_phase')}
       integer
       onChange={onChange}
       onRemove={onRemove}
+      options={[1, 2, 3, 4].map((val) => ({
+        label: mapMaxPhase(val),
+        tooltip: `Phase ${mapMaxPhase(val)}`,
+        value: { $eq: val },
+      }))}
       title="Max phase"
       description="Max clinical trial phase for any drug targeting this gene/protein for any indication."
     />
@@ -79,7 +94,6 @@ export const filters = (filterBy, onChange, onRemove) => ({
   drugs_in_clinic: (
     <IntegerFilter
       name="drugs_in_clinic"
-      key="drugs_in_clinic"
       value={getFilter(filterBy, 'drugs_in_clinic')}
       onChange={onChange}
       onRemove={onRemove}
@@ -87,10 +101,20 @@ export const filters = (filterBy, onChange, onRemove) => ({
       description="Number of drugs in clinical trials for a given target."
     />
   ),
+  drugs_in_covid_trials: (
+    <ToggleFilter
+      name="drugs_in_covid_trials"
+      value={getFilter(filterBy, 'drugs_in_covid_trials')}
+      onChange={onChange}
+      onRemove={onRemove}
+      options={presentAbsentOptions}
+      title="Drugs in COVID-19 CT"
+      description="Whether or not there are drugs in clinical trials for COVID-19 whose mechanism of action is to modulate the given target."
+    />
+  ),
   invitro_covid_activity: (
     <StringFilter
       name="invitro_covid_activity"
-      key="invitro_covid_activity"
       value={getFilter(filterBy, 'invitro_covid_activity')}
       capitalize
       onChange={onChange}
@@ -103,7 +127,6 @@ export const filters = (filterBy, onChange, onRemove) => ({
   hpa_rna_tissue_distribution: (
     <MultiListFilter
       name="hpa_rna_tissue_distribution"
-      key="hpa_rna_tissue_distribution"
       list={tissueDistributionList}
       value={getFilter(filterBy, 'hpa_rna_tissue_distribution')}
       onChange={onChange}
@@ -115,7 +138,6 @@ export const filters = (filterBy, onChange, onRemove) => ({
   hpa_rna_tissue_specificity: (
     <MultiListFilter
       name="hpa_rna_tissue_specificity"
-      key="hpa_rna_tissue_specificity"
       list={tissueSpecificityList}
       value={getFilter(filterBy, 'hpa_rna_tissue_specificity')}
       onChange={onChange}
@@ -127,7 +149,6 @@ export const filters = (filterBy, onChange, onRemove) => ({
   hpa_rna_specific_tissues: (
     <StringFilter
       name="hpa_rna_specific_tissues"
-      key="hpa_rna_specific_tissues"
       value={getFilter(filterBy, 'hpa_rna_specific_tissues')}
       onChange={onChange}
       onRemove={onRemove}
@@ -136,21 +157,9 @@ export const filters = (filterBy, onChange, onRemove) => ({
       placeholder="Specific to..."
     />
   ),
-  has_drug_in_covid_trials: (
-    <BooleanFilter
-      name="has_drug_in_covid_trials"
-      key="has_drug_in_covid_trials"
-      value={getFilter(filterBy, 'has_drug_in_covid_trials')}
-      onChange={onChange}
-      onRemove={onRemove}
-      title="Drugs in COVID-19 CT"
-      description="Whether or not there are drugs in clinical trials for COVID-19 whose mechanism of action is to modulate the given target."
-    />
-  ),
   hpa_subcellular_location: (
     <MultiListFilter
       name="hpa_subcellular_location"
-      key="hpa_subcellular_location"
       list={subcellularLocationList}
       value={getFilter(filterBy, 'hpa_subcellular_location')}
       onChange={onChange}
@@ -160,21 +169,30 @@ export const filters = (filterBy, onChange, onRemove) => ({
     />
   ),
   has_safety_risk: (
-    <BooleanFilter
+    <ToggleFilter
       name="has_safety_risk"
-      key="has_safety_risk"
       value={getFilter(filterBy, 'has_safety_risk')}
       onChange={onChange}
       onRemove={onRemove}
+      options={[
+        {
+          label: <IconWarning />,
+          tooltip: 'Has safety risk',
+          value: { $eq: true },
+        },
+        {
+          label: <NaLabel />,
+          tooltip: 'No safety risk',
+          value: { $eq: false },
+        },
+      ]}
       title="Safety risk"
       description="Whether or not there is any safety risk information for the target."
-      placeholder="Pick locations..."
     />
   ),
   safety_info_source: (
     <SafetySourceFilter
       name="safety_info_source"
-      key="safety_info_source"
       value={getFilter(filterBy, 'safety_info_source')}
       onChange={onChange}
       onRemove={onRemove}
@@ -185,7 +203,6 @@ export const filters = (filterBy, onChange, onRemove) => ({
   safety_organs_systems_affected: (
     <StringFilter
       name="safety_organs_systems_affected"
-      key="safety_organs_systems_affected"
       value={getFilter(filterBy, 'safety_organs_systems_affected')}
       onChange={onChange}
       onRemove={onRemove}
@@ -195,53 +212,3 @@ export const filters = (filterBy, onChange, onRemove) => ({
     />
   ),
 });
-
-// const basicFilters = (
-//   <>
-//     <BooleanFilter
-//       name="FILTER_network"
-//       value={getFilter(filterBy, 'FILTER_network')}
-//       showRemove
-//       onChange={handleChangeFilterBy}
-//       onRemove={handleRemoveFilterBy}
-//       title="In COVID-19 network"
-//       description={
-//         <span>
-//           Target is in <strong>UniProt COVID-19</strong> set{' '}
-//           <strong>or</strong> is part of the human-virus interactome{' '}
-//           <strong>or</strong> interacts with a targets that interacts with a
-//           viral protein.
-//         </span>
-//       }
-//     />
-//     <BooleanFilter
-//       name="FILTER_network+drug"
-//       value={getFilter(filterBy, 'FILTER_network+drug')}
-//       showRemove
-//       onChange={handleChangeFilterBy}
-//       onRemove={handleRemoveFilterBy}
-//       title="Phase III/IV Drug"
-//       description={
-//         <span>
-//           Target fulfils criteria of the above filter <strong>and</strong>{' '}
-//           also has a <strong>Phase III or IV drug</strong> available."
-//         </span>
-//       }
-//     />
-//     <BooleanFilter
-//       name="FILTER_network+covid_tests"
-//       value={getFilter(filterBy, 'FILTER_network+covid_tests')}
-//       showRemove
-//       onChange={handleChangeFilterBy}
-//       onRemove={handleRemoveFilterBy}
-//       title="In clinical trials"
-//       description={
-//         <span>
-//           Target fulfils criteria in first filter <strong>or</strong> has drug
-//           in <strong>COVID-19 clinical trial</strong> <strong>or</strong> has
-//           active compound in <strong>COVID-19 in vitro assay</strong>.
-//         </span>
-//       }
-//     />
-//   </>
-// );

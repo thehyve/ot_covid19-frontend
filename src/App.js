@@ -17,7 +17,14 @@ import { getLS, setLS } from './utils';
 function App() {
   const [content, setContent] = useState(null);
   const [contentOpen, setContentOpen] = useState(false);
-  const [filterBy, setFilterBy] = useState([]);
+  const [filterBy, setFilterBy] = useState([
+    // { biotype: { $in: ['protein_coding'] } },
+    // { Covid_direct_interactions: { $ne: null } },
+    // { max_phase: { $eq: 4 } },
+    // { drugs_in_clinic: { $gte: 2 } },
+    // { invitro_covid_activity: { $regex: 'IN' } },
+    // { has_safety_risk: { $eq: false } },
+  ]);
   const [filterOpen, setFilterOpen] = useState(true);
   const [updating, setUpdating] = useState(false);
   const [indexing, setIndexing] = useState(false);

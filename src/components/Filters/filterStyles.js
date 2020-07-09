@@ -31,11 +31,6 @@ export const filterStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     paddingLeft: '.5rem',
   },
-  maxPhaseButton: {
-    fontWeight: 'bold',
-    width: '3rem',
-    padding: '.25rem .75rem',
-  },
   multiListAutocomplete: {
     width: '100%',
   },
@@ -50,7 +45,19 @@ export const filterStyles = makeStyles((theme) => ({
     padding: 0,
   },
   multiListListChip: {
-    width: '100%',
+    borderRadius: 0,
     justifyContent: 'space-between',
+    width: '100%',
+  },
+  toggleButton: {
+    padding: 0,
+  },
+  toggleButtonContent: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '3rem',
+    height: '2.5rem',
+    padding: 0,
   },
 }));

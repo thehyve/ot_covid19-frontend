@@ -12,6 +12,7 @@ export const cellStyles = makeStyles((theme) => ({
   },
   naLabel: {
     border: `1px solid ${theme.palette.grey[500]}`,
+    backgroundColor: theme.palette.grey[500],
     borderRadius: '50px',
     width: '1.25rem',
   },

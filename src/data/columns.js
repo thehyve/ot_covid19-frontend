@@ -202,7 +202,9 @@ const columnGroups = (onClickCellContent) => [
         label: 'COVID-19 drugs',
         minWidth: '8.4375rem',
         tooltip: tooltips.drugsInCovidTrialsTooltip,
+        filterable: true,
         sortable: true,
+        defaultFilter: { $ne: null },
         comparator: comparatorFromAccessorLength('drugs_in_covid_trials', ';'),
         renderCell: (row) => (
           <CellArray
