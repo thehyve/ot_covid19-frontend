@@ -10,7 +10,7 @@ import { cellStyles } from './cellStyles';
 const IconWrapper = ({ link, children }) =>
   link ? <CellLink {...link} label={children} /> : children;
 
-function CellBoolean({ value, link, fillNa = false }) {
+function CellBoolean({ value, link, fillNa = false, highlightFalse = false }) {
   const classes = cellStyles();
 
   if (value === null && !fillNa) return <NaLabel />;
@@ -23,7 +23,10 @@ function CellBoolean({ value, link, fillNa = false }) {
         />
       ) : (
         <HighlightOffTwoToneIcon
-          className={clsx(classes.iconCell, classes.booleanIconFalse)}
+          className={clsx(
+            classes.iconCell,
+            highlightFalse && classes.booleanIconFalse
+          )}
         />
       )}
     </IconWrapper>
