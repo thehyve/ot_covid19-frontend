@@ -317,7 +317,7 @@ const columnGroups = (onClickCellContent) => [
         minWidth: '7rem',
         filterable: true,
         sortable: true,
-        defaultFilter: { $regex: 'lung' },
+        defaultFilter: { $in: ['lung'] },
         comparator: comparatorFromAccessorLength('hpa_rna_specific_tissues'),
         renderCell: (row) => {
           const urlPart =

@@ -7,7 +7,7 @@ import StringFilter from './StringFilter';
 import ToggleFilter from './ToggleFilter';
 
 import NaLabel from '../Cells/NaLabel';
-import { mapMaxPhase } from '../../data/maps';
+import { mapMaxPhase, specificTissueList } from '../../data/maps';
 import { IconTrue, IconFalse, IconExists, IconWarning } from '../common';
 
 import * as tooltips from '../../data/tooltips';
@@ -147,8 +147,9 @@ export const filters = (filterBy, onChange, onRemove) => ({
     />
   ),
   hpa_rna_specific_tissues: (
-    <StringFilter
+    <MultiListFilter
       name="hpa_rna_specific_tissues"
+      list={specificTissueList}
       value={getFilter(filterBy, 'hpa_rna_specific_tissues')}
       onChange={onChange}
       onRemove={onRemove}
