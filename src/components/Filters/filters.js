@@ -7,7 +7,11 @@ import StringFilter from './StringFilter';
 import ToggleFilter from './ToggleFilter';
 
 import NaLabel from '../Cells/NaLabel';
-import { mapMaxPhase, specificTissueList } from '../../data/maps';
+import {
+  mapMaxPhase,
+  specificTissueList,
+  safetySystemsAffected,
+} from '../../data/maps';
 import { IconTrue, IconFalse, IconExists, IconWarning } from '../common';
 
 import * as tooltips from '../../data/tooltips';
@@ -202,8 +206,9 @@ export const filters = (filterBy, onChange, onRemove) => ({
     />
   ),
   safety_organs_systems_affected: (
-    <StringFilter
+    <MultiListFilter
       name="safety_organs_systems_affected"
+      list={safetySystemsAffected}
       value={getFilter(filterBy, 'safety_organs_systems_affected')}
       onChange={onChange}
       onRemove={onRemove}

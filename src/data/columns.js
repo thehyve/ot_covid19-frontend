@@ -519,7 +519,7 @@ const columnGroups = (onClickCellContent) => [
         tooltip: tooltips.safetyOrgansSystemsAffectedTooltip,
         filterable: true,
         sortable: true,
-        defaultFilter: { $regex: 'cardiovascular' },
+        defaultFilter: { $in: ['cardiovascular'] },
         comparator: comparatorFromAccessorLength(
           'safety_organs_systems_affected'
         ),

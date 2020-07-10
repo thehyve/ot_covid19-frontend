@@ -324,6 +324,27 @@ export const specificTissueList = [
   'urinary bladder',
 ].sort();
 
+export const safetySystemsAffected = [
+  'cardiovascular system',
+  'central nervous system',
+  'nervous system',
+  'renal system',
+  'peripheral nervous system',
+  'immune system',
+  'gastrointestinal system',
+  'pancreas',
+  'respiratory system',
+  'endocrine system',
+  'blood',
+  'lung',
+  'liver',
+  'development',
+  'Pharmaco-kinetics',
+  'gall bladder',
+  'genitourinary system',
+  'gonad',
+].sort();
+
 export const redToGreen9Step = [
   '#c6e3c7',
   '#d4ead0',
