@@ -17,10 +17,11 @@ export const navBarStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       backgroundColor: 'rgb(82 155 210) !important',
       boxShadow: '-10px 0px 5px 5px rgb(52 137 202)',
     },
+    zIndex: 2,
   },
   searchContainer: {
     display: 'flex',
@@ -61,7 +62,7 @@ export const navBarStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       display: 'none',
     },
-    zIndex: 2,
+    zIndex: 1,
     position: 'absolute',
     top: '9px',
     left: 'calc(50vw - 123px)',

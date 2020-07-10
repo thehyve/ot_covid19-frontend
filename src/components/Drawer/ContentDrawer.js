@@ -10,7 +10,7 @@ function ContentDrawer({ children, onToggleDrawer, open }) {
 
   return (
     <Drawer
-      title="Content"
+      caption="Content"
       open={open}
       onHide={onToggleDrawer}
       position="right"

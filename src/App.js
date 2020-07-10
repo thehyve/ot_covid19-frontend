@@ -26,7 +26,7 @@ function App() {
     // { invitro_covid_activity: { $regex: 'IN' } },
     // { has_safety_risk: { $eq: false } },
   ]);
-  const [filterOpen, setFilterOpen] = useState(true);
+  const [filterOpen, setFilterOpen] = useState(false);
   const [targetSearch, setTargetSearch] = useState('');
   const [updating, setUpdating] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
