@@ -6,17 +6,8 @@ import { navBarStyles } from './navBarStyles';
 function OpenTargetsTitle({ onClick }) {
   const classes = navBarStyles();
 
-  const handleClick = () => {
-    console.log('click');
-    onClick();
-  };
-
   return (
-    <Button
-      className={classes.titleButton}
-      color="inherit"
-      onClick={handleClick}
-    >
+    <Button className={classes.titleButton} color="inherit" onClick={onClick}>
       <Title height="19px" />
     </Button>
   );
