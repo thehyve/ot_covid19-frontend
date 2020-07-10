@@ -517,9 +517,7 @@ const columnGroups = (onClickCellContent) => [
         id: 'safety_organs_systems_affected',
         label: 'Systems affected',
         tooltip: tooltips.safetyOrgansSystemsAffectedTooltip,
-        filterable: true,
         sortable: true,
-        defaultFilter: { $in: ['cardiovascular'] },
         comparator: comparatorFromAccessorLength(
           'safety_organs_systems_affected'
         ),

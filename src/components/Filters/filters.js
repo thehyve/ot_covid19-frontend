@@ -205,16 +205,4 @@ export const filters = (filterBy, onChange, onRemove) => ({
       description="Source of the safety risk info."
     />
   ),
-  safety_organs_systems_affected: (
-    <MultiListFilter
-      name="safety_organs_systems_affected"
-      list={safetySystemsAffected}
-      value={getFilter(filterBy, 'safety_organs_systems_affected')}
-      onChange={onChange}
-      onRemove={onRemove}
-      title="Systems affected"
-      description="List of organs where there are known safety risks for the target."
-      placeholder="Safety risk affects..."
-    />
-  ),
 });
