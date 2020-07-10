@@ -71,7 +71,8 @@ export const tractabilityTopBucketSMCaptions = [
   </span>,
 ];
 
-// TODO: THIS IS NOT CORRECTLY SORTED https://docs.targetvalidation.org/getting-started/target-tractability
+// TODO: THIS IS NOT CORRECTLY SORTED
+// https://docs.targetvalidation.org/getting-started/target-tractability
 export const mapTractabilityTopBucketAB = (str) =>
   ({
     'Targets with drugs in phase IV': 1,

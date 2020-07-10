@@ -1,4 +1,4 @@
-import { getComparator, globalFilter } from './sortingAndFiltering';
+import { getComparator } from './sortingAndFiltering';
 
 export function prepareDataClientSide(
   rows,
@@ -8,14 +8,23 @@ export function prepareDataClientSide(
   pageSize,
   order,
   sortBy,
-  globalFilterValue
+  targetSearch
 ) {
-  fixedRows.forEach(fixedRow => {
+  fixedRows.forEach((fixedRow) => {
     fixedRow.isFixedRow = true;
   });
 
-  const filteredRows = globalFilterValue
-    ? rows.filter(row => globalFilter(row, columns, globalFilterValue))
+  const filteredRows = targetSearch
+    ? rows.filter((row) => {
+        if (row.ensembl_id?.toLowerCase().includes(targetSearch.toLowerCase()))
+          return true;
+        if (row.uniprot_ids?.toLowerCase().includes(targetSearch.toLowerCase()))
+          return true;
+        if (row.name?.toLowerCase().includes(targetSearch.toLowerCase()))
+          return true;
+
+        return false;
+      })
     : rows;
 
   const rowCount = filteredRows.length;
@@ -31,7 +40,7 @@ export function prepareDataClientSide(
 }
 
 export function prepareDataServerSide(rows, fixedRows, pageSize) {
-  fixedRows.forEach(fixedRow => {
+  fixedRows.forEach((fixedRow) => {
     fixedRow.isFixedRow = true;
   });
 

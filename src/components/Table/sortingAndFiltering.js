@@ -9,11 +9,6 @@ function ascendingComparator(a, b, sortBy) {
     +(a[sortBy] < b[sortBy]) ||
     -(a[sortBy] > b[sortBy])
   );
-
-  // TODO: NULLS LAST ALWAYS
-  // if (a[sortBy] === undefined || a[sortBy] < b[sortBy]) return -1;
-  // if (a[sortBy] === undefined || a[sortBy] > b[sortBy]) return 1;
-  // return 0;
 }
 
 export function getComparator(columns, order, sortBy) {

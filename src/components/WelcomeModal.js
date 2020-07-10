@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 
 import Logo from '../assets/logo';
-import { setLS, getLS } from '../utils';
+import { setLS } from '../utils';
 
 const useStyles = makeStyles((theme) => ({
   divider: {

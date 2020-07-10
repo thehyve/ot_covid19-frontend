@@ -319,18 +319,21 @@ const columnGroups = (onClickCellContent) => [
         sortable: true,
         defaultFilter: { $regex: 'lung' },
         comparator: comparatorFromAccessorLength('hpa_rna_specific_tissues'),
-        renderCell: (row) => (
-          <CellArray
-            array={row.hpa_rna_specific_tissues}
-            link={{
-              // TODO: Fix this links: https://www.proteinatlas.org/search/tissue_category_rna:Adipose+tissue;Tissue+enhanced
-              url: 'https://www.proteinatlas.org/search/tissue_category_rna:$$',
-            }}
-            onClickCellContent={onClickCellContent}
-            contentTitle="RNA Specific tissues"
-            contentDescription="List of tissues if target expression has some degree of specificity"
-          />
-        ),
+        renderCell: (row) => {
+          const urlPart =
+            'https://www.proteinatlas.org/search/tissue_category_rna';
+          const specPart = row.hpa_rna_tissue_specificity?.replace(/ /g, '+');
+
+          return (
+            <CellArray
+              array={row.hpa_rna_specific_tissues}
+              link={{ url: `${urlPart}:$$;${specPart}` }}
+              onClickCellContent={onClickCellContent}
+              contentTitle="RNA Specific tissues"
+              contentDescription="List of tissues if target expression has some degree of specificity"
+            />
+          );
+        },
       },
     ],
   },

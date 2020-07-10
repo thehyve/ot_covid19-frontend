@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo } from 'react';
 import _ from 'lodash';
-import { Box } from '@material-ui/core';
+import { Box, useMediaQuery, useTheme } from '@material-ui/core';
 
 import fetchDB from '../db/fetch';
 import LoadingSnackbar from './LoadingSnackbar';
@@ -13,15 +13,24 @@ function CovidTable({
   onClickCellContent,
   onRequestFilter,
   sideBarsOpen,
+  targetSearch,
 }) {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
+  const theme = useTheme();
+  const matchesSmall = useMediaQuery(theme.breakpoints.down('sm'));
+  const sideBarOpenCount = sideBarsOpen.filter((v) => v).length;
 
   const fetchBlockSize = 100000;
   const preparedColumns = columns(onClickCellContent);
-  const width = `${
-    100 - sideBarsOpen.filter((v) => v).length * sideBarWidthPercent
-  }%`;
+
+  let width = '100%';
+
+  if (matchesSmall && sideBarOpenCount) {
+    width = '0%';
+  } else {
+    width = `${100 - sideBarOpenCount * sideBarWidthPercent}%`;
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -50,6 +59,7 @@ function CovidTable({
           order="asc"
           rows={rows}
           sortBy="covid_literature"
+          targetSearch={targetSearch}
         />
       </Box>
       <LoadingSnackbar open={loading} />
@@ -64,6 +74,7 @@ export default memo(CovidTable, (prevProps, nextProps) => {
     prevProps.sideBarsOpen,
     nextProps.sideBarsOpen
   );
+  const targetSearchChanged = prevProps.targetSearch !== nextProps.targetSearch;
 
-  return !(filtersChanged || sideBarsOpenChanged);
+  return !(filtersChanged || sideBarsOpenChanged || targetSearchChanged);
 });

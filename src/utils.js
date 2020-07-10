@@ -71,7 +71,6 @@ export const comparatorFromAccessorLength = (accessor, splitChar) => {
   }
 };
 
-// TODO: null values must go last even if sorting ascending
 export const comparatorFromMaps = (accessor, map, settings = {}) => (a, b) => {
   const aValue =
     parseInt(map(a[accessor])) || (settings.ascending ? Infinity : -1);

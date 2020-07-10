@@ -1,21 +1,10 @@
 import React from 'react';
-import { AppBar, Toolbar, makeStyles } from '@material-ui/core';
+import { AppBar, Toolbar } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    backgroundColor: theme.palette.primary.main,
-    margin: 0,
-    width: '100%',
-    zIndex: theme.zIndex.drawer - 1,
-  },
-  toolBar: {
-    justifyContent: 'space-between',
-    padding: 0,
-  },
-}));
+import { navBarStyles } from './navBarStyles';
 
 function NavBar({ children }) {
-  const classes = useStyles();
+  const classes = navBarStyles();
 
   return (
     <AppBar

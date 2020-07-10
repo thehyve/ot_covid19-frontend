@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
 
-import OpenTargetsTitle from './components/NavBar/OpenTargetsTitle';
-import NavBar from './components/NavBar/NavBar';
-import DrawerButton from './components/Drawer/DrawerButton';
 import ContentDrawer from './components/Drawer/ContentDrawer';
 import CovidTable from './components/CovidTable';
+import DrawerButton from './components/Drawer/DrawerButton';
 import FilterDrawer from './components/Drawer/FilterDrawer';
-import WelcomeModal from './components/WelcomeModal';
 import IndexingSnackbar from './components/IndexingSnackbar';
+import NavBar from './components/NavBar/NavBar';
+import OpenTargetsTitle from './components/NavBar/OpenTargetsTitle';
+import TargetSearch from './components/NavBar/TargetSearch';
+import WelcomeModal from './components/WelcomeModal';
 
 import { createIndex, indexes } from './db/indexes';
 import { getNewestDatasetRevision, updateClient } from './db/update';
@@ -26,6 +27,7 @@ function App() {
     // { has_safety_risk: { $eq: false } },
   ]);
   const [filterOpen, setFilterOpen] = useState(true);
+  const [targetSearch, setTargetSearch] = useState('');
   const [updating, setUpdating] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
   const [showWelcomeCheck, setShowWelcomeCheck] = useState(true);
@@ -55,6 +57,10 @@ function App() {
 
   const handleSetFilterBy = (filterBy) => {
     setFilterBy(filterBy);
+  };
+
+  const handleTargetSearch = (value) => {
+    setTargetSearch(value);
   };
 
   const handleToggleContentDrawer = () => {
@@ -107,12 +113,15 @@ function App() {
           position="left"
         />
         <OpenTargetsTitle onClick={handleOpenModal} subtitle="COVID-19" />
-        <DrawerButton
-          caption="content"
-          onClick={handleToggleContentDrawer}
-          open={!contentOpen}
-          position="right"
-        />
+        <Box display="flex">
+          <TargetSearch onChange={handleTargetSearch} value={targetSearch} />
+          <DrawerButton
+            caption="content"
+            onClick={handleToggleContentDrawer}
+            open={!contentOpen}
+            position="right"
+          />
+        </Box>
       </NavBar>
 
       <Box display="flex" alignItems="flex-start">
@@ -128,6 +137,7 @@ function App() {
             onRequestFilter={handleSetFilterBy}
             onClickCellContent={handleSetContent}
             sideBarsOpen={[filterOpen, contentOpen]}
+            targetSearch={targetSearch}
           />
         ) : (
           <Box display="flex" width="100%" />

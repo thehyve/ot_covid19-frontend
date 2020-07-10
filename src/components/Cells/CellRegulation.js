@@ -7,6 +7,7 @@ import {
   faDotCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
+import NaLabel from './NaLabel';
 import { cellStyles } from './cellStyles';
 import { splitStringInParentheses } from '../../utils';
 
@@ -36,7 +37,7 @@ export function CellRegulationUnit({ direction, time }) {
 }
 
 function CellRegulation({ value }) {
-  if (value === null) return <>Not altered</>;
+  if (value === null || value === undefined) return <NaLabel />;
 
   const values = value.split(';');
 

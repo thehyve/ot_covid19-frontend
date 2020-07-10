@@ -1,8 +1,9 @@
 import React from 'react';
-import { Paper, Button, Box } from '@material-ui/core';
+import { Paper, Button, Box, useMediaQuery, useTheme } from '@material-ui/core';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 
 import { drawerStyles } from './drawerStyles';
+import { sideBarWidthPercent } from '../../config';
 
 function Drawer({
   caption,
@@ -12,6 +13,10 @@ function Drawer({
   position = 'left',
 }) {
   const classes = drawerStyles();
+  const theme = useTheme();
+  const matchesSmall = useMediaQuery(theme.breakpoints.down('sm'));
+
+  let width = matchesSmall ? '100%' : `${sideBarWidthPercent}%`;
 
   return (
     <Paper
@@ -20,6 +25,7 @@ function Drawer({
           open ? classes.drawerOpen : classes.drawerClosed
         }`,
       }}
+      style={{ width }}
       elevation={5}
     >
       <Box>

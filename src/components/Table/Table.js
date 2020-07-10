@@ -41,6 +41,7 @@ function Table({
   showGlobalFilter = false,
   noWrap = true,
   noWrapHeader = true,
+  targetSearch,
   ...props
 }) {
   const [page, setPage] = useState(0);
@@ -63,7 +64,7 @@ function Table({
         pageSize,
         order,
         sortBy,
-        globalFilter
+        targetSearch
       );
 
   const handleChangePage = (_, newPage) => {
