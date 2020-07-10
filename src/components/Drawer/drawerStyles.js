@@ -57,9 +57,7 @@ export const drawerStyles = makeStyles((theme) => ({
     color: theme.palette.primary.contrastText,
     margin: '0 .5rem',
     padding: 0,
-  },
-  drawerTitleButtonOpen: {
-    minWidth: '250px',
+    zIndex: 2,
   },
   drawerTitleCaption: {
     color: theme.palette.grey[700],

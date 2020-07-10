@@ -1,6 +1,6 @@
 import { getComparator } from './sortingAndFiltering';
 
-export function prepareDataClientSide(
+export function prepareData(
   rows,
   columns,
   fixedRows,
@@ -30,25 +30,10 @@ export function prepareDataClientSide(
   const rowCount = filteredRows.length;
   const pageStart = page * pageSize;
   const pageEnd = Math.min(page * pageSize + pageSize, rowCount);
-  const emptyRows = pageSize - (pageEnd - pageStart);
 
   const sortedRows = filteredRows.sort(getComparator(columns, order, sortBy));
   const slicedRows = sortedRows.slice(pageStart, pageEnd);
   const processedRows = [...fixedRows, ...slicedRows];
 
-  return [processedRows, emptyRows, rowCount];
-}
-
-export function prepareDataServerSide(rows, fixedRows, pageSize) {
-  fixedRows.forEach((fixedRow) => {
-    fixedRow.isFixedRow = true;
-  });
-
-  const pageStart = 0;
-  const pageEnd = rows.length;
-  const emptyRows = pageSize - (pageEnd - pageStart);
-  const slicedRows = rows.slice(pageStart, pageEnd);
-  const processedRows = [...fixedRows, ...slicedRows];
-
-  return [processedRows, emptyRows];
+  return [processedRows, rowCount];
 }

@@ -1,17 +1,24 @@
 import React from 'react';
-import { Box, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import Title from '../../assets/title';
 import { navBarStyles } from './navBarStyles';
 
 function OpenTargetsTitle({ onClick }) {
   const classes = navBarStyles();
 
+  const handleClick = () => {
+    console.log('click');
+    onClick();
+  };
+
   return (
-    <Box className={classes.titleContainer}>
-      <Button className={classes.titleButton} color="inherit" onClick={onClick}>
-        <Title height="19px" />
-      </Button>
-    </Box>
+    <Button
+      className={classes.titleButton}
+      color="inherit"
+      onClick={handleClick}
+    >
+      <Title height="19px" />
+    </Button>
   );
 }
 

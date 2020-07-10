@@ -15,8 +15,10 @@ function Drawer({
   const classes = drawerStyles();
   const theme = useTheme();
   const matchesSmall = useMediaQuery(theme.breakpoints.down('sm'));
+  const style = {};
 
-  let width = matchesSmall ? '100%' : `${sideBarWidthPercent}%`;
+  style.width = matchesSmall ? '100%' : `${sideBarWidthPercent}%`;
+  style.minWidth = matchesSmall ? 'none' : '250px';
 
   return (
     <Paper
@@ -25,7 +27,7 @@ function Drawer({
           open ? classes.drawerOpen : classes.drawerClosed
         }`,
       }}
-      style={{ width }}
+      style={style}
       elevation={5}
     >
       <Box>

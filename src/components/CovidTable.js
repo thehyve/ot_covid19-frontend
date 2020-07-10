@@ -21,7 +21,6 @@ function CovidTable({
   const matchesSmall = useMediaQuery(theme.breakpoints.down('sm'));
   const sideBarOpenCount = sideBarsOpen.filter((v) => v).length;
 
-  const fetchBlockSize = 100000;
   const preparedColumns = columns(onClickCellContent);
 
   let width = '100%';
@@ -35,10 +34,7 @@ function CovidTable({
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      const newData = await fetchDB({
-        limit: fetchBlockSize,
-        selector: filterBy,
-      });
+      const newData = await fetchDB({ selector: filterBy });
 
       setRows(newData.rows);
       setLoading(false);

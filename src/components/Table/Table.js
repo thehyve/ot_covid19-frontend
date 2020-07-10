@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Box,
   Grid,
@@ -8,15 +8,10 @@ import {
 } from '@material-ui/core';
 import clsx from 'clsx';
 
-import DataDownloader from './DataDownloader';
-import GlobalFilter from './GlobalFilter';
 import TableHeader from './TableHeader';
 import TablePaginationActions from './TablePaginationActions';
 import TableRow from './TableRow';
-import {
-  prepareDataClientSide,
-  prepareDataServerSide,
-} from './dataPreparation';
+import { prepareData } from './dataPreparation';
 import { tableStyles } from './tableStyles';
 import useDimensions from '../../hooks/useDimensions';
 import { addFilter, includeFilter, remFilter } from '../Filters/utils';
@@ -33,12 +28,8 @@ function Table({
   onRequestFilter,
   onTableAction = () => {},
   pageSize = 10 - fixedRows.length,
-  dataDownloader = false,
-  dataDownloaderFileStem = 'data',
-  dataDownloaderRows = rows,
   hover = false,
   serverSide = false,
-  showGlobalFilter = false,
   noWrap = true,
   noWrapHeader = true,
   targetSearch,
@@ -47,31 +38,30 @@ function Table({
   const [page, setPage] = useState(0);
   const [sortBy, setSortBy] = useState(props.sortBy);
   const [order, setOrder] = useState(props.order || 'asc');
-  const [globalFilter, setGlobalFilter] = useState('');
   const containerRef = useRef();
   const { height } = useDimensions(containerRef);
 
   pageSize = Math.floor((height - (98 + 36 + 15 + 1)) / 37);
 
   // eslint-disable-next-line no-unused-vars
-  const [processedRows, emptyRows, effectiveRowCount = rowCount] = serverSide
-    ? prepareDataServerSide(rows, fixedRows, pageSize)
-    : prepareDataClientSide(
-        rows,
-        columns,
-        fixedRows,
-        page,
-        pageSize,
-        order,
-        sortBy,
-        targetSearch
-      );
+  const [processedRows, effectiveRowCount] = prepareData(
+    rows,
+    columns,
+    fixedRows,
+    page,
+    pageSize,
+    order,
+    sortBy,
+    targetSearch
+  );
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
   };
 
   const handleRequestFilter = (newFilter) => {
+    setPage(0);
+
     const defaultFilter = columns.find((column) => column.id === newFilter)
       ?.defaultFilter;
 
@@ -96,25 +86,6 @@ function Table({
     setSortBy(property);
   };
 
-  const handleChangeGlobalFilter = (newValue) => {
-    if (globalFilter !== newValue) {
-      setPage(0);
-      setGlobalFilter(newValue);
-    }
-  };
-
-  useEffect(
-    () => {
-      async function asyncTableAction() {
-        await onTableAction({ page, pageSize, sortBy, order, globalFilter });
-      }
-
-      asyncTableAction();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [page, pageSize, sortBy, order, globalFilter]
-  );
-
   const classes = tableStyles();
 
   return (
@@ -124,34 +95,6 @@ function Table({
         style={{ height: `${height - 35}px` }}
       >
         <Grid container justify="flex-end" alignContent="center">
-          {showGlobalFilter && (
-            <Grid
-              item
-              xs={12}
-              md={5}
-              lg={7}
-              className={classes.tableUpperControl1}
-            >
-              <GlobalFilter onGlobalFilterChange={handleChangeGlobalFilter} />
-            </Grid>
-          )}
-
-          {dataDownloader && (
-            <Grid
-              item
-              xs={12}
-              md={7}
-              lg={5}
-              className={classes.tableUpperControl2}
-            >
-              <DataDownloader
-                columns={columns}
-                rows={dataDownloaderRows}
-                fileStem={dataDownloaderFileStem}
-              />
-            </Grid>
-          )}
-
           <Grid item xs={12} className={classes.tableWrapper}>
             <MUITable
               classes={{

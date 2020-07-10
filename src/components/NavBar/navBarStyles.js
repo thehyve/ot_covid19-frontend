@@ -17,8 +17,17 @@ export const navBarStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
-    marginLeft: 0,
-    width: 'auto',
+    [theme.breakpoints.down('md')]: {
+      backgroundColor: 'rgb(82 155 210) !important',
+      boxShadow: '-10px 0px 5px 5px rgb(52 137 202)',
+    },
+  },
+  searchContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    position: 'absolute',
+    top: '8px',
+    width: '100%',
   },
   searchIcon: {
     padding: '0 .25rem',
@@ -46,19 +55,21 @@ export const navBarStyles = makeStyles((theme) => ({
     },
   },
   titleButton: {
-    margin: 'auto',
     [theme.breakpoints.down('md')]: {
-      marginLeft: '260px',
+      left: '260px',
     },
     [theme.breakpoints.down('sm')]: {
       display: 'none',
     },
+    zIndex: 2,
+    position: 'absolute',
+    top: '9px',
+    left: 'calc(50vw - 123px)',
   },
   titleContainer: {
     display: 'flex',
     position: 'absolute',
-    top: '10px',
+    top: '9px',
     width: '100%',
-    zIndex: -1,
   },
 }));

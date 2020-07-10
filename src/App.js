@@ -57,6 +57,7 @@ function App() {
 
   const handleSetFilterBy = (filterBy) => {
     setFilterBy(filterBy);
+    setFilterOpen(true);
   };
 
   const handleTargetSearch = (value) => {
@@ -113,15 +114,17 @@ function App() {
           position="left"
         />
         <OpenTargetsTitle onClick={handleOpenModal} subtitle="COVID-19" />
-        <Box display="flex">
-          <TargetSearch onChange={handleTargetSearch} value={targetSearch} />
-          <DrawerButton
-            caption="content"
-            onClick={handleToggleContentDrawer}
-            open={!contentOpen}
-            position="right"
-          />
-        </Box>
+        <TargetSearch
+          contentOpen={contentOpen}
+          onChange={handleTargetSearch}
+          value={targetSearch}
+        />
+        <DrawerButton
+          caption="content"
+          onClick={handleToggleContentDrawer}
+          open={!contentOpen}
+          position="right"
+        />
       </NavBar>
 
       <Box display="flex" alignItems="flex-start">
