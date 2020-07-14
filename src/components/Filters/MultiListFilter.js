@@ -27,7 +27,7 @@ function MultiListFilter({
 
   const handleChangeFilter = (_, newEntries) => {
     if (!newEntries.length) {
-      onRemove(name);
+      onRemove(name, true);
       return;
     }
 

@@ -8,6 +8,7 @@ import { FilterHeader } from './common';
 import { filterStyles } from './filterStyles';
 
 function ToggleFilter({
+  exclusive = true,
   name,
   onChange,
   onRemove,
@@ -17,8 +18,24 @@ function ToggleFilter({
 }) {
   const classes = filterStyles();
 
-  const handleChangeFilter = (_, value) => {
-    onChange({ [name]: value });
+  let innerValue = exclusive ? value : value?.$in || [];
+
+  const handleChangeFilter = (e, newValue) => {
+    // Some times, material-ui togglebutton does not let us toggle a button.
+    if (_.isEqual(newValue, value)) {
+      newValue = null;
+    }
+
+    if (!newValue || (!exclusive && !newValue.length)) {
+      onRemove(name, true);
+      return;
+    }
+
+    if (exclusive) {
+      onChange({ [name]: newValue });
+    } else {
+      onChange({ [name]: { $in: [...newValue] } });
+    }
   };
 
   const handleRemoveFilter = () => {
@@ -33,12 +50,14 @@ function ToggleFilter({
       <FilterHeader onRemove={handleRemoveFilter} {...headerProps} />
       <Box className={classes.filterBodyContainerRow}>
         <ToggleButtonGroup
-          exclusive
+          exclusive={exclusive}
           onChange={handleChangeFilter}
-          value={value}
+          value={innerValue}
         >
           {options.map((option, i) => {
-            const isSelected = _.isEqual(value, option.value);
+            const isSelected = exclusive
+              ? _.isEqual(innerValue, option.value)
+              : innerValue.includes(option.value);
 
             return (
               <ToggleButton

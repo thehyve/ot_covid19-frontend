@@ -73,13 +73,15 @@ function App() {
     setFilterOpen(!filterOpen);
   };
 
-  const handleToggleActiveFilter = (filter) => {
+  const handleToggleActiveFilter = (filter, keepActive = false) => {
     const isFilterActive = activeFilters.includes(filter);
 
     if (isFilterActive) {
-      setActiveFilters((activeFilters) =>
-        activeFilters.filter((oldFilter) => oldFilter !== filter)
-      );
+      if (!keepActive) {
+        setActiveFilters((activeFilters) =>
+          activeFilters.filter((oldFilter) => oldFilter !== filter)
+        );
+      }
 
       if (includeFilter(filterBy, filter)) {
         const newFilterObject = remFilter(filterBy, filter);

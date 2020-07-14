@@ -42,7 +42,7 @@ function SafetySourceFilter({
     }
 
     if (!newValue.length) {
-      onRemove(name);
+      onRemove(name, true);
       return;
     }
 

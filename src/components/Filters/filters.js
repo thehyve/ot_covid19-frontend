@@ -77,6 +77,7 @@ export const filters = (filterBy, onChange, onRemove) => ({
   ),
   max_phase: (
     <ToggleFilter
+      exclusive={false}
       name="max_phase"
       value={getFilter(filterBy, 'max_phase')}
       integer
@@ -85,7 +86,7 @@ export const filters = (filterBy, onChange, onRemove) => ({
       options={[1, 2, 3, 4].map((val) => ({
         label: mapMaxPhase(val),
         tooltip: `Phase ${mapMaxPhase(val)}`,
-        value: { $eq: val },
+        value: val,
       }))}
       title="Max phase"
       description="Max clinical trial phase for any drug targeting this gene/protein for any indication."
