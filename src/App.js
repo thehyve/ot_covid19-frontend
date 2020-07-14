@@ -14,10 +14,16 @@ import WelcomeModal from './components/WelcomeModal';
 import { createIndex, indexes } from './db/indexes';
 import { getNewestDatasetRevision, updateClient } from './db/update';
 import { getLS, setLS } from './utils';
+import {
+  includeFilter,
+  remFilter,
+  addFilter,
+} from './components/Filters/utils';
 
 function App() {
   const [content, setContent] = useState(null);
   const [contentOpen, setContentOpen] = useState(false);
+  const [activeFilters, setActiveFilters] = useState([]);
   const [filterBy, setFilterBy] = useState([
     // { biotype: { $in: ['protein_coding'] } },
     // { Covid_direct_interactions: { $ne: null } },
@@ -55,11 +61,6 @@ function App() {
     setContentOpen(true);
   };
 
-  const handleSetFilterBy = (filterBy) => {
-    setFilterBy(filterBy);
-    setFilterOpen(true);
-  };
-
   const handleTargetSearch = (value) => {
     setTargetSearch(value);
   };
@@ -70,6 +71,30 @@ function App() {
 
   const handleToggleFilterDrawer = () => {
     setFilterOpen(!filterOpen);
+  };
+
+  const handleToggleActiveFilter = (filter) => {
+    const isFilterActive = activeFilters.includes(filter);
+
+    if (isFilterActive) {
+      setActiveFilters((activeFilters) =>
+        activeFilters.filter((oldFilter) => oldFilter !== filter)
+      );
+
+      if (includeFilter(filterBy, filter)) {
+        const newFilterObject = remFilter(filterBy, filter);
+        setFilterBy(newFilterObject);
+      }
+    } else {
+      setActiveFilters((activeFilters) => [...activeFilters, filter]);
+    }
+
+    setFilterOpen(true);
+  };
+
+  const handleChangeFilter = (newFilter) => {
+    const newFilterObject = addFilter(filterBy, newFilter);
+    setFilterBy(newFilterObject);
   };
 
   useEffect(() => {
@@ -129,15 +154,18 @@ function App() {
 
       <Box display="flex" alignItems="flex-start">
         <FilterDrawer
+          activeFilters={activeFilters}
           filterBy={filterBy}
-          onSetFilterBy={handleSetFilterBy}
+          onRemoveFilter={handleToggleActiveFilter}
+          onSetFilterBy={handleChangeFilter}
           onToggleDrawer={handleToggleFilterDrawer}
           open={filterOpen}
         />
         {ready ? (
           <CovidTable
+            activeFilters={activeFilters}
             filterBy={filterBy}
-            onRequestFilter={handleSetFilterBy}
+            onToggleFilter={handleToggleActiveFilter}
             onClickCellContent={handleSetContent}
             sideBarsOpen={[filterOpen, contentOpen]}
             targetSearch={targetSearch}

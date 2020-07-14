@@ -7,11 +7,7 @@ import StringFilter from './StringFilter';
 import ToggleFilter from './ToggleFilter';
 
 import NaLabel from '../Cells/NaLabel';
-import {
-  mapMaxPhase,
-  specificTissueList,
-  safetySystemsAffected,
-} from '../../data/maps';
+import { mapMaxPhase, specificTissueList } from '../../data/maps';
 import { IconTrue, IconFalse, IconExists, IconWarning } from '../common';
 
 import * as tooltips from '../../data/tooltips';

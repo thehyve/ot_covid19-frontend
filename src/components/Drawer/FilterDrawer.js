@@ -4,7 +4,6 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 
 import Drawer from './Drawer';
 import DrawerHelp from './DrawerHelp';
-import { addFilter, remFilter } from '../Filters/utils';
 import { drawerStyles } from './drawerStyles';
 import { filters } from '../Filters/filters';
 import Tooltip from '../Table/Tooltip';
@@ -25,24 +24,17 @@ function FilterJoin({ type = 'AND' }) {
   );
 }
 
-function FilterDrawer({ filterBy, onSetFilterBy, onToggleDrawer, open }) {
+function FilterDrawer({
+  activeFilters,
+  filterBy,
+  onRemoveFilter,
+  onSetFilterBy,
+  onToggleDrawer,
+  open,
+}) {
   const classes = drawerStyles();
 
-  const handleChangeFilterBy = (newFilter) => {
-    const newFilterObject = addFilter(filterBy, newFilter);
-    onSetFilterBy(newFilterObject);
-  };
-
-  const handleRemoveFilterBy = (oldFilter) => {
-    const newFilterObject = remFilter(filterBy, oldFilter);
-    onSetFilterBy(newFilterObject);
-  };
-
-  const preparedFilters = filters(
-    filterBy,
-    handleChangeFilterBy,
-    handleRemoveFilterBy
-  );
+  const preparedFilters = filters(filterBy, onSetFilterBy, onRemoveFilter);
 
   return (
     <Drawer
@@ -51,7 +43,7 @@ function FilterDrawer({ filterBy, onSetFilterBy, onToggleDrawer, open }) {
       position="left"
       onHide={onToggleDrawer}
     >
-      {!filterBy.length ? (
+      {!activeFilters.length ? (
         <DrawerHelp
           title="No filters selected"
           content={
@@ -64,12 +56,14 @@ function FilterDrawer({ filterBy, onSetFilterBy, onToggleDrawer, open }) {
         />
       ) : (
         <Box className={classes.drawerBodyNoBorder}>
-          {filterBy.map((f, i) => (
-            <React.Fragment key={i}>
-              {preparedFilters[Object.keys(f)[0]]}
-              {i < filterBy.length - 1 && <FilterJoin />}
-            </React.Fragment>
-          ))}
+          {activeFilters.map((filter, i) => {
+            return (
+              <React.Fragment key={i}>
+                {preparedFilters[filter]}
+                {i < filterBy.length - 1 && <FilterJoin />}
+              </React.Fragment>
+            );
+          })}
         </Box>
       )}
     </Drawer>

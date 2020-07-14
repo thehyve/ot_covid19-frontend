@@ -18,19 +18,18 @@ import Tooltip from './Tooltip';
 import useDynamicColspan from '../../hooks/useDynamicColspans';
 import { getHiddenBreakpoints } from './utils';
 import { tableStyles } from './tableStyles';
-import { includeFilter } from '../Filters/utils';
 
 function HeaderCell({
+  activeFilters = [],
   colspan,
   isHeaderGroup = false,
   filterable = false,
-  filterBy = [],
   id,
   label,
   labelStyle,
   minWidth,
   noWrapHeader,
-  onRequestFilter,
+  onToggleFilter,
   sortable = false,
   sortParams,
   sticky = false,
@@ -44,10 +43,10 @@ function HeaderCell({
     width,
     ...labelStyle,
   };
-  const isFiltered = includeFilter(filterBy, id);
+  const isFiltered = activeFilters.includes(id);
 
   const handleRequestFilter = () => {
-    onRequestFilter(id);
+    onToggleFilter(id);
   };
 
   const headerToolbar = (
@@ -119,13 +118,13 @@ function HeaderCell({
 }
 
 function TableHeader({
+  activeFilters,
   columns,
-  filterBy,
   headerGroups,
   noWrapHeader,
   order,
-  onRequestFilter,
   onRequestSort,
+  onToggleFilter,
   sortBy,
   width,
 }) {
@@ -158,12 +157,12 @@ function TableHeader({
                 column.align ? column.align : column.numeric ? 'right' : 'left'
               }
               filterable={column.filterable}
-              filterBy={filterBy}
+              activeFilters={activeFilters}
               id={column.id}
               label={column.label || _.startCase(column.id)}
               labelStyle={column.labelStyle}
               noWrapHeader={noWrapHeader}
-              onRequestFilter={onRequestFilter}
+              onToggleFilter={onToggleFilter}
               sortable={column.sortable}
               sortParams={
                 column.sortable

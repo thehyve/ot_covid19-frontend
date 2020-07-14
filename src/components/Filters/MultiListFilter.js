@@ -20,7 +20,7 @@ function MultiListFilter({
   onChange,
   onRemove,
   placeholder = 'Select items...',
-  value,
+  value = { $in: [] },
   ...headerProps
 }) {
   const classes = filterStyles();

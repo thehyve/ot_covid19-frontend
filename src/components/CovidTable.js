@@ -9,9 +9,10 @@ import { columns, headerGroups } from '../data/columns';
 import { sideBarWidthPercent } from '../config';
 
 function CovidTable({
+  activeFilters,
   filterBy,
   onClickCellContent,
-  onRequestFilter,
+  onToggleFilter,
   sideBarsOpen,
   targetSearch,
 }) {
@@ -47,11 +48,11 @@ function CovidTable({
     <>
       <Box style={{ paddingTop: '3rem', overflowX: 'hidden', width }}>
         <Table
+          activeFilters={activeFilters}
           columns={preparedColumns}
-          filterBy={filterBy}
           headerGroups={headerGroups}
           noWrapHeader={false}
-          onRequestFilter={onRequestFilter}
+          onToggleFilter={onToggleFilter}
           order="asc"
           rows={rows}
           sortBy="covid_literature"
@@ -65,7 +66,9 @@ function CovidTable({
 
 // Only rerender if filters/sideBarsOpen change.
 export default memo(CovidTable, (prevProps, nextProps) => {
-  const filtersChanged = !_.isEqual(prevProps.filterBy, nextProps.filterBy);
+  const filtersChanged =
+    !_.isEqual(prevProps.filterBy, nextProps.filterBy) ||
+    !_.isEqual(prevProps.activeFilters, nextProps.activeFilters);
   const sideBarsOpenChanged = !_.isEqual(
     prevProps.sideBarsOpen,
     nextProps.sideBarsOpen

@@ -57,7 +57,6 @@ const columnGroups = (onClickCellContent) => [
         id: 'biotype',
         label: 'Gene biotype',
         filterable: true,
-        defaultFilter: { $in: ['protein_coding'] },
         tooltip: tooltips.geneBiotypeTooltip,
         sortable: true,
       },
@@ -92,7 +91,6 @@ const columnGroups = (onClickCellContent) => [
         align: 'center',
         minWidth: '5.1rem',
         filterable: true,
-        defaultFilter: { $eq: true },
         sortable: true,
         renderCell: (row) => (
           <CellBoolean value={row['COVID-19 UniprotKB']} fillNa={true} />
@@ -123,7 +121,6 @@ const columnGroups = (onClickCellContent) => [
         tooltip: tooltips.directInteractionsTooltip,
         filterable: true,
         sortable: true,
-        defaultFilter: { $ne: null },
         comparator: comparatorFromAccessorLength('Covid_direct_interactions'),
         renderCell: (row) => (
           <CellArray
@@ -141,7 +138,6 @@ const columnGroups = (onClickCellContent) => [
         tooltip: tooltips.indirectInteractionsTooltip,
         filterable: true,
         sortable: true,
-        defaultFilter: { $ne: null },
         comparator: comparatorFromAccessorLength('Covid_indirect_interactions'),
         renderCell: (row) => (
           <CellArray
@@ -184,7 +180,6 @@ const columnGroups = (onClickCellContent) => [
         minWidth: '6rem',
         filterable: true,
         sortable: true,
-        defaultFilter: { $eq: 4 },
         renderCell: (row) => <CellMaxPhase value={row.max_phase} />,
       },
       {
@@ -194,7 +189,6 @@ const columnGroups = (onClickCellContent) => [
         tooltip: tooltips.drugsInClinicTooltip,
         filterable: true,
         sortable: true,
-        defaultFilter: { $gte: 1 },
         renderCell: (row) => parseInt(row.drugs_in_clinic ?? 0),
       },
       {
@@ -204,7 +198,6 @@ const columnGroups = (onClickCellContent) => [
         tooltip: tooltips.drugsInCovidTrialsTooltip,
         filterable: true,
         sortable: true,
-        defaultFilter: { $ne: null },
         comparator: comparatorFromAccessorLength('drugs_in_covid_trials', ';'),
         renderCell: (row) => (
           <CellArray
@@ -249,7 +242,6 @@ const columnGroups = (onClickCellContent) => [
         tooltip: tooltips.invitroCovidActivityTooltip,
         filterable: true,
         sortable: true,
-        defaultFilter: { $regex: 'HYDROXYCHLOROQUINE' },
         comparator: comparatorFromAccessorLength('invitro_covid_activity', ';'),
         renderCell: (row) => (
           <CellInvitro
@@ -274,7 +266,6 @@ const columnGroups = (onClickCellContent) => [
         tooltip: tooltips.subcellularLocationTooltip,
         filterable: true,
         sortable: true,
-        defaultFilter: { $in: ['Plasma membrane'] },
         comparator: comparatorFromAccessorLength('hpa_subcellular_location'),
         renderCell: (row) => (
           <CellArray
@@ -293,7 +284,6 @@ const columnGroups = (onClickCellContent) => [
         label: 'RNA tissue distribution',
         tooltip: tooltips.rnaTissueDistributionTooltip,
         filterable: true,
-        defaultFilter: { $in: ['Detected in single'] },
         sortable: true,
         comparator: comparatorFromMaps(
           'hpa_rna_tissue_distribution',
@@ -306,7 +296,6 @@ const columnGroups = (onClickCellContent) => [
         label: 'RNA tissue specificity',
         tooltip: tooltips.rnaTissueSpecifityTooltip,
         filterable: true,
-        defaultFilter: { $in: ['Tissue enriched'] },
         sortable: true,
         renderCell: (row) => row.hpa_rna_tissue_specificity || <NaLabel />,
       },
@@ -317,7 +306,6 @@ const columnGroups = (onClickCellContent) => [
         minWidth: '7rem',
         filterable: true,
         sortable: true,
-        defaultFilter: { $in: ['lung'] },
         comparator: comparatorFromAccessorLength('hpa_rna_specific_tissues'),
         renderCell: (row) => {
           const urlPart =
@@ -495,7 +483,6 @@ const columnGroups = (onClickCellContent) => [
         align: 'center',
         filterable: true,
         sortable: true,
-        defaultFilter: { $eq: false },
         renderCell: (row) => <CellSafetyHas value={row.has_safety_risk} />,
       },
       {
@@ -504,7 +491,6 @@ const columnGroups = (onClickCellContent) => [
         tooltip: tooltips.safetyInfoSourceTooltip,
         filterable: true,
         sortable: true,
-        defaultFilter: { $all: ['experimental_toxicity'] },
         comparator: comparatorFromAccessorLength('safety_info_source'),
         renderCell: (row) => (
           <CellSafetySource

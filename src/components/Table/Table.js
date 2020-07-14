@@ -14,18 +14,17 @@ import TableRow from './TableRow';
 import { prepareData } from './dataPreparation';
 import { tableStyles } from './tableStyles';
 import useDimensions from '../../hooks/useDimensions';
-import { addFilter, includeFilter, remFilter } from '../Filters/utils';
 
 function Table({
+  activeFilters = [],
   className,
   columns,
   rows,
   rowCount,
-  filterBy = [],
   fixed = false,
   fixedRows = [],
   headerGroups = [],
-  onRequestFilter,
+  onToggleFilter,
   onTableAction = () => {},
   pageSize = 10 - fixedRows.length,
   hover = false,
@@ -59,23 +58,9 @@ function Table({
     setPage(newPage);
   };
 
-  const handleRequestFilter = (newFilter) => {
+  const handleToggleFilter = (newFilter) => {
     setPage(0);
-
-    const defaultFilter = columns.find((column) => column.id === newFilter)
-      ?.defaultFilter;
-
-    let newFilterBy = filterBy;
-
-    if (includeFilter(filterBy, newFilter)) {
-      newFilterBy = remFilter(filterBy, newFilter);
-    } else {
-      newFilterBy = addFilter(filterBy, {
-        [newFilter]: defaultFilter,
-      });
-    }
-
-    onRequestFilter(newFilterBy);
+    onToggleFilter(newFilter);
   };
 
   const handleRequestSort = (_, property) => {
@@ -102,10 +87,10 @@ function Table({
               }}
             >
               <TableHeader
+                activeFilters={activeFilters}
                 classes={classes}
                 columns={columns}
-                filterBy={filterBy}
-                onRequestFilter={handleRequestFilter}
+                onToggleFilter={handleToggleFilter}
                 headerGroups={headerGroups}
                 noWrapHeader={noWrapHeader}
                 order={order}

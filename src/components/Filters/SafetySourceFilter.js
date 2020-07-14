@@ -24,7 +24,7 @@ function SafetySourceFilter({
   name,
   onChange,
   onRemove,
-  value,
+  value = { $all: [] },
   ...headerProps
 }) {
   const etPresent = value.$all?.includes('experimental_toxicity');
