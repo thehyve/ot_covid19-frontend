@@ -36,7 +36,7 @@ function App() {
   const [targetSearch, setTargetSearch] = useState('');
   const [updating, setUpdating] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
-  const [showWelcomeCheck, setShowWelcomeCheck] = useState(true);
+  const [showModalControls, setShowModalsControls] = useState(true);
   const [indexing, setIndexing] = useState(false);
   const [indexingProgress, setIndexingProgress] = useState(0);
   const [ready, setReady] = useState(false);
@@ -48,7 +48,7 @@ function App() {
   };
 
   const handleOpenModal = () => {
-    setShowWelcomeCheck(false);
+    setShowModalsControls(false);
     setShowWelcome(true);
   };
 
@@ -183,9 +183,9 @@ function App() {
         </ContentDrawer>
       </Box>
       <WelcomeModal
-        open={showWelcome}
+        open={updating || showWelcome}
         onClose={handleCloseModal}
-        showWelcomeCheck={showWelcomeCheck}
+        showControls={showModalControls}
         updating={updating}
       />
       <IndexingSnackbar

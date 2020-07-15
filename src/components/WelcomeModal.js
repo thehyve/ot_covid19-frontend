@@ -3,20 +3,33 @@ import {
   Backdrop,
   Box,
   Button,
+  Checkbox,
   CircularProgress,
   Divider,
   Fade,
+  FormControlLabel,
+  Link,
   Modal,
   makeStyles,
   Typography,
-  Checkbox,
-  FormControlLabel,
+  Menu,
+  MenuItem,
 } from '@material-ui/core';
 
 import Logo from '../assets/logo';
-import { setLS } from '../utils';
+import { setLS, getLS, delLS } from '../utils';
+import { storeUrl } from '../config';
+import Tooltip from './Table/Tooltip';
 
 const useStyles = makeStyles((theme) => ({
+  bottomControls: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  controlLabel: {
+    fontSize: '.75rem',
+  },
   divider: {
     margin: '2rem 0 0 0',
     width: '75%',
@@ -28,17 +41,11 @@ const useStyles = makeStyles((theme) => ({
   },
   readyText: {
     textAlign: 'center',
-    marginBottom: '4rem',
+    marginBottom: '3.5rem',
     width: '100%',
-  },
-  dontShowWelcomeLabel: {
-    fontSize: '.75rem',
   },
   dontShowWelcomeRoot: {
-    display: 'flex',
-    flex: 1,
-    justifyContent: 'flex-end',
-    width: '100%',
+    margin: 0,
   },
   loadingContainer: {
     alignItems: 'center',
@@ -73,6 +80,9 @@ const useStyles = makeStyles((theme) => ({
       outline: 'none',
     },
   },
+  startButton: {
+    marginBottom: '2rem',
+  },
   titleContainer: {
     alignItems: 'center',
     display: 'flex',
@@ -81,9 +91,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function UpdatingModal({ open, onClose, updating, showWelcomeCheck }) {
+function UpdatingModal({ open, onClose, updating, showControls }) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const [dontShowWelcome, setDontShowWelcome] = useState(false);
+  const clientDatasetRevision = getLS('datasetRevision');
+  const datasetUrl = `${storeUrl}/${clientDatasetRevision}.zip`;
   const classes = useStyles();
+
+  const handleClickMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClickClean = () => {
+    delLS('showWelcome');
+    delLS('datasetRevision');
+    // eslint-disable-next-line no-restricted-globals
+    location.reload();
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
 
   const handleClose = () => {
     if (dontShowWelcome) {
@@ -136,29 +164,83 @@ function UpdatingModal({ open, onClose, updating, showWelcomeCheck }) {
             ) : (
               <Fade in={!updating}>
                 <Box className={classes.readyContainer}>
-                  {showWelcomeCheck && (
+                  {showControls && (
                     <Typography variant="caption" className={classes.readyText}>
                       Data is ready.
                     </Typography>
                   )}
-                  <Button onClick={handleClose} color="primary">
-                    {showWelcomeCheck ? 'Start' : 'Continue'}
+                  <Button
+                    className={classes.startButton}
+                    color="primary"
+                    onClick={handleClose}
+                  >
+                    {showControls ? 'Start' : 'Continue'}
                   </Button>
-                  {showWelcomeCheck && (
-                    <FormControlLabel
-                      classes={{
-                        root: classes.dontShowWelcomeRoot,
-                        label: classes.dontShowWelcomeLabel,
-                      }}
-                      control={
-                        <Checkbox
-                          checked={dontShowWelcome}
-                          onChange={handleChangeDontShowWelcome}
-                        />
-                      }
-                      label="Don't show this message"
-                    />
-                  )}
+                  <Box className={classes.bottomControls}>
+                    <Button onClick={handleClickMenu}>More options...</Button>
+                    <Menu
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleCloseMenu}
+                    >
+                      <MenuItem onClick={handleCloseMenu}>
+                        <Link
+                          className={classes.controlLabel}
+                          color="inherit"
+                          underline="none"
+                          href={datasetUrl}
+                        >
+                          Download dataset
+                        </Link>
+                      </MenuItem>
+                      <Tooltip
+                        title={
+                          <>
+                            Forces the tool to download the data again to your
+                            device.
+                            <br />
+                            <br />
+                            <strong>Note: </strong>Do not do this to get the
+                            latest dataset. The dataset is updated automatically
+                            to the latest available version. You should only do
+                            this if you think something is wrong with the data.
+                            If you use this option and it solves the problems
+                            for you, we would be grateful if you{' '}
+                            <Link
+                              href="https://github.com/opentargets/ot_covid19-frontend/issues"
+                              target="blank"
+                            >
+                              reported it
+                            </Link>
+                            .
+                          </>
+                        }
+                      >
+                        <MenuItem
+                          className={classes.controlLabel}
+                          onClick={handleClickClean}
+                        >
+                          <>Force data renew</>
+                        </MenuItem>
+                      </Tooltip>
+                    </Menu>
+                    {showControls && (
+                      <FormControlLabel
+                        classes={{
+                          root: classes.dontShowWelcomeRoot,
+                          label: classes.controlLabel,
+                        }}
+                        control={
+                          <Checkbox
+                            checked={dontShowWelcome}
+                            onChange={handleChangeDontShowWelcome}
+                          />
+                        }
+                        label="Don't show this message"
+                      />
+                    )}
+                  </Box>
                 </Box>
               </Fade>
             )}
