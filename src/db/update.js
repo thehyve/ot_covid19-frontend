@@ -45,12 +45,15 @@ export async function updateClient(datasetRevision) {
     console.log('[DB] data decompressed');
 
     const dataArray = datasetStr.split('\n').map((line) => JSON.parse(line));
-    console.log('[DB] data parsed');
+    console.log(`[DB] data parsed ${dataArray.length} rows`);
 
     const updateResult = await populateDB(newDB, dataArray);
     console.log(`[DB] imported ${updateResult.length} rows`);
 
-    setLS('datasetRevision', datasetRevision);
-    delLS('indexesReady');
+    // Only set the revision key in localstorage if the import was successful.
+    if (dataArray.length === updateResult.length) {
+      setLS('datasetRevision', datasetRevision);
+      delLS('indexesReady');
+    }
   });
 }
