@@ -24,8 +24,8 @@ export const speciesTooltip = (
     <strong>Options:</strong>
     <ul style={classes.tooltipUl}>
       <li>Human</li>
-      <li>CoV-SARS-1</li>
-      <li>CoV-SARS-2</li>
+      <li>SARS-CoV-1</li>
+      <li>SARS-CoV-2</li>
     </ul>
   </span>
 );

@@ -15,8 +15,8 @@ export const mapMaxPhase = (value) =>
 export const mapScientificName = (str) =>
   ({
     'Homo sapiens': 'Human',
-    'Severe acute respiratory syndrome-related coronavirus': 'CoV-SARS-1',
-    'Severe acute respiratory syndrome coronavirus 2': 'CoV-SARS-2',
+    'Severe acute respiratory syndrome-related coronavirus': 'SARS-CoV-1',
+    'Severe acute respiratory syndrome coronavirus 2': 'SARS-CoV-2',
   }[str?.trim()]);
 
 export const mapTissueDistribution = (str) =>
