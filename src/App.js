@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ReactGA from 'react-ga';
 import { Box } from '@material-ui/core';
 
 import ContentDrawer from './components/Drawer/ContentDrawer';
@@ -48,6 +49,8 @@ function App() {
   };
 
   const handleOpenModal = () => {
+    ReactGA.event({ category: 'Modal', action: 'Open' });
+
     setShowModalsControls(false);
     setShowWelcome(true);
   };
