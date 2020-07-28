@@ -81,6 +81,11 @@ const useStyles = makeStyles((theme) => ({
       outline: 'none',
     },
   },
+  privacyLabel: {
+    color: theme.palette.grey[500],
+    fontSize: '.7rem',
+    marginTop: '.5rem',
+  },
   startButton: {
     marginBottom: '2rem',
   },
@@ -255,6 +260,16 @@ function UpdatingModal({ open, onClose, updating, showControls }) {
                 </Box>
               </Fade>
             )}
+            <Box className={classes.privacyLabel}>
+              This website uses cookies. Take a look at our{' '}
+              <Link
+                href="https://www.ebi.ac.uk/data-protection/privacy-notice/open-targets"
+                target="blank"
+              >
+                privacy notice
+              </Link>
+              .
+            </Box>
           </Box>
         </Fade>
       </Modal>
