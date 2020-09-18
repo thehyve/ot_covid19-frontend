@@ -173,7 +173,7 @@ function TableHeader({
                 column.sortable
                   ? {
                       active: sortBy === column.id,
-                      direction: sortBy === column.id ? order : 'asc',
+                      direction: sortBy === column.id ? order : 'desc',
                       onClick: createSortHandler(column.id),
                     }
                   : null

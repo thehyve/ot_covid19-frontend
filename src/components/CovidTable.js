@@ -53,7 +53,7 @@ function CovidTable({
           headerGroups={headerGroups}
           noWrapHeader={false}
           onToggleFilter={onToggleFilter}
-          order="asc"
+          order="desc"
           rows={rows}
           sortBy="covid_literature"
           targetSearch={targetSearch}

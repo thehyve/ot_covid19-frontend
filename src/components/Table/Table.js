@@ -36,7 +36,7 @@ function Table({
 }) {
   const [page, setPage] = useState(0);
   const [sortBy, setSortBy] = useState(props.sortBy);
-  const [order, setOrder] = useState(props.order || 'asc');
+  const [order, setOrder] = useState(props.order || 'desc');
   const containerRef = useRef();
   const { height } = useDimensions(containerRef);
 

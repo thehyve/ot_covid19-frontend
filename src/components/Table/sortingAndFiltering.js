@@ -2,12 +2,14 @@ import _ from 'lodash';
 
 import { safeToString } from '../../utils';
 
-function ascendingComparator(a, b, sortBy) {
+function ascendingComparator(aObj, bObj, sortBy) {
+  const a = aObj[sortBy];
+  const b = bObj[sortBy];
+
   return (
-    (a[sortBy] === null || a[sortBy] === undefined) -
-      (b[sortBy] === null || b[sortBy] === undefined) ||
-    +(a[sortBy] < b[sortBy]) ||
-    -(a[sortBy] > b[sortBy])
+    -(a < b) ||
+    +(a > b) ||
+    (a === null || a === undefined) - (b === null || b === undefined)
   );
 }
 
