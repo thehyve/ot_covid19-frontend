@@ -65,7 +65,7 @@ export const drawerStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
   },
   drawerSubtitleCaption: {
-    color: theme.palette.grey[400],
+    color: theme.palette.grey[500],
     fontSize: '0.8rem',
     fontStyle: 'italic',
   },

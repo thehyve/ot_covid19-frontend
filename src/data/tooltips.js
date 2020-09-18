@@ -99,6 +99,7 @@ export const covidLiteratureTooltip = (
     <Link href="https://www.targetvalidation.org/" target="blank">
       Open Targets
     </Link>
+    .
   </span>
 );
 
@@ -111,6 +112,7 @@ export const directInteractionsTooltip = (
     <Link href="https://www.ebi.ac.uk/intact/" target="blank">
       IntAct Molecular Interaction Database
     </Link>
+    .
   </span>
 );
 
@@ -123,6 +125,7 @@ export const indirectInteractionsTooltip = (
     <Link href="https://www.ebi.ac.uk/intact/" target="blank">
       IntAct Molecular Interaction Database
     </Link>
+    .
   </span>
 );
 
@@ -135,6 +138,7 @@ export const implicatedInViralInfectionTooltip = (
     <Link href="https://www.ebi.ac.uk/intact/" target="blank">
       IntAct Molecular Interaction Database
     </Link>
+    .
   </span>
 );
 
@@ -146,6 +150,7 @@ export const maxPhaseTooltip = (
     <Link href="https://www.ebi.ac.uk/chembl/" target="blank">
       ChEMBL Bioactive Molecule Database
     </Link>
+    .
   </span>
 );
 
@@ -158,6 +163,7 @@ export const drugsInClinicTooltip = (
     <Link href="https://www.ebi.ac.uk/chembl/" target="blank">
       ChEMBL Bioactive Molecule Database
     </Link>
+    .
   </span>
 );
 
@@ -171,6 +177,7 @@ export const drugsInCovidTrialsTooltip = (
     <Link href="https://www.ebi.ac.uk/chembl/" target="blank">
       ChEMBL Bioactive Molecule Database
     </Link>
+    .
   </span>
 );
 
@@ -184,6 +191,7 @@ export const hasInvitroCovidActivityTooltip = (
     <Link href="https://www.ebi.ac.uk/chembl/" target="blank">
       ChEMBL Bioactive Molecule Database
     </Link>
+    .
   </span>
 );
 
@@ -197,6 +205,71 @@ export const invitroCovidActivityTooltip = (
     <Link href="https://www.ebi.ac.uk/chembl/" target="blank">
       ChEMBL Bioactive Molecule Database
     </Link>
+    .
+  </span>
+);
+
+export const MR_fieldTooltip = (
+  <span>
+    <strong>Mendelian Randomisation: </strong>Estimates represent association of
+    genetically predicted higher levels of protein with risk of COVID-19
+    disease. Only those with MR <i>p</i>-value &lt; 0.05 are tabulated. The
+    genetic instruments were selected based on the following parameters:
+    <ul className={classes.tooltipUl}>
+      <li>
+        <strong>
+          <i>cis</i>-window:{' '}
+        </strong>
+        &plusmn;1 Mbp of transcription start site of respective genes encoding
+        the protein.
+      </li>
+      <li>
+        <strong>
+          r<sup>2</sup>
+        </strong>{' '}
+        &le; 0.05
+      </li>
+      <li>
+        <strong>
+          <i>p</i>
+        </strong>{' '}
+        &lt; 1 &times; 10<sup>-5</sup>
+      </li>
+    </ul>
+    <hr />
+    <strong>Source for protein GWAS: </strong>
+    <Link
+      href="https://www.nature.com/articles/s41586-018-0175-2"
+      target="blank"
+    >
+      Sun et al
+    </Link>
+    .
+    <br />
+    <strong>Source for COVID-19 GWAS: </strong>
+    <Link href="https://www.covid19hg.org/results/" target="blank">
+      COVID-19 HGI
+    </Link>
+    .
+    <br />
+    <strong>Source of MR method: </strong>
+    <Link href="https://cnsgenomics.com/software/gcta/#GSMR" target="blank">
+      GSMR
+    </Link>
+    .
+  </span>
+);
+export const colocalisationTooltip = (
+  <span>
+    <strong>Colocalisation: </strong>Analysis shows the posterior probability
+    that the genetic associations of protein and COVID-19 outcome share the same
+    candidate causal variant.
+    <hr />
+    <strong>Source:</strong> Colocalisation analyses were done using the{' '}
+    <Link href="https://github.com/jrs95/hyprcoloc" target="blank">
+      hyprcoloc R package
+    </Link>
+    .
   </span>
 );
 
@@ -208,6 +281,7 @@ export const subcellularLocationTooltip = (
     <Link href="https://www.proteinatlas.org/" target="blank">
       The Human Protein Atlas
     </Link>
+    .
   </span>
 );
 
@@ -229,6 +303,7 @@ export const rnaTissueDistributionTooltip = (
     <Link href="https://www.proteinatlas.org/" target="blank">
       The Human Protein Atlas
     </Link>
+    .
   </span>
 );
 
@@ -250,6 +325,7 @@ export const rnaTissueSpecifityTooltip = (
     <Link href="https://www.proteinatlas.org/" target="blank">
       The Human Protein Atlas
     </Link>
+    .
   </span>
 );
 
@@ -261,6 +337,7 @@ export const rnaSpecificTissuesTooltip = (
     <Link href="https://www.proteinatlas.org/" target="blank">
       The Human Protein Atlas
     </Link>
+    .
   </span>
 );
 
@@ -289,6 +366,7 @@ export const abundanceRegOnCovidTooltip = (
       Bojkova, D. et al. Proteomics of SARS-CoV-2-infected host cells reveals
       therapy targets
     </Link>
+    .
   </span>
 );
 
@@ -300,6 +378,7 @@ export const respiratorySystemTissuesTooltip = (
     <Link href="https://www.ebi.ac.uk/gxa/home" target="blank">
       Expression Atlas
     </Link>
+    .
   </span>
 );
 
@@ -311,6 +390,7 @@ export const immuneSystemTissuesTooltip = (
     <Link href="https://www.ebi.ac.uk/gxa/home" target="blank">
       Expression Atlas
     </Link>
+    .
   </span>
 );
 
@@ -325,6 +405,7 @@ export const tractabilityBucketSMTooltip = (
     >
       Open Targets target tractability assessment
     </Link>
+    .
   </span>
 );
 
@@ -339,6 +420,7 @@ export const tractabilityBucketABTooltip = (
     >
       Open Targets target tractability assessment
     </Link>
+    .
   </span>
 );
 
@@ -354,6 +436,7 @@ export const tractabilityBucketOtherTooltip = (
     >
       Open Targets target tractability assessment
     </Link>
+    .
   </span>
 );
 
@@ -368,6 +451,7 @@ export const hasSafetyRiskTooltip = (
     >
       Open Targets target safety assessment
     </Link>
+    .
   </span>
 );
 
@@ -406,6 +490,7 @@ export const safetyInfoSourceTooltip = (
     <Link href="https://alpha.targetvalidation.org" target="blank">
       Open Targets
     </Link>
+    .
   </span>
 );
 
@@ -417,5 +502,6 @@ export const safetyOrgansSystemsAffectedTooltip = (
     <Link href="https://alpha.targetvalidation.org" target="blank">
       Open Targets
     </Link>
+    .
   </span>
 );

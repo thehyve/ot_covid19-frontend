@@ -3,15 +3,15 @@ import { Box, Typography } from '@material-ui/core';
 
 import { drawerStyles } from './drawerStyles';
 
-function ListTitle({ title, description, length }) {
+function ListTitle({ title, description, subtitle }) {
   const classes = drawerStyles();
 
   return (
     <Box className={classes.drawerBodyTitle}>
       <Typography className={classes.drawerTitleCaption}>{title}</Typography>
-      {length && (
+      {subtitle && (
         <Typography className={classes.drawerSubtitleCaption}>
-          {length} entries
+          {subtitle}
         </Typography>
       )}
       <Typography variant="caption">{description}</Typography>

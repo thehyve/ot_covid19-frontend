@@ -5,9 +5,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ListTitle from '../Drawer/ListTitle';
 import NaLabel from './NaLabel';
 import {
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   List,
   ListItem,
   Link,
@@ -32,21 +32,21 @@ export const CellInvitro = ({
       <ListTitle
         title={contentTitle}
         description={contentDescription}
-        length={entryCount}
+        subtitle={`${entryCount} entries`}
       />
 
       {Object.keys(entryGroups).map((group, groupIndex) => {
         if (!entryGroups[group]) return null;
 
         return (
-          <ExpansionPanel key={groupIndex} defaultExpanded={groupIndex <= 3}>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <Accordion key={groupIndex} defaultExpanded={groupIndex <= 3}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <ListTitle
                 title={_.capitalize(group)}
-                length={entryGroups[group]?.length}
+                subtitle={`${entryGroups[group]?.length} entries`}
               />
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
+            </AccordionSummary>
+            <AccordionDetails>
               <List>
                 {entryGroups[group]?.map((entry, entryIndex) => (
                   <ListItem key={entryIndex}>
@@ -54,8 +54,8 @@ export const CellInvitro = ({
                   </ListItem>
                 ))}
               </List>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+            </AccordionDetails>
+          </Accordion>
         );
       })}
     </>

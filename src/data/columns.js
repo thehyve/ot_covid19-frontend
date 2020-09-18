@@ -5,6 +5,7 @@ import CellArray from '../components/Cells/CellArray';
 import CellBoolean from '../components/Cells/CellBoolean';
 import CellDescription from '../components/Cells/CellDescription';
 import CellInvitro from '../components/Cells/CellInvitro';
+import CellGenetics from '../components/Cells/CellGenetics';
 import CellLink from '../components/Cells/CellLink';
 import CellLiterature from '../components/Cells/CellLiterature';
 import CellMaxPhase from '../components/Cells/CellMaxPhase';
@@ -158,7 +159,6 @@ const columnGroups = (onClickCellContent) => [
         id: 'Implicated_in_viral_infection',
         label: 'Infection',
         tooltip: tooltips.implicatedInViralInfectionTooltip,
-        // TODO: ask if I can fill NAS in this column
         align: 'center',
         sortable: true,
         renderCell: (row) => (
@@ -257,6 +257,60 @@ const columnGroups = (onClickCellContent) => [
       },
     ],
   },
+
+  {
+    label: 'COVID-19 Genetics',
+    columns: [
+      {
+        id: 'MR_field',
+        label: 'Mendelian Randomisation',
+        tooltip: tooltips.MR_fieldTooltip,
+        filterable: false,
+        sortable: true,
+        comparator: comparatorFromAccessorLength('MR_field'),
+        renderCell: (row) => (
+          <CellGenetics
+            entries={row.MR_field}
+            onClickCellContent={onClickCellContent}
+            contentTitle="Mendelian Randomisation"
+            contentDescription={
+              <>
+                Estimates represent association of genetically predicted higher
+                levels of protein with risk of COVID-19 disease, sorted by{' '}
+                <i>p</i>-value.
+              </>
+            }
+            renderAccordionDetails={maps.renderMRFieldAccordionDetails}
+          />
+        ),
+      },
+      {
+        id: 'colocalisation',
+        label: 'Colocalisation',
+        tooltip: tooltips.colocalisationTooltip,
+        filterable: false,
+        sortable: true,
+        comparator: comparatorFromAccessorLength('colocalisation'),
+        renderCell: (row) => (
+          <CellGenetics
+            entries={row.colocalisation}
+            onClickCellContent={onClickCellContent}
+            contentTitle="Colocalisation"
+            contentDescription={
+              <>
+                Analysis shows the posterior probability that the genetic
+                associations of protein and COVID-19 outcome share the same
+                candidate causal variant. Sorted by descending posterior
+                probability.
+              </>
+            }
+            renderAccordionDetails={maps.renderColocalisationAccordionDetails}
+          />
+        ),
+      },
+    ],
+  },
+
   {
     label: 'Baseline gene expression',
     columns: [

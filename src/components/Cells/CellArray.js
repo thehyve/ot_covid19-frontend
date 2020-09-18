@@ -22,7 +22,7 @@ export const CellArray = ({
       <ListTitle
         title={contentTitle}
         description={contentDescription}
-        length={array.length}
+        subtitle={`${array.length} entries`}
       />
       <List>
         {array.map((accession, i) => (

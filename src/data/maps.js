@@ -1,8 +1,8 @@
 import React from 'react';
+import { Box, Link, Typography } from '@material-ui/core';
 import _ from 'lodash';
 
 import { splitStringInParentheses } from '../utils';
-import { Link } from '@material-ui/core';
 
 export const mapMaxPhase = (value) =>
   ({
@@ -71,7 +71,7 @@ export const tractabilityTopBucketSMCaptions = [
   </span>,
 ];
 
-// TODO: THIS IS NOT CORRECTLY SORTED
+// Sorting in here is based on:
 // https://docs.targetvalidation.org/getting-started/target-tractability
 export const mapTractabilityTopBucketAB = (str) =>
   ({
@@ -188,6 +188,38 @@ export const prepareInvitroCovidActivity = (row) => {
   const entryGroups = _.groupBy(entries, mapInvitroCovidActivity);
   return stripEntryGroups(entryGroups);
 };
+
+export const renderMRFieldAccordionDetails = (entry) => (
+  <Box>
+    <Typography display="block" variant="caption">
+      <strong>Number of SNPs:</strong> {entry['Number of SNPs']}
+    </Typography>
+    <Typography display="block" variant="caption">
+      <strong>MR estimate:</strong> {entry['MR estimate']}
+    </Typography>
+    <Typography display="block" variant="caption">
+      <strong>CI (95%):</strong> ({entry['Lower conf.int']},{' '}
+      {entry['Upper conf.int']})
+    </Typography>
+    <Typography display="block" variant="caption">
+      <strong>
+        <i>p</i>-value:
+      </strong>{' '}
+      {entry['p-value']}
+    </Typography>
+  </Box>
+);
+
+export const renderColocalisationAccordionDetails = (entry) => (
+  <Box>
+    <Typography display="block" variant="caption">
+      <strong>Candidate SNP:</strong> {entry['Candidate SNP']}
+    </Typography>
+    <Typography display="block" variant="caption">
+      <strong>Posterior probability:</strong> {entry['Posterior probability']}
+    </Typography>
+  </Box>
+);
 
 export const biotypeList = [
   'lncRNA',

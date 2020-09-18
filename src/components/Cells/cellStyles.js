@@ -1,6 +1,18 @@
 import { colors, makeStyles } from '@material-ui/core';
 
 export const cellStyles = makeStyles((theme) => ({
+  accordionSummaryRoot: {
+    marginRight: '.25rem',
+  },
+  accordionSummaryContent: {
+    minWidth: 0,
+    whiteSpace: 'nowrap',
+    '&$accordionSummaryExpanded': {
+      margin: 0,
+      whiteSpace: 'normal',
+    },
+  },
+  accordionSummaryExpanded: {},
   booleanIconTrue: {
     color: colors.green[500],
   },
@@ -9,6 +21,13 @@ export const cellStyles = makeStyles((theme) => ({
   },
   iconCell: {
     verticalAlign: 'middle',
+  },
+  geneticsTitle: {
+    minWidth: 0,
+    fontWeight: 'bold',
+    whiteSpace: 'inherit',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
   },
   naLabel: {
     border: `1px solid ${theme.palette.grey[500]}`,
