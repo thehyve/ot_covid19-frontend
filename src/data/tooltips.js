@@ -487,7 +487,7 @@ export const safetyInfoSourceTooltip = (
     </table>
     <hr />
     <strong>Source:</strong>{' '}
-    <Link href="https://alpha.targetvalidation.org" target="blank">
+    <Link href="https://beta.targetvalidation.org" target="blank">
       Open Targets
     </Link>
     .
@@ -499,7 +499,7 @@ export const safetyOrgansSystemsAffectedTooltip = (
     List of organs where there are known safety risks for the target.
     <hr />
     <strong>Source:</strong>{' '}
-    <Link href="https://alpha.targetvalidation.org" target="blank">
+    <Link href="https://beta.targetvalidation.org" target="blank">
       Open Targets
     </Link>
     .

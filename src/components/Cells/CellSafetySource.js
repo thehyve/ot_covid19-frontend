@@ -23,7 +23,7 @@ function CellSafetySource({ value, accession }) {
     present ? (
       <Tooltip title={title}>
         <Link
-          href={`https://alpha.targetvalidation.org/target/${accession}`}
+          href={`https:/beta.targ/etvalidation.org/target/${accession}`}
           target="blank"
         >
           {children}
