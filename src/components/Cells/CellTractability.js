@@ -21,7 +21,7 @@ export const CellTractability = ({
       Name of the highest <strong>{contentDescription}</strong> tractability
       bucket. More information about{' '}
       <Link
-        href="https://docs.targetvalidation.org/getting-started/target-tractability"
+        href="https://platform-docs.opentargets.org/target/tractability"
         target="blank"
       >
         target tractability

@@ -96,7 +96,7 @@ export const covidLiteratureTooltip = (
     Number of papers mentioning the target and COVID-19 in the same sentence.
     <hr />
     <strong>Source:</strong>{' '}
-    <Link href="https://www.targetvalidation.org/" target="blank">
+    <Link href="https://platform.opentargets.org/" target="blank">
       Open Targets
     </Link>
     .
@@ -400,10 +400,10 @@ export const tractabilityBucketSMTooltip = (
     <hr />
     <strong>Source:</strong>{' '}
     <Link
-      href="https://docs.targetvalidation.org/getting-started/target-tractability"
+      href="https://platform-docs.opentargets.org/target/tractability"
       target="blank"
     >
-      Open Targets target tractability assessment
+      Open Targets
     </Link>
     .
   </span>
@@ -415,10 +415,10 @@ export const tractabilityBucketABTooltip = (
     <hr />
     <strong>Source:</strong>{' '}
     <Link
-      href="https://docs.targetvalidation.org/getting-started/target-tractability"
+      href="https://platform-docs.opentargets.org/target/tractability"
       target="blank"
     >
-      Open Targets target tractability assessment
+      Open Targets
     </Link>
     .
   </span>
@@ -431,10 +431,10 @@ export const tractabilityBucketOtherTooltip = (
     <hr />
     <strong>Source:</strong>{' '}
     <Link
-      href="https://docs.targetvalidation.org/getting-started/target-tractability"
+      href="https://platform-docs.opentargets.org/target/tractability"
       target="blank"
     >
-      Open Targets target tractability assessment
+      Open Targets
     </Link>
     .
   </span>
@@ -446,7 +446,7 @@ export const hasSafetyRiskTooltip = (
     <hr />
     <strong>Source:</strong>{' '}
     <Link
-      href="https://docs.targetvalidation.org/getting-started/target-safety"
+      href="https://platform-docs.opentargets.org/target/safety"
       target="blank"
     >
       Open Targets target safety assessment
@@ -487,7 +487,7 @@ export const safetyInfoSourceTooltip = (
     </table>
     <hr />
     <strong>Source:</strong>{' '}
-    <Link href="https://beta.targetvalidation.org" target="blank">
+    <Link href="https://platform.opentargets.org" target="blank">
       Open Targets
     </Link>
     .
@@ -499,7 +499,7 @@ export const safetyOrgansSystemsAffectedTooltip = (
     List of organs where there are known safety risks for the target.
     <hr />
     <strong>Source:</strong>{' '}
-    <Link href="https://beta.targetvalidation.org" target="blank">
+    <Link href="https://platform.opentargets.org" target="blank">
       Open Targets
     </Link>
     .

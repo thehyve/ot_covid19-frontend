@@ -8,7 +8,7 @@ function CellLiterature({ value, ensemblId }) {
 
   return (
     <CellLink
-      url="https://www.targetvalidation.org/evidence/$$/MONDO_0100096?view=sec:literature"
+      url="https://platform.opentargets.org/evidence/$$/MONDO_0100096"
       accession={ensemblId}
       label={value}
     />

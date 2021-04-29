@@ -203,7 +203,7 @@ const columnGroups = (onClickCellContent) => [
           <CellArray
             array={row.drugs_in_covid_trials?.split(';')}
             link={{
-              url: 'https://beta.targetvalidation.org/search?q=$$&page=1',
+              url: 'https://platform.opentargets.org/search?q=$$&page=1',
             }}
             onClickCellContent={onClickCellContent}
             contentTitle="Drugs In COVID-19 trials"
@@ -247,7 +247,7 @@ const columnGroups = (onClickCellContent) => [
           <CellInvitro
             entries={row.invitro_covid_activity}
             link={{
-              url: 'https://beta.targetvalidation.org/search?q=$$&page=1',
+              url: 'https://platform.opentargets.org/search?q=$$&page=1',
             }}
             onClickCellContent={onClickCellContent}
             contentTitle="In-vitro COVID-19 compound list"
@@ -565,7 +565,7 @@ const columnGroups = (onClickCellContent) => [
           <CellArray
             array={row.safety_organs_systems_affected}
             link={{
-              url: `https://beta.targetvalidation.org/target/${row.ensembl_id}`,
+              url: `https://platform.opentargets.org/target/${row.ensembl_id}`,
             }}
             onClickCellContent={onClickCellContent}
             contentTitle="Organ systems affected"
