@@ -72,7 +72,7 @@ export const tractabilityTopBucketSMCaptions = [
 ];
 
 // Sorting in here is based on:
-// https://docs.targetvalidation.org/getting-started/target-tractability
+// https://platform-docs.opentargets.org/target/tractability
 export const mapTractabilityTopBucketAB = (str) =>
   ({
     'Targets with drugs in phase IV': 1,
