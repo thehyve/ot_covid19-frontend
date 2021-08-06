@@ -15,7 +15,6 @@ import {
   Menu,
   MenuItem,
 } from '@material-ui/core';
-import ReactGA from 'react-ga';
 
 import Logo from '../assets/logo';
 import { setLS, getLS, delLS } from '../utils';
@@ -112,8 +111,6 @@ function UpdatingModal({ open, onClose, updating, showControls }) {
     delLS('showWelcome');
     delLS('datasetRevision');
 
-    ReactGA.event({ category: 'Table', action: 'Refresh' });
-
     // eslint-disable-next-line no-restricted-globals
     location.reload();
   };
@@ -127,17 +124,11 @@ function UpdatingModal({ open, onClose, updating, showControls }) {
       setLS('showWelcome', 'no');
     }
 
-    ReactGA.event({ category: 'Modal', action: 'Close' });
-
     onClose();
   };
 
   const handleChangeDontShowWelcome = (e) => {
     setDontShowWelcome(e.target.checked);
-  };
-
-  const handleDownloadDataset = () => {
-    ReactGA.event({ category: 'Table', action: 'Download' });
   };
 
   return (

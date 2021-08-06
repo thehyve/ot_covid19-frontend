@@ -22,7 +22,6 @@
     "pouchdb-find": "^7.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-ga": "^3.1.2",
     "react-scripts": "4.0.3",
     "typeface-inter": "^3.12.0"
   },

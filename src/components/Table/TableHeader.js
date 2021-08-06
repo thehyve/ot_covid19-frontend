@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactGA from 'react-ga';
 import {
   Box,
   Hidden,
@@ -47,8 +46,6 @@ function HeaderCell({
   const isFiltered = activeFilters.includes(id);
 
   const handleRequestFilter = () => {
-    ReactGA.event({ category: 'Table', action: 'Filter', label: id });
-
     onToggleFilter(id);
   };
 
@@ -133,8 +130,6 @@ function TableHeader({
 }) {
   const colspans = useDynamicColspan(headerGroups, columns, width);
   const createSortHandler = (property) => (event) => {
-    ReactGA.event({ category: 'Table', action: 'Sort', label: property });
-
     onRequestSort(event, property);
   };
 
