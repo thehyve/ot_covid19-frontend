@@ -10,10 +10,16 @@ import { cellStyles } from './cellStyles';
 const IconWrapper = ({ link, children }) =>
   link ? <CellLink {...link} label={children} /> : children;
 
-function CellBoolean({ value, link, fillNa = false, highlightFalse = false }) {
+function CellBoolean({
+  value,
+  link,
+  fillNa = false,
+  centerNa = false,
+  highlightFalse = false,
+}) {
   const classes = cellStyles();
 
-  if (value === null && !fillNa) return <NaLabel />;
+  if (value === null && !fillNa) return <NaLabel center={centerNa} />;
 
   return (
     <IconWrapper link={link}>
