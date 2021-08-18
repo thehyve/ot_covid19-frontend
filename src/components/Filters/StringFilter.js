@@ -7,7 +7,7 @@ import { FilterHeader } from './common';
 import { filterStyles } from './filterStyles';
 
 function StringFilter({
-  capitalize = false,
+  caseSensitive = true,
   name,
   onChange,
   onRemove,
@@ -29,9 +29,9 @@ function StringFilter({
   };
 
   useUpdateEffect(() => {
-    const finalValue = capitalize
-      ? debouncedInputValue.toUpperCase()
-      : debouncedInputValue;
+    const finalValue = caseSensitive
+      ? debouncedInputValue
+      : RegExp(debouncedInputValue, 'i');
 
     onChange({ [name]: { $regex: finalValue } });
     // eslint-disable-next-line react-hooks/exhaustive-deps
