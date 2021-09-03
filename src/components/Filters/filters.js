@@ -1,7 +1,7 @@
 import React from 'react';
 
-import IntegerFilter from './IntegerFilter';
 import MultiListFilter from './MultiListFilter';
+import RangeFilter from './IntegerFilter';
 import SafetySourceFilter from './SafetySourceFilter';
 import StringFilter from './StringFilter';
 import ToggleFilter from './ToggleFilter';
@@ -93,9 +93,11 @@ export const filters = (filterBy, onChange, onRemove) => ({
     />
   ),
   drugs_in_clinic: (
-    <IntegerFilter
+    <RangeFilter
       name="drugs_in_clinic"
       value={getFilter(filterBy, 'drugs_in_clinic')}
+      min={0}
+      max={67}
       onChange={onChange}
       onRemove={onRemove}
       title="Drugs in clinic"
