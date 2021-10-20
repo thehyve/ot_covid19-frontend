@@ -27,7 +27,7 @@ export const CellArray = ({
       <List>
         {array.map((accession, i) => (
           <ListItem key={i}>
-            <CellLink {...link} accession={accession} />
+            {link ? <CellLink {...link} accession={accession} /> : accession}
           </ListItem>
         ))}
       </List>
