@@ -117,7 +117,7 @@ export const filters = (filterBy, onChange, onRemove) => ({
     <StringFilter
       name="invitro_covid_activity"
       value={getFilter(filterBy, 'invitro_covid_activity')}
-      capitalize
+      caseSensitive={false}
       onChange={onChange}
       onRemove={onRemove}
       title="In-vitro compound activity"
